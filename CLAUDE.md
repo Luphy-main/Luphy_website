@@ -58,3 +58,8 @@ Propriétaire : Tristan (Président Luphy). Répondre en français.
 - Pages : `index`, `crm`, `ia-automation`, `outbound`, `cas-clients`, `case-study-*`, `blog`, `blog-*`, `team`
 - Nouvel article de blog : fichier `blog-<sujet>-<année>.html` + carte ajoutée dans `blog.html` (FR + EN)
 - Nouvelle étude de cas : `case-study-<client>.html` + carte dans `cas-clients.html`
+
+## Commandes shell
+- Les commandes sont lancées depuis la racine du repo : ne jamais préfixer par `cd "..." &&`.
+- Pas de redirection `2>/dev/null` ni `> fichier` dans les commandes de lecture (elles déclenchent une validation manuelle).
+- Une commande simple par appel plutôt que des chaînes `&&` / `|` quand c'est possible.
