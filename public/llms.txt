@@ -1,0 +1,50 @@
+# Luphy — llms.txt
+# Agence de performance digitale pour la finance
+# https://www.luphy.io
+
+## À propos
+Luphy est une agence de performance digitale basée à Paris, spécialisée dans la finance (fonds d'investissement, M&A, sociétés de gestion, conseil). Elle conseille et implémente des solutions CRM, d'automatisation et d'IA, en partant d'une méthodologie de diagnostic centrée sur le ROI.
+
+Fondateurs : Titouan Galpin (performance commerciale, CRM) et Tristan Camilli (opérations, IA, automatisation — ex-Head of Operations Caption.market, INSA Toulouse / ESCP).
+
+## Pages clés
+- / : Accueil — présentation générale de Luphy
+- /methode : Diagnostic Performance ROI — méthode en 7 étapes pour identifier et chiffrer les chantiers CRM, automatisation et IA
+- /performance-commerciale : Pôle performance commerciale (CRM, Outbound)
+- /performance-commerciale/crm : Conseil et implémentation CRM (Affinity, DealCloud, HubSpot, Pipedrive, Notion, sur mesure)
+- /performance-commerciale/crm/affinity : Implémentation Affinity CRM pour fonds d'investissement et M&A
+- /performance-commerciale/crm/dealcloud : Implémentation DealCloud pour boutiques M&A et banques d'affaires
+- /performance-commerciale/crm/hubspot : Implémentation HubSpot pour sociétés de gestion et conseil
+- /performance-commerciale/crm/pipedrive : Implémentation Pipedrive
+- /performance-commerciale/crm/notion : Notion comme CRM léger
+- /performance-commerciale/crm/sur-mesure : CRM sur mesure quand les solutions du marché ne suffisent pas
+- /performance-commerciale/outbound : Prospection outbound structurée et automatisée
+- /performance-operationnelle : Pôle performance opérationnelle (IA, automatisation)
+- /performance-operationnelle/ia : Déploiement de l'IA en entreprise — cas d'usage, gouvernance, ROI
+- /performance-operationnelle/automatisation : Automatisation de processus avec n8n et autres outils
+- /formation : Formation & adoption — acculturation IA, parcours Claude, adoption CRM, coaching dirigeant
+- /formation/acculturation-ia : Acculturation IA pour COMEX, associés et managers
+- /formation/claude : Parcours Claude (Chat → Cowork → Code) pour tous profils
+- /formation/crm : Formation adoption CRM (Affinity, DealCloud, HubSpot, Pipedrive, Notion)
+- /formation/coaching-dirigeant : Coaching IA individuel pour fondateurs et directeurs
+- /expertise-finance : Expertise sectorielle finance — dealflow, IC memos, relation LP/GP, mandats M&A
+- /secteurs/fonds-investissement : PE, VC, family offices
+- /secteurs/m-a-banques-affaires : M&A, advisory, banques d'affaires
+- /secteurs/societes-de-gestion : Gestion d'actifs, CGP, MFO
+- /secteurs/conseil : Cabinets de conseil et services professionnels
+- /cas-usage : Bibliothèque de cas d'usage CRM et IA pour la finance
+- /cas-clients : Études de cas clients (Allyum, Fundora, Hoppi, etc.)
+- /ressources : Articles et guides (CRM pour fonds, IA pour M&A, etc.)
+- /equipe : Présentation de l'équipe Luphy
+- /contact : Contact — devis personnalisé sous 72 h
+
+## Offre
+- Tarifs : aucun tarif affiché — devis personnalisé sous 72 h après un premier échange.
+- CRM déployés : Affinity, DealCloud, HubSpot, Pipedrive, Notion, CRM sur mesure.
+- Outils d'automatisation : n8n, Make, Zapier, Claude, agents IA.
+- Pas de certification Qualiopi — aucun financement OPCO/CPF.
+
+## Contact
+- Pôle commercial (CRM, Outbound) : https://meetings-eu1.hubspot.com/tgalpin
+- Pôle opérationnel (IA, automatisation, formation) : https://meetings-eu1.hubspot.com/tcamilli
+- LinkedIn : https://www.linkedin.com/company/luphy/

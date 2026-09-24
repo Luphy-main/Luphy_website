@@ -1,10 +1,26 @@
 node_modules/
 temporary screenshots/
-*.png
+.next/
 *.jpg.bak
+
+# Fichiers confidentiels — ne jamais committer
+docs/private/
+
+# Images : exclure à la racine, autoriser dans les sous-dossiers d'assets
+*.png
 !blog-assets/**/*.png
 !brand-assets/**/*.png
 !case-study-assets/**/*.png
 !case-study-assets/**/*.jpg
 !case-study-assets/**/*.jpeg
 !brand-assets/Client logos/*.jpg
+!public/brand-assets/**/*.png
+!public/brand-assets/**/*.jpg
+!public/brand-assets/**/*.jpeg
+!public/brand-assets/**/*.webp
+!public/blog-assets/**/*.png
+!public/blog-assets/**/*.jpg
+!public/blog-assets/**/*.jpeg
+!public/case-study-assets/**/*.png
+!public/case-study-assets/**/*.jpg
+!public/case-study-assets/**/*.jpeg
