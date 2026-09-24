@@ -1,64 +1,60 @@
-# CLAUDE.md – Frontend Website Rules
+# CLAUDE.md – Site Luphy (www.luphy.io)
 
-## Always Do First
-- **Invoke the `frontend-design` skill** before writing any frontend code, every session
+Site vitrine + blog de Luphy. HTML statique (une page = un fichier .html), CSS inline dans chaque page, pas de framework, pas de build.
+Propriétaire : Tristan (Président Luphy). Répondre en français.
 
-## ⚠️ Deployment Guardrails – Read Before Any Change
-- The site is live on GitHub Pages (or similar). All changes stay local until explicitly cleared.
-- Default behavior: Every change is previewed on localhost only. Do NOT push to GitHub unless the user says so.
-- Accepted push triggers (exact phrases): "push to GitHub", "deploy", "ship it", "go live"
-- If unsure, ask. Never assume a push is wanted.
-- If the user says "looks good" or "perfect" — that is NOT a push trigger. Stay local.
+## Infrastructure
+- **Code** : GitHub `Luphy-main/Luphy_website`, branche de production `main`
+- **Hébergement** : Vercel, équipe « Luphy's projects » (Pro), projet `luphy-website-march26`
+- **Domaine** : luphy.io chez IONOS (DNS : A `@` → 216.150.1.1, CNAME `www` → Vercel). `luphy.io` redirige (308) vers `www.luphy.io`
+- `vercel.json` : site statique servi depuis la racine, `cleanUrls: true` (liens sans `.html`)
+- Chaque push sur `main` = mise en production automatique. Chaque push sur une autre branche = URL de prévisualisation Vercel
 
-## Reference Images
-- If a reference image is provided: match layout, spacing, typography, and color exactly
-- If no reference image: design from scratch with high craft (see guardrails below)
-- Screenshot your output, compare against reference, fix mismatches, re-screenshot. Do not stop until it matches
+## ⚠️ Règles de publication – à lire avant toute modification
+- Par défaut, tout reste en local et se vérifie sur http://localhost:3000. **Ne jamais push sans accord explicite de Tristan.**
+- Déclencheurs acceptés : « push », « publie », « mets en ligne », « deploy », « ship it ».
+- « C'est bien », « parfait », « ok » ne sont PAS des déclencheurs de publication.
+- Pour une modification importante (nouvelle page, refonte) : travailler sur une branche (`feat/...`), push la branche, donner l'URL de preview Vercel, puis merger dans `main` seulement après validation.
+- Petite correction de texte validée : commit direct sur `main` possible si Tristan le demande.
+- Messages de commit clairs, format `feat: ...` / `fix: ...`.
+- En cas de doute : demander.
 
-## Local Server
-- **Always serve on localhost** – never screenshot a `file:///` URL
-- Start the dev server: `node serve.mjs` (serves the project root at `http://localhost:3000`)
-- `serve.mjs` lives in the project root. Start it in the background before taking any screenshot
-- If the server is already running, do not start a second instance
+## Serveur local
+- Lancer : `node serve.mjs` → http://localhost:3000 (sert la racine du projet)
+- Le lancer en arrière-plan avant toute capture d'écran. Ne pas lancer une deuxième instance s'il tourne déjà.
+- Ne jamais faire de capture sur une URL `file:///`.
 
-## Langage
-- When asked to add content to the website (blog, case study, section), always make sure there is a french AND an english version for the two langage of the website to adapt when clicked on the langage button in the header
+## Captures d'écran
+- Première fois : `npm install` (installe Puppeteer, défini dans package.json)
+- `node screenshot.mjs http://localhost:3000` → enregistre dans `./temporary screenshots/screenshot-N.png`
+- Libellé optionnel : `node screenshot.mjs http://localhost:3000/blog label` → `screenshot-N-label.png`
+- Mobile : `node screenshot.mjs http://localhost:3000 mobile --mobile`
+- Relire le PNG avec l'outil Read, comparer précisément (tailles, espacements, couleurs hex), corriger, recapturer
+- Toujours vérifier le rendu desktop ET mobile
+- `temporary screenshots/` est ignoré par git
 
-## Screenshot Workflow
-- Puppeteer is installed at `C:/Users/nateh/AppData/Local/Temp/puppeteer-test/`
-- **Always screenshot from localhost:** `node screenshot.mjs http://localhost:3000`
-- Screenshots are saved automatically to `./temporary screenshots/screenshot-N.png`
-- Optional label suffix: `node screenshot.mjs http://localhost:3000 label` → saves as screenshot-N-label.png
-- `screenshot.mjs` lives in the project root. Use it as-is
-- After screenshotting, read the PNG from `temporary screenshots/` with the Read tool
-- When comparing, be specific: "heading is 32px but reference shows ~24px", "card gap is 16px but should be 24px"
-- Check: spacing/padding, font size/weight/line-height, colors (exact hex), alignment, and component proportions
+## Bilingue FR / EN (obligatoire)
+- Tout contenu ajouté (page, section, article, étude de cas) doit exister en français ET en anglais.
+- Mécanisme : `lang.js` (inclus sur chaque page). Les éléments traduisibles portent `data-i18n="cle"` ; le texte FR est dans le HTML, le dictionnaire EN est passé à `initLang({ cle: "..." })` en bas de page.
+- Bouton `#lang-toggle` dans le header ; langue mémorisée dans localStorage (`luphy-lang`).
+- Header et footer doivent rester identiques et traduits sur toutes les pages.
 
-## Output Defaults
-- Single `index.html` file, all styles inline, unless user says otherwise
-- Tailwind CSS via CDN: `<script src="https://cdn.tailwindcss.com"></script>`
-- Placeholder images: `https://placehold.co/WIDTHxHEIGHT`
-- Mobile-first responsive
+## Charte & design
+- Toujours partir des pages existantes (`index.html`, `crm.html`…) : réutiliser header, footer, variables CSS, composants.
+- Couleurs (variables CSS) : `--deep #071E2C`, `--dark #0D3D58`, `--mid #144F6C`, `--accent #1B6A8A`, `--sky #4A9FBF`, `--gold #5BBEE8`
+- Polices (Google Fonts) : Sora pour les titres, Inter pour le texte.
+- Logos, polices et visuels : dossier `brand-assets/` (logos clients dans `brand-assets/Client logos/`). Ne jamais utiliser de placeholder si un vrai visuel existe.
+- Images d'articles : `blog-assets/` ; images d'études de cas : `case-study-assets/`
+- Responsive mobile-first. Pas de `transition-all` ; n'animer que `transform` et `opacity`.
+- Chaque élément cliquable : états hover, focus-visible, active.
+- Ne pas ajouter de sections ou contenus non demandés.
 
-## Brand Assets
-- Always check the `brand_assets/` folder before designing. It may contain logos, colors, and fonts
-- If assets exist there, use them. Do not use placeholders where real assets are available
-- If a logo is present, use it. If a color palette is defined, use those exact values
+## SEO & partage
+- Chaque page : `<title>`, meta description, balises Open Graph (og:image absolue en `https://www.luphy.io/...`, 1200×630).
+- Liens internes sans `.html` (cleanUrls).
+- Script analytics Midbound présent sur toutes les pages : le conserver sur toute nouvelle page.
 
-## Anti-Generic Guardrails
-- **Colors:** Never use default Tailwind palette (indigo-500, blue-600, etc.). Pick a custom, intentional palette
-- **Shadows:** Never use flat `shadow-md`. Use layered, color-tinted shadows with low opacity
-- **Typography:** Never use the same font for headings and body. Pair a display/serif with a clean sans-serif
-- **Gradients:** Layer multiple radial gradients. Add grain/texture via SVG noise filter when appropriate
-- **Animations:** Only animate `transform` and `opacity`. Never `transition-all`. Use specific properties
-- **Interactive states:** Every clickable element needs hover, focus-visible, and active states
-- **Images:** Add a gradient overlay (`bg-gradient-to-t from-black/60`) and a color treatment
-- **Spacing:** Use intentional, consistent spacing tokens – not random Tailwind steps
-- **Depth:** Surfaces should have a layering system (base → elevated → floating), not flat UI
-
-## Hard Rules
-- Do not add sections, features, or content not in the reference
-- Do not "improve" a reference design – match it
-- Do not stop after one screenshot pass
-- Do not use `transition-all`
-- Do not use default Tailwind blue/indigo as primary color
+## Structure
+- Pages : `index`, `crm`, `ia-automation`, `outbound`, `cas-clients`, `case-study-*`, `blog`, `blog-*`, `team`
+- Nouvel article de blog : fichier `blog-<sujet>-<année>.html` + carte ajoutée dans `blog.html` (FR + EN)
+- Nouvelle étude de cas : `case-study-<client>.html` + carte dans `cas-clients.html`
