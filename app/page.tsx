@@ -7,11 +7,11 @@ import HeroAnimation from '@/components/HeroAnimation'
 import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
 
 export const metadata: Metadata = {
-  title: 'Luphy — Agence de performance digitale pour la finance',
+  title: 'Luphy | Agence de performance digitale pour la finance',
   description:
     "Luphy conseille et implémente des solutions CRM, d'automatisation et d'IA pour les acteurs de la finance (fonds d'investissement, M&A, sociétés de gestion, conseil), en partant d'un diagnostic ROI.",
   openGraph: {
-    title: 'Luphy — Agence de performance digitale pour la finance',
+    title: 'Luphy | Agence de performance digitale pour la finance',
     description:
       "Du conseil à l'implémentation : CRM, automatisation et IA pour les fonds d'investissement, M&A et cabinets de conseil.",
     url: SITE_URL,
@@ -47,7 +47,7 @@ export default function HomePage() {
           </h1>
           <p className="hero-sub a2">
             Du conseil à l&apos;implémentation, Luphy accompagne les acteurs de la finance dans l&apos;amélioration
-            de leur performance commerciale et opérationnelle — CRM, automatisation et IA.
+            de leur performance commerciale et opérationnelle : CRM, automatisation et IA.
           </p>
           <div className="hero-ctas a3">
             <a href={CTA_COMMERCIAL} target="_blank" rel="noopener" className="btn-primary">
@@ -195,7 +195,7 @@ export default function HomePage() {
             <div className="why-card reveal">
               <div className="why-card-diamond">◆</div>
               <h4>Spécialisation finance</h4>
-              <p>Fonds VC/PE, M&A, sociétés de gestion, cabinets de conseil — nous connaissons vos enjeux, vos outils et vos contraintes de confidentialité.</p>
+              <p>Fonds VC/PE, M&A, sociétés de gestion, cabinets de conseil. Nous connaissons vos enjeux, vos outils et vos contraintes de confidentialité.</p>
             </div>
             <div className="why-card reveal d1">
               <div className="why-card-diamond">◆</div>
@@ -211,6 +211,40 @@ export default function HomePage() {
               <div className="why-card-diamond">◆</div>
               <h4>Formation incluse</h4>
               <p>Un déploiement sans adoption ne crée aucune valeur. Nous formons vos équipes sur vos données et vos process réels, jusqu&apos;à l&apos;usage quotidien.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── TÉMOIGNAGES ── */}
+      <section className="section" style={{ background: 'var(--dark)' }}>
+        <div className="container">
+          <div className="offers-intro reveal">
+            <div className="label">Ce qu&apos;ils en disent</div>
+            <div className="divider" />
+            <h2 className="sec-title">Témoignages clients</h2>
+          </div>
+          <div className="testi-grid">
+            <div className="testi-card reveal">
+              <p className="testi-quote">[À COMPLÉTER : verbatim client]</p>
+              <div className="testi-author">
+                <strong>[Prénom Nom]</strong>
+                <span>[Titre], [Entreprise]</span>
+              </div>
+            </div>
+            <div className="testi-card reveal d1">
+              <p className="testi-quote">[À COMPLÉTER : verbatim client]</p>
+              <div className="testi-author">
+                <strong>[Prénom Nom]</strong>
+                <span>[Titre], [Entreprise]</span>
+              </div>
+            </div>
+            <div className="testi-card reveal d2">
+              <p className="testi-quote">[À COMPLÉTER : verbatim client]</p>
+              <div className="testi-author">
+                <strong>[Prénom Nom]</strong>
+                <span>[Titre], [Entreprise]</span>
+              </div>
             </div>
           </div>
         </div>

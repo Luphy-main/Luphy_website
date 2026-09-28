@@ -324,6 +324,24 @@ button, input, select, textarea { font-family: inherit; }
 .why-card h4 { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 10px; color: #fff; }
 .why-card p { font-size: 13.5px; color: rgba(255,255,255,0.55); line-height: 1.68; }
 
+/* ── TÉMOIGNAGES ── */
+.testi-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px;
+}
+.testi-card {
+  background: rgba(20,79,108,0.18); border: 1px solid rgba(74,159,191,0.14);
+  border-radius: 18px; padding: 32px 28px; display: flex; flex-direction: column; gap: 24px;
+}
+.testi-quote {
+  font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.78);
+  font-style: italic; flex: 1;
+}
+.testi-quote::before { content: '\201C'; color: var(--sky); font-size: 28px; line-height: 0; vertical-align: -10px; margin-right: 4px; font-style: normal; }
+.testi-author { border-top: 1px solid rgba(74,159,191,0.14); padding-top: 16px; }
+.testi-author strong { display: block; font-size: 14px; font-weight: 600; color: #fff; }
+.testi-author span { font-size: 13px; color: rgba(255,255,255,0.45); }
+@media (max-width: 1024px) { .testi-grid { grid-template-columns: 1fr; } }
+
 /* ── CTA SECTION ── */
 .cta-sec {
   padding: 120px 56px; text-align: center; position: relative; overflow: hidden;
