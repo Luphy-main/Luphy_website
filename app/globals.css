@@ -444,14 +444,82 @@ footer p { font-size: 13px; color: rgba(255,255,255,0.35); }
 .d3 { transition-delay: 0.24s; }
 .d4 { transition-delay: 0.32s; }
 
+/* ── INNER PAGE COMPONENTS ── */
+/* Steps */
+.steps-list { display: flex; flex-direction: column; gap: 4px; margin-top: 40px; }
+.step-row {
+  display: flex; gap: 24px; align-items: flex-start;
+  padding: 26px 30px; border-radius: 16px;
+  background: rgba(20,79,108,0.14); border: 1px solid rgba(74,159,191,0.1);
+  transition: background 0.25s;
+}
+.step-row:hover { background: rgba(20,79,108,0.26); }
+.step-row.step-highlight { background: rgba(20,79,108,0.3); border-color: rgba(91,190,232,0.28); }
+.step-num { font-family: 'Sora', sans-serif; font-size: 26px; font-weight: 800; color: var(--sky); min-width: 44px; line-height: 1.1; }
+.step-row.step-highlight .step-num { color: var(--gold); }
+.step-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 5px; }
+.step-content p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.65; }
+
+/* Matrix */
+.matrix-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+.matrix-card { border-radius: 16px; padding: 28px 24px; border: 1px solid; }
+.matrix-card.mc-quick { background: rgba(74,191,130,0.05); border-color: rgba(74,191,130,0.18); }
+.matrix-card.mc-mid  { background: rgba(74,159,191,0.06); border-color: rgba(74,159,191,0.18); }
+.matrix-card.mc-struct { background: rgba(91,190,232,0.05); border-color: rgba(91,190,232,0.18); }
+.mc-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+.matrix-card.mc-quick .mc-label { color: rgba(74,191,130,0.85); }
+.matrix-card.mc-mid  .mc-label { color: var(--sky); }
+.matrix-card.mc-struct .mc-label { color: var(--gold); }
+.matrix-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.matrix-card p  { font-size: 13.5px; color: rgba(255,255,255,0.55); line-height: 1.6; margin-bottom: 10px; }
+.matrix-card ul { padding-left: 16px; font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.85; }
+
+/* Deliverables */
+.delivs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 36px; }
+.deliv-item { display: flex; gap: 16px; align-items: flex-start; background: rgba(20,79,108,0.16); border: 1px solid rgba(74,159,191,0.1); border-radius: 14px; padding: 20px 22px; }
+.deliv-icon { font-size: 22px; flex-shrink: 0; }
+.deliv-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.deliv-text p  { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.55; }
+
+/* FAQ */
+.faq-list { display: flex; flex-direction: column; gap: 10px; margin-top: 40px; }
+.faq-item { border-radius: 14px; background: rgba(20,79,108,0.18); border: 1px solid rgba(74,159,191,0.12); overflow: hidden; padding: 22px 24px; }
+.faq-item h3 { font-size: 15px; font-weight: 600; font-family: 'Sora', sans-serif; color: #fff; margin-bottom: 10px; }
+.faq-a { font-size: 14.5px; color: rgba(255,255,255,0.6); line-height: 1.72; }
+
+/* ROI Calculator */
+.calc-widget { background: rgba(20,79,108,0.22); border: 1px solid rgba(74,159,191,0.2); border-radius: 20px; padding: 36px; margin-top: 36px; }
+.calc-note { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 24px; }
+.calc-inputs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-bottom: 28px; }
+.calc-field label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+.calc-field input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(74,159,191,0.2); border-radius: 8px; padding: 12px 14px; color: #fff; font-size: 15px; font-family: 'Sora', sans-serif; font-weight: 600; }
+.calc-field input:focus { outline: none; border-color: rgba(74,159,191,0.5); background: rgba(74,159,191,0.06); }
+.calc-result { background: rgba(91,190,232,0.07); border: 1px solid rgba(91,190,232,0.18); border-radius: 14px; padding: 24px 28px; display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start; }
+.calc-res-val { font-family: 'Sora', sans-serif; font-size: 30px; font-weight: 800; color: var(--gold); line-height: 1; }
+.calc-res-lab { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 5px; }
+.calc-disclaimer { font-size: 12px; color: rgba(255,255,255,0.28); margin-top: 14px; font-style: italic; }
+
+/* Problems / items grid */
+.problems-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 36px; }
+.problem-item { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; background: rgba(20,79,108,0.14); border-radius: 12px; border: 1px solid rgba(74,159,191,0.1); text-decoration: none; color: inherit; }
+.problem-item:hover { background: rgba(20,79,108,0.26); }
+.problem-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sky); flex-shrink: 0; margin-top: 5px; }
+.problem-item p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .offers-grid { grid-template-columns: 1fr 1fr; }
   .nav { padding: 18px 32px; }
   .nav.scrolled { padding: 12px 32px; }
 }
+@media (max-width: 1024px) {
+  .matrix-grid { grid-template-columns: 1fr; }
+}
 @media (max-width: 768px) {
   .section, .why-sec, .cta-sec { padding: 72px 24px; }
+  .delivs-grid { grid-template-columns: 1fr; }
+  .calc-inputs { grid-template-columns: 1fr; }
+  .problems-grid { grid-template-columns: 1fr; }
   .nav { padding: 16px 24px; }
   .nav.scrolled { padding: 12px 24px; }
   .nav-links { display: none; }
