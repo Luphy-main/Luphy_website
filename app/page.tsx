@@ -226,7 +226,7 @@ export default function HomePage() {
             <em>vos chantiers prioritaires.</em>
           </h2>
           <p className="cta-intro reveal">
-            Premier échange de 30 min pour cadrer vos enjeux. Devis personnalisé sous 72 h.
+            Premier échange de 30 min pour cadrer vos enjeux. Votre devis personnalisé en moins d&apos;une semaine.
           </p>
           <div className="cta-btns reveal">
             <a href={CTA_COMMERCIAL} target="_blank" rel="noopener" className="btn-primary">

@@ -36,10 +36,10 @@ Fondateurs : Titouan Galpin (performance commerciale, CRM) et Tristan Camilli (o
 - /cas-clients : Études de cas clients (Allyum, Fundora, Hoppi, etc.)
 - /ressources : Articles et guides (CRM pour fonds, IA pour M&A, etc.)
 - /equipe : Présentation de l'équipe Luphy
-- /contact : Contact — devis personnalisé sous 72 h
+- /contact : Contact — votre devis personnalisé en moins d'une semaine
 
 ## Offre
-- Tarifs : aucun tarif affiché — devis personnalisé sous 72 h après un premier échange.
+- Tarifs : aucun tarif affiché — votre devis personnalisé en moins d'une semaine après un premier échange.
 - CRM déployés : Affinity, DealCloud, HubSpot, Pipedrive, Notion, CRM sur mesure.
 - Outils d'automatisation : n8n, Make, Zapier, Claude, agents IA.
 - Pas de certification Qualiopi — aucun financement OPCO/CPF.

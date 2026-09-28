@@ -8,7 +8,7 @@ export default function ContactPage() {
         <h1 className="sec-title" style={{ marginBottom: 18 }}>Parlons de votre organisation.</h1>
         <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 16, lineHeight: 1.75, marginBottom: 44 }}>
           Premier échange de 30 min pour cadrer vos enjeux.<br />
-          <strong style={{ color: 'rgba(255,255,255,0.75)' }}>Devis personnalisé sous 72 h.</strong>
+          <strong style={{ color: 'rgba(255,255,255,0.75)' }}>Votre devis personnalisé en moins d&apos;une semaine.</strong>
         </p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
           <a href={CTA_COMMERCIAL} target="_blank" rel="noopener" className="btn-primary">
