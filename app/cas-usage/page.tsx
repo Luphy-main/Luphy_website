@@ -3,6 +3,10 @@ import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
 import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { client } from '@/sanity/lib/client'
+import { CAS_USAGE_LIST } from '@/sanity/lib/queries'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: "Cas d'usage | Luphy",
@@ -15,45 +19,17 @@ export const metadata: Metadata = {
   },
 }
 
-const CAS_USAGE = [
-  {
-    slug: 'affinity-suivi-dealflow',
-    categorie: 'CRM Affinity',
-    secteur: 'Fonds d\'investissement',
-    titre: '[À COMPLÉTER : titre du cas d\'usage]',
-    description: '[À COMPLÉTER : description courte du cas d\'usage. Enjeu, solution, résultat.]',
-  },
-  {
-    slug: 'automatisation-reporting-lps',
-    categorie: 'Automatisation',
-    secteur: 'Société de gestion',
-    titre: '[À COMPLÉTER : titre du cas d\'usage]',
-    description: '[À COMPLÉTER : description courte du cas d\'usage. Enjeu, solution, résultat.]',
-  },
-  {
-    slug: 'dealcloud-mandats-ma',
-    categorie: 'CRM DealCloud',
-    secteur: 'Boutique M&A',
-    titre: '[À COMPLÉTER : titre du cas d\'usage]',
-    description: '[À COMPLÉTER : description courte du cas d\'usage. Enjeu, solution, résultat.]',
-  },
-  {
-    slug: 'claude-extraction-memos',
-    categorie: 'IA Claude',
-    secteur: 'Fonds d\'investissement',
-    titre: '[À COMPLÉTER : titre du cas d\'usage]',
-    description: '[À COMPLÉTER : description courte du cas d\'usage. Enjeu, solution, résultat.]',
-  },
-  {
-    slug: 'hubspot-pipeline-conseil',
-    categorie: 'CRM HubSpot',
-    secteur: 'Cabinet de conseil',
-    titre: '[À COMPLÉTER : titre du cas d\'usage]',
-    description: '[À COMPLÉTER : description courte du cas d\'usage. Enjeu, solution, résultat.]',
-  },
-]
+type CasUsage = {
+  _id: string
+  titre: string
+  slug: string
+  categorie: string
+  secteur: string
+  description: string
+  datePublication?: string
+}
 
-const CATEGORIES = ['Tous', 'CRM Affinity', 'CRM DealCloud', 'CRM HubSpot', 'Automatisation', 'IA Claude']
+const CATEGORIES = ['Tous', 'CRM Affinity', 'CRM DealCloud', 'CRM HubSpot', 'CRM Pipedrive', 'CRM Notion', 'Automatisation', 'IA Claude']
 
 const schema = {
   '@context': 'https://schema.org',
@@ -70,7 +46,9 @@ const SVG_ARROW = (
   </svg>
 )
 
-export default function Page() {
+export default async function Page() {
+  const items: CasUsage[] = await client.fetch(CAS_USAGE_LIST)
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -92,7 +70,7 @@ export default function Page() {
 
       <section className="section">
         <div className="container">
-          {/* Filtres statiques, interactifs en Phase 3 (Sanity) */}
+          {/* Filtres statiques, interactifs en Phase 4 */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 40 }}>
             {CATEGORIES.map((cat, i) => (
               <span key={i}
@@ -100,33 +78,41 @@ export default function Page() {
                   background: i === 0 ? 'var(--sky)' : 'rgba(75,159,191,0.1)',
                   border: `1px solid ${i === 0 ? 'var(--sky)' : 'rgba(75,159,191,0.25)'}`,
                   color: i === 0 ? 'var(--deep)' : 'var(--sky)',
-                  borderRadius: 8, padding: '7px 16px', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                  borderRadius: 8, padding: '7px 16px', fontSize: 13, fontWeight: 600,
                 }}>
                 {cat}
               </span>
             ))}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>
-            {CAS_USAGE.map((c, i) => (
-              <Link key={i} href={`/cas-usage/${c.slug}`}
-                className={`offer-card sky-card reveal${i > 0 ? ` d${Math.min(i, 4)}` : ''}`}
-                style={{ textDecoration: 'none' }}>
-                <div className="offer-card-line" />
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14, gap: 8 }}>
-                  <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--sky)', background: 'rgba(75,159,191,0.12)', border: '1px solid rgba(75,159,191,0.25)', borderRadius: 5, padding: '3px 10px' }}>
-                    {c.categorie}
-                  </span>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', whiteSpace: 'nowrap' }}>{c.secteur}</span>
-                </div>
-                <h3 style={{ fontSize: 17, marginBottom: 10 }}>{c.titre}</h3>
-                <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.65)', lineHeight: 1.6 }}>{c.description}</p>
-                <div className="card-link" style={{ marginTop: 20, color: 'var(--sky)', display: 'flex', alignItems: 'center', gap: 6 }}>
-                  Lire le cas d&apos;usage {SVG_ARROW}
-                </div>
-              </Link>
-            ))}
-          </div>
+          {items.length === 0 ? (
+            <div style={{ padding: '64px 0', textAlign: 'center', color: 'rgba(255,255,255,0.4)', fontSize: 15 }}>
+              Les cas d&apos;usage arrivent bientôt. Revenez dans quelques jours.
+            </div>
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>
+              {items.map((c, i) => (
+                <Link key={c._id} href={`/cas-usage/${c.slug}`}
+                  className={`offer-card sky-card reveal${i > 0 ? ` d${Math.min(i % 4, 4)}` : ''}`}
+                  style={{ textDecoration: 'none' }}>
+                  <div className="offer-card-line" />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14, gap: 8 }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--sky)', background: 'rgba(75,159,191,0.12)', border: '1px solid rgba(75,159,191,0.25)', borderRadius: 5, padding: '3px 10px' }}>
+                      {c.categorie}
+                    </span>
+                    <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', whiteSpace: 'nowrap' }}>{c.secteur}</span>
+                  </div>
+                  <h3 style={{ fontSize: 17, marginBottom: 10 }}>{c.titre}</h3>
+                  {c.description && (
+                    <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.65)', lineHeight: 1.6 }}>{c.description}</p>
+                  )}
+                  <div className="card-link" style={{ marginTop: 20, color: 'var(--sky)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                    Lire le cas d&apos;usage {SVG_ARROW}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
