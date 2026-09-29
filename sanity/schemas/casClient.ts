@@ -28,6 +28,8 @@ export const casClient = defineType({
           { title: 'Boutique M&A', value: 'Boutique M&A' },
           { title: 'Société de gestion', value: 'Société de gestion' },
           { title: 'Cabinet de conseil', value: 'Cabinet de conseil' },
+          { title: 'Fintech', value: 'Fintech' },
+          { title: 'Startup / Scale-up', value: 'Startup / Scale-up' },
         ],
       },
     }),
