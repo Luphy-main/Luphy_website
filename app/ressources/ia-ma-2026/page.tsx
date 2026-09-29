@@ -1,4 +1,25 @@
-import PlaceholderPage from '@/components/PlaceholderPage'
+import type { Metadata } from 'next'
+import { client } from '@/sanity/lib/client'
+import { ARTICLE_BY_SLUG } from '@/sanity/lib/queries'
+import { SITE_URL } from '@/lib/constants'
+import ArticleDetailPage from '@/components/ArticleDetailPage'
+
+export const revalidate = 3600
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await client.fetch(ARTICLE_BY_SLUG, { slug: 'ia-ma-2026' })
+  if (!data) return { title: 'IA & M&A en 2026 | Luphy' }
+  return {
+    title: `${data.titre} | Luphy`,
+    description: data.metaDescription || data.chapeau,
+    openGraph: {
+      title: `${data.titre} | Luphy`,
+      description: data.metaDescription || data.chapeau,
+      url: `${SITE_URL}/ressources/ia-ma-2026`,
+    },
+  }
+}
+
 export default function Page() {
-  return <PlaceholderPage label="Ressources" title="Ce que l'IA change vraiment pour les fonds et boutiques M&A en 2026" subtitle="Article en cours de migration vers la nouvelle plateforme." />
+  return <ArticleDetailPage slug="ia-ma-2026" />
 }

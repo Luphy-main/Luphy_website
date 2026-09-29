@@ -3,6 +3,10 @@ import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
 import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { client } from '@/sanity/lib/client'
+import { TEMOIGNAGES_LIST } from '@/sanity/lib/queries'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Témoignages clients | Luphy',
@@ -15,56 +19,15 @@ export const metadata: Metadata = {
   },
 }
 
-const VERBATIMS = [
-  {
-    quote: '[À COMPLÉTER : verbatim client]',
-    auteur: '[Prénom Nom]',
-    fonction: '[Fonction]',
-    entreprise: '[Entreprise]',
-    secteur: 'Fonds d\'investissement',
-    sujet: 'Déploiement Affinity',
-  },
-  {
-    quote: '[À COMPLÉTER : verbatim client]',
-    auteur: '[Prénom Nom]',
-    fonction: '[Fonction]',
-    entreprise: '[Entreprise]',
-    secteur: 'Boutique M&A',
-    sujet: 'Déploiement DealCloud',
-  },
-  {
-    quote: '[À COMPLÉTER : verbatim client]',
-    auteur: '[Prénom Nom]',
-    fonction: '[Fonction]',
-    entreprise: '[Entreprise]',
-    secteur: 'Société de gestion',
-    sujet: 'Automatisation reporting LPs',
-  },
-  {
-    quote: '[À COMPLÉTER : verbatim client]',
-    auteur: '[Prénom Nom]',
-    fonction: '[Fonction]',
-    entreprise: '[Entreprise]',
-    secteur: 'Cabinet de conseil',
-    sujet: 'Acculturation IA',
-  },
-  {
-    quote: '[À COMPLÉTER : verbatim client]',
-    auteur: '[Prénom Nom]',
-    fonction: '[Fonction]',
-    entreprise: '[Entreprise]',
-    secteur: 'Fonds d\'investissement',
-    sujet: 'Formation équipes',
-  },
-  {
-    quote: '[À COMPLÉTER : verbatim client]',
-    auteur: '[Prénom Nom]',
-    fonction: '[Fonction]',
-    entreprise: '[Entreprise]',
-    secteur: 'Société de gestion',
-    sujet: 'Déploiement HubSpot',
-  },
-]
+type Temoignage = {
+  _id: string
+  quote: string
+  auteur: string
+  fonction?: string
+  entreprise?: string
+  secteur?: string
+  sujet?: string
+}
 
 const schema = {
   '@context': 'https://schema.org',
@@ -81,7 +44,9 @@ const SVG_ARROW = (
   </svg>
 )
 
-export default function Page() {
+export default async function Page() {
+  const verbatims: Temoignage[] = await client.fetch(TEMOIGNAGES_LIST)
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -104,23 +69,33 @@ export default function Page() {
 
       <section className="section">
         <div className="container">
-          <div className="testi-grid">
-            {VERBATIMS.map((v, i) => (
-              <div key={i} className={`testi-card reveal${i > 0 ? ` d${Math.min(i % 4, 4)}` : ''}`}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16, gap: 12 }}>
-                  <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--sky)', background: 'rgba(75,159,191,0.12)', border: '1px solid rgba(75,159,191,0.25)', borderRadius: 5, padding: '3px 10px' }}>
-                    {v.secteur}
-                  </span>
-                  <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>{v.sujet}</span>
+          {verbatims.length === 0 ? (
+            <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.4)', fontSize: 15 }}>
+              Les témoignages clients arrivent bientôt.
+            </p>
+          ) : (
+            <div className="testi-grid">
+              {verbatims.map((v, i) => (
+                <div key={v._id} className={`testi-card reveal${i > 0 ? ` d${Math.min(i % 4, 4)}` : ''}`}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16, gap: 12 }}>
+                    {v.secteur && (
+                      <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--sky)', background: 'rgba(75,159,191,0.12)', border: '1px solid rgba(75,159,191,0.25)', borderRadius: 5, padding: '3px 10px' }}>
+                        {v.secteur}
+                      </span>
+                    )}
+                    {v.sujet && <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>{v.sujet}</span>}
+                  </div>
+                  <p className="testi-quote">&ldquo;{v.quote}&rdquo;</p>
+                  <div className="testi-author">
+                    <strong>{v.auteur}</strong>
+                    {(v.fonction || v.entreprise) && (
+                      <span>{[v.fonction, v.entreprise].filter(Boolean).join(', ')}</span>
+                    )}
+                  </div>
                 </div>
-                <p className="testi-quote">&ldquo;{v.quote}&rdquo;</p>
-                <div className="testi-author">
-                  <strong>{v.auteur}</strong>
-                  <span>{v.fonction}, {v.entreprise}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
