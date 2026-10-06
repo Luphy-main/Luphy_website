@@ -4,12 +4,20 @@
 
 /* ── DESIGN TOKENS ── */
 :root {
-  --deep:   #071E2C;
-  --dark:   #0D3D58;
-  --mid:    #144F6C;
-  --accent: #1B6A8A;
-  --sky:    #4A9FBF;
-  --gold:   #5BBEE8;
+  --deep:       #071E2C;
+  --dark:       #0D3D58;
+  --mid:        #144F6C;
+  --accent:     #1B6A8A;
+  --sky:        #4A9FBF;
+  --gold:       #5BBEE8;
+  /* Extended tokens (cas clients / maquette) */
+  --surface:    #0C2A3D;
+  --surface-2:  #103650;
+  --line:       #1E4A66;
+  --text-2:     #B9CCD8;
+  --text-3:     #8FA9BA;
+  --cc-accent:  #5BC0EB;
+  --accent-ink: #06202E;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }

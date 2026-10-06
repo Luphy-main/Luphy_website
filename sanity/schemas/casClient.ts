@@ -5,6 +5,7 @@ export const casClient = defineType({
   title: 'Étude de cas',
   type: 'document',
   fields: [
+    // ── Identité ──────────────────────────────────────────────────────────────
     defineField({
       name: 'client',
       title: 'Nom du client',
@@ -17,6 +18,12 @@ export const casClient = defineType({
       type: 'slug',
       options: { source: 'client', maxLength: 96 },
       validation: r => r.required(),
+    }),
+    defineField({
+      name: 'logo',
+      title: 'Logo client',
+      type: 'image',
+      options: { hotspot: true },
     }),
     defineField({
       name: 'secteur',
@@ -34,93 +41,152 @@ export const casClient = defineType({
       },
     }),
     defineField({
-      name: 'titre',
-      title: "Titre de l'étude",
+      name: 'pole',
+      title: 'Pôle (détermine le CTA)',
       type: 'string',
+      options: {
+        list: [
+          { title: 'Performance commerciale', value: 'commercial' },
+          { title: 'Performance opérationnelle', value: 'operationnel' },
+        ],
+        layout: 'radio',
+      },
+    }),
+    defineField({
+      name: 'outils',
+      title: 'Outils déployés',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: { layout: 'tags' },
+    }),
+
+    // ── Contenu principal ─────────────────────────────────────────────────────
+    defineField({
+      name: 'titre',
+      title: 'Titre résultat (client + résultat chiffré, max 70 car.)',
+      type: 'string',
+      validation: r => r.required().max(70),
+    }),
+    defineField({
+      name: 'enBref',
+      title: 'En bref (60-120 mots — réponse directe, obligatoire)',
+      type: 'text',
+      rows: 4,
       validation: r => r.required(),
     }),
     defineField({
       name: 'chapeau',
-      title: 'Chapeau (court, carte)',
+      title: 'Chapeau court (carte de liste, max 200 car.)',
       type: 'text',
       rows: 2,
       validation: r => r.max(200),
     }),
+
+    // ── Fiche projet ──────────────────────────────────────────────────────────
+    defineField({ name: 'taille', title: 'Taille (ex : 4 associés)', type: 'string' }),
+    defineField({ name: 'duree', title: 'Durée de la mission', type: 'string' }),
+    defineField({ name: 'periode', title: 'Période (ex : T1 2025)', type: 'string' }),
+    defineField({ name: 'perimetre', title: 'Périmètre de la mission', type: 'string' }),
+
+    // ── KPIs ──────────────────────────────────────────────────────────────────
     defineField({
-      name: 'logo',
-      title: 'Logo client',
-      type: 'image',
-      options: { hotspot: true },
-    }),
-    defineField({
-      name: 'enjeux',
-      title: 'Enjeux identifiés',
-      type: 'array',
-      of: [{ type: 'string' }],
-    }),
-    defineField({
-      name: 'solution',
-      title: 'Solution déployée',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-          styles: [
-            { title: 'Normal', value: 'normal' },
-            { title: 'H3', value: 'h3' },
-          ],
-          marks: {
-            decorators: [
-              { title: 'Gras', value: 'strong' },
-              { title: 'Italique', value: 'em' },
-            ],
-          },
-        },
-      ],
-    }),
-    defineField({
-      name: 'resultats',
-      title: 'Résultats (métriques)',
+      name: 'kpis',
+      title: 'KPIs (2 à 4) — le 1er sert de KPI principal sur la carte de liste',
       type: 'array',
       of: [
         {
           type: 'object',
           fields: [
-            defineField({ name: 'metrique', title: 'Chiffre clé (ex: +25%)', type: 'string' }),
-            defineField({ name: 'label', title: 'Label (ex: temps prospection)', type: 'string' }),
+            defineField({ name: 'valeur', title: 'Valeur (ex : x2, 50, ½)', type: 'string' }),
+            defineField({ name: 'unite', title: 'Unité (ex : %, €) — laisser vide si dans la valeur', type: 'string' }),
+            defineField({ name: 'libelle', title: 'Libellé', type: 'string' }),
+            defineField({ name: 'source', title: 'Source / période', type: 'string' }),
           ],
-          preview: { select: { title: 'metrique', subtitle: 'label' } },
+          preview: { select: { title: 'valeur', subtitle: 'libelle' } },
         },
       ],
     }),
+
+    // ── Verbatim ──────────────────────────────────────────────────────────────
+    defineField({ name: 'verbatim', title: 'Verbatim client (citation exacte)', type: 'text', rows: 4 }),
+    defineField({ name: 'verbatimAuteur', title: 'Auteur du verbatim', type: 'string' }),
+    defineField({ name: 'verbatimFonction', title: 'Fonction', type: 'string' }),
+
+    // ── Enjeux ────────────────────────────────────────────────────────────────
     defineField({
-      name: 'verbatim',
-      title: 'Verbatim client',
+      name: 'enjeux',
+      title: 'Enjeux identifiés (3 recommandés)',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'titre', title: 'Titre court (3-4 mots)', type: 'string' }),
+            defineField({ name: 'texte', title: 'Texte (1 phrase)', type: 'text', rows: 2 }),
+          ],
+          preview: { select: { title: 'titre', subtitle: 'texte' } },
+        },
+      ],
+    }),
+
+    // ── Étapes de la solution ─────────────────────────────────────────────────
+    defineField({
+      name: 'etapes',
+      title: 'Étapes de la solution (3 à 5)',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'titre', title: "Titre de l'étape", type: 'string' }),
+            defineField({ name: 'texte', title: 'Texte (2 phrases max)', type: 'text', rows: 3 }),
+            defineField({ name: 'livrable', title: 'Livrable (optionnel)', type: 'string' }),
+          ],
+          preview: { select: { title: 'titre', subtitle: 'texte' } },
+        },
+      ],
+    }),
+
+    // ── Résultats en texte ────────────────────────────────────────────────────
+    defineField({
+      name: 'resultatsTexte',
+      title: 'Résultats en texte (reprend les chiffres pour les IA)',
       type: 'text',
-      rows: 4,
+      rows: 3,
     }),
+
+    // ── FAQ ───────────────────────────────────────────────────────────────────
     defineField({
-      name: 'verbatimAuteur',
-      title: 'Auteur du verbatim',
-      type: 'string',
+      name: 'faq',
+      title: 'FAQ (2 à 4 questions)',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'question', title: 'Question', type: 'string' }),
+            defineField({ name: 'reponse', title: 'Réponse', type: 'text', rows: 3 }),
+          ],
+          preview: { select: { title: 'question' } },
+        },
+      ],
     }),
-    defineField({
-      name: 'verbatimFonction',
-      title: 'Fonction',
-      type: 'string',
-    }),
+
+    // ── Méta ──────────────────────────────────────────────────────────────────
+    defineField({ name: 'auteur', title: 'Auteur (byline)', type: 'string' }),
+    defineField({ name: 'datePublication', title: 'Date de publication', type: 'date' }),
+    defineField({ name: 'dateMiseAJour', title: 'Date de mise à jour', type: 'date' }),
     defineField({
       name: 'metaDescription',
-      title: 'Meta description SEO',
+      title: 'Meta description SEO (max 155 car.)',
       type: 'text',
       rows: 2,
       validation: r => r.max(160),
     }),
-    defineField({
-      name: 'ordre',
-      title: "Ordre d'affichage",
-      type: 'number',
-    }),
+
+    // ── Organisation ──────────────────────────────────────────────────────────
+    defineField({ name: 'ordre', title: "Ordre d'affichage", type: 'number' }),
+    defineField({ name: 'aLaUne', title: 'À la une (grande carte en tête de liste)', type: 'boolean' }),
   ],
   preview: {
     select: { title: 'client', subtitle: 'secteur' },

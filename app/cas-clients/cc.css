@@ -1,0 +1,172 @@
+/* ── CAS CLIENTS — styles spécifiques (préfixe cc-) ── */
+
+/* Chips */
+.cc-chip {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
+  white-space: nowrap;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font: 500 13px/1 Inter, sans-serif;
+  color: var(--text-2);
+  background: var(--surface);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.cc-chip:hover { border-color: rgba(91,190,232,0.45); color: #fff; }
+.cc-chip.on { background: var(--cc-accent); color: var(--accent-ink); border-color: var(--cc-accent); font-weight: 600; }
+.cc-chip.accent { color: var(--cc-accent); border-color: #2B6B8F; background: rgba(91,190,232,0.07); }
+.cc-tool-chip {
+  font: 500 12px/1 Inter, sans-serif;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-3);
+  background: rgba(255,255,255,0.03);
+}
+
+/* Filtres */
+.cc-filters { display: flex; gap: 8px; overflow-x: auto; padding: 8px 0 24px; scrollbar-width: none; }
+.cc-filters::-webkit-scrollbar { display: none; }
+
+/* Liste — hero */
+.cc-lhero { padding: 120px 56px 40px; }
+.cc-lhero h1 { font-size: clamp(32px,5vw,48px); font-weight: 800; line-height: 1.14; letter-spacing: -0.025em; margin: 12px 0 16px; }
+.cc-lhero p { color: var(--text-2); font-size: 17px; max-width: 640px; margin: 0; }
+
+/* Liste — carte à la une */
+.cc-featured { display: grid; gap: 24px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); padding: 40px; margin-bottom: 32px; }
+.cc-featured h2 { font-size: clamp(22px,3vw,30px); line-height: 1.2; margin: 12px 0 16px; letter-spacing: -0.015em; }
+.cc-featured-kpis { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; align-self: center; }
+
+/* Liste — grille de cartes */
+.cc-cards { display: grid; gap: 16px; padding-bottom: 64px; }
+.cc-card {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--line); border-radius: 14px;
+  background: var(--surface); padding: 28px;
+  text-decoration: none; color: inherit;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.cc-card:hover { border-color: rgba(91,190,232,0.4); transform: translateY(-4px); }
+.cc-card:focus-visible { outline: 2px solid var(--cc-accent); outline-offset: 2px; }
+.cc-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; gap: 8px; }
+.cc-card-logo { font: 700 16px/1.2 Sora, sans-serif; letter-spacing: 0.04em; }
+.cc-kpi-big { font: 700 clamp(30px,5vw,38px)/1 Sora, sans-serif; margin: 8px 0 4px; }
+.cc-kpi-label { font-size: 14px; color: var(--text-2); }
+.cc-card h3 { font-size: 17px; line-height: 1.35; margin: 16px 0 12px; flex: 1; }
+.cc-card-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 16px; }
+.cc-more { margin-top: 16px; color: var(--gold); font: 600 13px/1 Inter, sans-serif; }
+.cc-empty { text-align: center; padding: 48px; color: var(--text-3); font-size: 15px; }
+
+/* Stat card (liste + détail) */
+.cc-stat { background: var(--deep); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+.cc-stat-n { font: 700 clamp(38px,5vw,52px)/1 Sora, sans-serif; color: #fff; }
+.cc-stat-n small { font-size: 0.5em; color: var(--gold); margin-left: 4px; }
+.cc-stat p { margin: 10px 0 8px; color: var(--text-2); font-size: 15px; line-height: 1.5; }
+.cc-stat-src { font-size: 12px; color: var(--text-3); }
+
+/* Détail — fil d'Ariane */
+.cc-crumb { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12.5px; color: var(--text-3); padding: 100px 56px 0; }
+.cc-crumb a { color: var(--text-3); text-decoration: none; transition: color 0.2s; }
+.cc-crumb a:hover { color: var(--cc-accent); }
+
+/* Détail — hero 2 colonnes */
+.cc-hero-2col { display: grid; gap: 32px; padding: 32px 56px 56px; max-width: 1200px; margin: 0 auto; }
+.cc-chips-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.cc-eyebrow { font: 600 12px/1 Inter,sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.cc-h1 { font-size: clamp(28px,4.5vw,44px); font-weight: 800; line-height: 1.14; letter-spacing: -0.02em; margin: 16px 0 24px; }
+
+/* En bref */
+.cc-enbref { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px; margin-bottom: 20px; }
+.cc-enbref-label { font: 700 11px/1.2 Inter,sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px; }
+.cc-enbref p { font-size: 16px; line-height: 1.7; color: #F2F7FA; margin: 0; }
+
+.cc-meta { display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 13px; color: var(--text-3); margin-top: 20px; }
+.cc-meta strong { color: var(--text-2); font-weight: 500; }
+
+/* Fiche projet */
+.cc-fiche { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 28px; }
+.cc-fiche-logo { font: 700 20px/1.2 Sora,sans-serif; letter-spacing: 0.04em; margin-bottom: 20px; height: 44px; display: flex; align-items: center; }
+.cc-fiche dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; }
+.cc-fiche dt { font-size: 13px; color: var(--text-3); align-self: start; padding-top: 1px; }
+.cc-fiche dd { margin: 0; font-size: 14px; color: #fff; }
+.cc-fiche .cc-chips-row { margin-bottom: 0; margin-top: 4px; }
+.cc-fiche-cta { width: 100%; justify-content: center; margin-top: 24px; min-height: 48px; }
+
+/* Détail — bande résultats */
+.cc-results { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 56px; }
+.cc-results-wrap { max-width: 1200px; margin: 0 auto; }
+.cc-results-grid { display: grid; gap: 16px; margin-top: 20px; }
+
+/* Verbatim */
+.cc-quote { padding: 56px; max-width: 1200px; margin: 0 auto; }
+.cc-quote-fig { max-width: 860px; display: grid; gap: 24px; }
+.cc-quote blockquote { margin: 0; font: 600 clamp(18px,2.4vw,26px)/1.45 Sora,sans-serif; color: #fff; }
+.cc-quote blockquote::before { content: "\201C"; color: var(--gold); }
+.cc-quote blockquote::after { content: "\201D"; color: var(--gold); }
+.cc-who { display: flex; align-items: center; gap: 14px; }
+.cc-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; font: 600 15px/1 Inter,sans-serif; color: var(--gold); flex-shrink: 0; }
+.cc-who b { display: block; font-size: 15px; }
+.cc-who span { font-size: 13px; color: var(--text-3); }
+
+/* Sections du détail */
+.cc-section { padding: 56px; border-top: 1px solid var(--line); }
+.cc-section-inner { max-width: 1200px; margin: 0 auto; }
+.cc-section-head { max-width: 720px; margin-bottom: 32px; }
+.cc-section-head h2 { font-size: clamp(22px,3vw,30px); line-height: 1.2; margin: 12px 0 8px; }
+.cc-section-lead { color: var(--text-2); font-size: 17px; margin: 0; }
+
+/* Enjeux */
+.cc-issues { display: grid; gap: 16px; }
+.cc-issue { border: 1px solid var(--line); border-radius: 14px; padding: 24px; background: var(--surface); }
+.cc-issue h3 { font-size: 16px; margin-bottom: 10px; }
+.cc-issue p { margin: 0; color: var(--text-2); font-size: 14.5px; line-height: 1.65; }
+
+/* Étapes */
+.cc-steps { list-style: none; margin: 0; padding: 0; max-width: 720px; display: grid; gap: 24px; }
+.cc-step { display: grid; grid-template-columns: 44px 1fr; gap: 16px; }
+.cc-step-num { width: 44px; height: 44px; border-radius: 50%; border: 1px solid #2B6B8F; color: var(--gold); display: grid; place-items: center; font: 600 14px/1 Sora,sans-serif; flex-shrink: 0; }
+.cc-step h3 { font-size: 18px; margin: 8px 0 10px; }
+.cc-step p { margin: 0 0 12px; color: var(--text-2); font-size: 15px; line-height: 1.65; }
+.cc-livrable { font: 500 12px/1 Inter,sans-serif; padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--text-3); background: rgba(255,255,255,0.03); display: inline-block; }
+
+/* Résultats texte */
+.cc-recap { max-width: 720px; font-size: 17px; color: var(--text-2); line-height: 1.75; }
+.cc-recap strong { color: #fff; }
+
+/* FAQ */
+.cc-faq { max-width: 720px; display: grid; gap: 12px; }
+.cc-faq details { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 20px 24px; }
+.cc-faq summary { cursor: pointer; font: 600 15px/1.4 Inter,sans-serif; list-style: none; }
+.cc-faq summary::-webkit-details-marker { display: none; }
+.cc-faq p { margin: 14px 0 0; color: var(--text-2); font-size: 14.5px; line-height: 1.7; }
+
+/* Pour aller plus loin */
+.cc-related { display: grid; gap: 16px; }
+.cc-rel { border: 1px solid var(--line); border-radius: 14px; padding: 24px; text-decoration: none; display: block; background: var(--surface); color: inherit; transition: border-color 0.2s; }
+.cc-rel:hover { border-color: rgba(91,190,232,0.4); }
+.cc-rel:focus-visible { outline: 2px solid var(--cc-accent); outline-offset: 2px; }
+.cc-rel-cat { font-size: 12px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+.cc-rel b { display: block; margin-top: 8px; font-size: 15px; }
+
+/* Responsive */
+@media (min-width: 640px) { .cc-cards { grid-template-columns: repeat(2,1fr); } }
+@media (min-width: 1024px) {
+  .cc-cards { grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .cc-featured { grid-template-columns: 1.4fr 1fr; padding: 56px; gap: 48px; }
+  .cc-hero-2col { grid-template-columns: minmax(0,1fr) 380px; gap: 64px; padding: 40px 56px 64px; }
+  .cc-results-grid { grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .cc-issues { grid-template-columns: repeat(3,1fr); }
+  .cc-related { grid-template-columns: repeat(3,1fr); }
+}
+@media (max-width: 768px) {
+  .cc-lhero { padding: 100px 24px 32px; }
+  .cc-crumb { padding: 88px 24px 0; }
+  .cc-hero-2col { padding: 24px 24px 48px; }
+  .cc-results { padding: 40px 24px; }
+  .cc-quote { padding: 40px 24px; }
+  .cc-section { padding: 40px 24px; }
+}

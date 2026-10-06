@@ -1,19 +1,17 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, SITE_URL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { CAS_CLIENTS_LIST } from '@/sanity/lib/queries'
-import { urlFor } from '@/sanity/lib/image'
 
 export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Cas clients | Luphy',
   description:
-    'Études de cas : fonds d\'investissement, boutiques M&A, sociétés de gestion. CRM Affinity, DealCloud, HubSpot, automatisation IA. Résultats mesurés.',
+    'Des résultats mesurés chez des fonds, boutiques M&A et fintechs. Études de cas documentées : CRM, automatisation, IA.',
   openGraph: {
     title: 'Cas clients | Luphy',
     description: 'Études de cas documentées avec résultats mesurés. Allyum, Fundora, Hoppi et autres.',
@@ -22,94 +20,178 @@ export const metadata: Metadata = {
   },
 }
 
+type Kpi = { _key?: string; valeur: string; unite?: string; libelle: string; source?: string }
 type CasClient = {
   _id: string
   client: string
   slug: string
   secteur?: string
+  pole?: string
+  outils?: string[]
   titre: string
   chapeau?: string
-  logo?: Parameters<typeof urlFor>[0]
+  ordre?: number
+  aLaUne?: boolean
+  kpiPrincipal?: Kpi
 }
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Accueil', item: SITE_URL },
-    { '@type': 'ListItem', position: 2, name: 'Cas clients', item: `${SITE_URL}/cas-clients` },
-  ],
+type SearchParams = Promise<{ secteur?: string }>
+
+function toSlug(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
 }
 
 const SVG_ARROW = (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 )
 
-export default async function Page() {
-  const etudes: CasClient[] = await client.fetch(CAS_CLIENTS_LIST)
+export default async function Page({ searchParams }: { searchParams: SearchParams }) {
+  const { secteur: filterSlug } = await searchParams
+  const allEtudes: CasClient[] = await client.fetch(CAS_CLIENTS_LIST)
+
+  const filtered = filterSlug
+    ? allEtudes.filter(e => e.secteur && toSlug(e.secteur) === filterSlug)
+    : allEtudes
+
+  const featured = filtered.find(e => e.aLaUne) ?? null
+  const rest = filtered.filter(e => !e.aLaUne)
+
+  const secteurs = [...new Set(allEtudes.map(e => e.secteur).filter(Boolean) as string[])]
+
+  const listSchema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name: 'Cas clients Luphy',
+        description: 'Des résultats mesurés chez des fonds, boutiques M&A et fintechs.',
+        url: `${SITE_URL}/cas-clients`,
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: allEtudes.map((e, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            url: `${SITE_URL}/cas-clients/${e.slug}`,
+            name: e.titre,
+          })),
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Accueil', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Cas clients', item: `${SITE_URL}/cas-clients` },
+        ],
+      },
+    ],
+  }
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(listSchema) }} />
       <SchemaOrg url={`${SITE_URL}/cas-clients`} />
 
-      <nav className="breadcrumb" aria-label="Fil d'Ariane">
-        <Link href="/">Accueil</Link><span>/</span>
-        <span>Cas clients</span>
-      </nav>
+      {/* ── Hero ── */}
+      <header className="cc-lhero container">
+        <span className="cc-eyebrow">Cas clients</span>
+        <h1>Des résultats mesurés chez des fonds, boutiques M&amp;A et fintechs</h1>
+        <p>Chaque étude détaille le problème de départ, ce que Luphy a mis en place et les résultats chiffrés, validés avec le client.</p>
+      </header>
 
-      <section className="page-hero">
-        <div className="label">Références</div>
-        <h1>Ce qu&apos;on a<br /><em>construit ensemble.</em></h1>
-        <p>
-          Des missions documentées, des résultats mesurés. Chaque étude retrace le contexte,
-          les enjeux, la méthode déployée et les indicateurs obtenus.
-        </p>
-      </section>
+      {/* ── Filtres ── */}
+      <div className="container">
+        <nav className="cc-filters" role="toolbar" aria-label="Filtrer les études de cas">
+          <a className={`cc-chip${!filterSlug ? ' on' : ''}`} href="/cas-clients">Toutes</a>
+          {secteurs.map(s => (
+            <a
+              key={s}
+              className={`cc-chip${filterSlug === toSlug(s) ? ' on' : ''}`}
+              href={`/cas-clients?secteur=${toSlug(s)}`}
+            >
+              {s}
+            </a>
+          ))}
+        </nav>
 
-      <section className="section">
-        <div className="container">
-          {etudes.length === 0 ? (
-            <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.4)', fontSize: 15 }}>
-              Les études de cas arrivent bientôt.
-            </p>
-          ) : (
-            <div className="offers-grid">
-              {etudes.map((e, i) => {
-                const logoUrl = e.logo ? urlFor(e.logo).width(120).height(60).fit('max').url() : null
-                return (
-                  <Link
-                    key={e._id}
-                    href={`/cas-clients/${e.slug}`}
-                    className={`offer-card reveal${i > 0 ? ` d${Math.min(i % 4, 4)}` : ''}`}
-                    style={{ textDecoration: 'none' }}
-                  >
-                    {logoUrl && (
-                      <div style={{ marginBottom: 20 }}>
-                        <Image src={logoUrl} alt={`Logo ${e.client}`} width={120} height={60} style={{ objectFit: 'contain', maxHeight: 44 }} />
-                      </div>
-                    )}
-                    {e.secteur && (
-                      <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--sky)', background: 'rgba(75,159,191,0.12)', border: '1px solid rgba(75,159,191,0.25)', borderRadius: 5, padding: '3px 10px', display: 'inline-block', marginBottom: 16 }}>{e.secteur}</span>
-                    )}
-                    <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 10 }}>{e.titre}</h3>
-                    {e.chapeau && (
-                      <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', lineHeight: 1.65 }}>{e.chapeau}</p>
-                    )}
-                    <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--sky)', fontWeight: 600 }}>
-                      Lire l&apos;étude {SVG_ARROW}
-                    </div>
-                  </Link>
-                )
-              })}
+        {/* ── Carte à la une ── */}
+        {featured && (
+          <article className="cc-featured">
+            <div>
+              <span className="cc-chip accent">
+                {[featured.secteur, ...(featured.outils ?? [])].filter(Boolean).join(' · ')}
+              </span>
+              <h2>{featured.titre}</h2>
+              {featured.chapeau && <p style={{ color: 'var(--text-2)', margin: '0 0 24px', fontSize: 16 }}>{featured.chapeau}</p>}
+              <a className="btn-primary" href={`/cas-clients/${featured.slug}`}>
+                Lire l&apos;étude {featured.client} {SVG_ARROW}
+              </a>
             </div>
-          )}
-        </div>
-      </section>
+            {featured.kpiPrincipal && (
+              <div className="cc-featured-kpis">
+                {/* premier KPI */}
+                <div className="cc-stat">
+                  <div className="cc-stat-n">
+                    {featured.kpiPrincipal.valeur}
+                    {featured.kpiPrincipal.unite && <small>{featured.kpiPrincipal.unite}</small>}
+                  </div>
+                  <p>{featured.kpiPrincipal.libelle}</p>
+                </div>
+                {/* deuxième KPI : on recharge les kpis complets pour l'afficher */}
+                {/* Pour éviter un second fetch, le chapeau fait office de sous-titre */}
+              </div>
+            )}
+          </article>
+        )}
 
-      <section className="cta-sec">
+        {/* ── Grille de cartes ── */}
+        {filtered.length === 0 ? (
+          <div className="cc-empty">
+            <p>Aucune étude pour ce filtre pour l&apos;instant.</p>
+            <a href="/cas-clients" style={{ color: 'var(--gold)', fontSize: 14, marginTop: 12, display: 'inline-block' }}>
+              Voir toutes les études
+            </a>
+          </div>
+        ) : rest.length > 0 ? (
+          <div className="cc-cards">
+            {rest.map(e => {
+              const kpi = e.kpiPrincipal
+              return (
+                <a key={e._id} className="cc-card" href={`/cas-clients/${e.slug}`}>
+                  <div className="cc-card-top">
+                    <span className="cc-card-logo">{e.client.toUpperCase()}</span>
+                    {e.secteur && <span className="cc-chip">{e.secteur}</span>}
+                  </div>
+                  {kpi && (
+                    <>
+                      <div className="cc-kpi-big">
+                        {kpi.valeur}{kpi.unite}
+                      </div>
+                      <div className="cc-kpi-label">{kpi.libelle}</div>
+                    </>
+                  )}
+                  <h3>{e.titre}</h3>
+                  {e.outils && e.outils.length > 0 && (
+                    <div className="cc-card-tools">
+                      {e.outils.map(o => <span key={o} className="cc-tool-chip">{o}</span>)}
+                    </div>
+                  )}
+                  <span className="cc-more">Lire l&apos;étude {SVG_ARROW}</span>
+                </a>
+              )
+            })}
+          </div>
+        ) : null}
+      </div>
+
+      {/* ── CTA ── */}
+      <section className="cta-sec" style={{ marginTop: 0 }}>
         <div className="cta-glow" />
         <div className="container" style={{ position: 'relative' }}>
           <div className="label reveal" style={{ display: 'inline-block', marginBottom: 16 }}>Votre projet</div>
@@ -121,9 +203,9 @@ export default async function Page() {
             <a href={CTA_COMMERCIAL} target="_blank" rel="noopener" className="btn-primary">
               CRM &amp; commercial {SVG_ARROW}
             </a>
-            <a href={CTA_OPERATIONNEL} target="_blank" rel="noopener" className="btn-outline">
+            <Link href="/ia-automation" className="btn-outline">
               IA &amp; opérationnel
-            </a>
+            </Link>
           </div>
         </div>
       </section>

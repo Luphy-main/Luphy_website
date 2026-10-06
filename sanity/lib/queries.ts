@@ -38,11 +38,19 @@ export const CAS_CLIENTS_LIST = groq`
     client,
     "slug": slug.current,
     secteur,
+    pole,
+    outils,
     titre,
     chapeau,
     logo,
     ordre,
+    aLaUne,
+    "kpiPrincipal": kpis[0],
   }
+`
+
+export const CAS_CLIENTS_SLUGS = groq`
+  *[_type == "casClient" && defined(slug.current)][].slug.current
 `
 
 export const CAS_CLIENT_BY_SLUG = groq`
@@ -51,16 +59,30 @@ export const CAS_CLIENT_BY_SLUG = groq`
     client,
     "slug": slug.current,
     secteur,
+    pole,
+    outils,
     titre,
+    enBref,
     chapeau,
     logo,
-    enjeux,
-    solution,
-    resultats,
+    taille,
+    duree,
+    periode,
+    perimetre,
+    kpis,
     verbatim,
     verbatimAuteur,
     verbatimFonction,
+    enjeux,
+    etapes,
+    resultatsTexte,
+    faq,
+    auteur,
+    datePublication,
+    dateMiseAJour,
     metaDescription,
+    ordre,
+    aLaUne,
   }
 `
 

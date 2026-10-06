@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import { client } from '@/sanity/lib/client'
 import { CAS_CLIENT_BY_SLUG, CAS_CLIENTS_LIST } from '@/sanity/lib/queries'
 import { SITE_URL } from '@/lib/constants'
@@ -19,13 +18,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const data = await client.fetch(CAS_CLIENT_BY_SLUG, { slug })
   if (!data) return { title: 'Étude de cas | Luphy' }
+
+  const description = (data.enBref || data.chapeau || `Étude de cas ${data.client} par Luphy.`).slice(0, 155)
+  const title = `${data.client} : ${data.titre} | Cas client Luphy`
+
   return {
-    title: `${data.client} | Cas client Luphy`,
-    description: data.metaDescription || data.chapeau || `Étude de cas ${data.client} par Luphy.`,
+    title,
+    description,
     openGraph: {
-      title: `${data.client} | Cas client Luphy`,
-      description: data.metaDescription || data.chapeau,
+      title,
+      description,
       url: `${SITE_URL}/cas-clients/${slug}`,
+      images: [{ url: `${SITE_URL}/og-cas-clients.png`, width: 1200, height: 630 }],
     },
   }
 }
