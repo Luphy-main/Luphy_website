@@ -23,15 +23,15 @@ export const metadata: Metadata = {
 }
 
 const CLIENT_LOGOS = [
-  { src: '/brand-assets/client-logos/dafinity-logo.png', alt: 'Dafinity' },
-  { src: '/brand-assets/client-logos/ACM-logo.png', alt: 'ACM' },
-  { src: '/brand-assets/client-logos/Allyum-logo.jpg', alt: 'Allyum' },
-  { src: '/brand-assets/client-logos/Dotmarket-logo.png', alt: 'Dotmarket' },
-  { src: '/brand-assets/client-logos/Fundora-logo.jpeg', alt: 'Fundora' },
-  { src: '/brand-assets/client-logos/Logo-Jasmin-Capital-base-1.png', alt: 'Jasmin Capital' },
-  { src: '/brand-assets/client-logos/IPEM_Logo_orange.webp', alt: 'IPEM' },
-  { src: '/brand-assets/client-logos/committed-capital.webp', alt: 'Committed Capital' },
-  { src: '/brand-assets/client-logos/Hoppi-logo.png', alt: 'Hoppi' },
+  { src: '/brand-assets/client-logos/white/dafinity-logo-white.png', alt: 'Dafinity' },
+  { src: '/brand-assets/client-logos/white/ACM-logo-white.png', alt: 'Agile Capital Markets' },
+  { src: '/brand-assets/client-logos/white/Allyum-logo-white.png', alt: 'Allyum' },
+  { src: '/brand-assets/client-logos/white/Dotmarket-logo-white.png', alt: 'Dotmarket' },
+  { src: '/brand-assets/client-logos/white/Fundora-logo-white.png', alt: 'Fundora' },
+  { src: '/brand-assets/client-logos/white/Logo-Jasmin-Capital-base-1-white.png', alt: 'Jasmin Capital' },
+  { src: '/brand-assets/client-logos/white/IPEM_Logo_orange-white.png', alt: 'IPEM' },
+  { src: '/brand-assets/client-logos/white/committed-capital-white.png', alt: 'Committed Capital' },
+  { src: '/brand-assets/client-logos/white/Hoppi-logo-white.png', alt: 'Hoppi' },
 ]
 
 export default async function HomePage() {
@@ -94,7 +94,7 @@ export default async function HomePage() {
             {/* Double pour l'effet marquee continu */}
             {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((logo, i) => (
               <div className="logo-item" key={i}>
-                <Image src={logo.src} alt={logo.alt} width={120} height={40} style={{ height: 28, width: 'auto', objectFit: 'contain' }} />
+                <Image src={logo.src} alt={logo.alt} width={130} height={32} style={{ maxHeight: 32, maxWidth: 130, width: 'auto', height: 'auto', objectFit: 'contain' }} />
               </div>
             ))}
           </div>

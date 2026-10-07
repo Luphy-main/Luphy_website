@@ -256,8 +256,8 @@ button, input, select, textarea { font-family: inherit; }
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
-.logo-item { display: flex; align-items: center; flex-shrink: 0; background: #fff; border-radius: 8px; padding: 8px 14px; }
-.logo-item img { height: 28px; width: auto; object-fit: contain; opacity: 0.85; transition: opacity 0.2s; }
+.logo-item { display: flex; align-items: center; flex-shrink: 0; }
+.logo-item img { max-height: 32px; max-width: 130px; width: auto; height: auto; object-fit: contain; opacity: 0.7; transition: opacity 0.2s; }
 .logo-item img:hover { opacity: 1; }
 
 /* ── OFFERS GRID ── */
