@@ -62,9 +62,9 @@ page.on('request', req => {
   }
 });
 
-await page.goto(url, { waitUntil: 'networkidle0' });
+await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
 // Let CSS custom properties and fonts settle
-await new Promise(r => setTimeout(r, 800));
+await new Promise(r => setTimeout(r, 2000));
 // Force-reveal all scroll-animated elements (IntersectionObserver doesn't fire headless)
 await page.evaluate(() => {
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('v'));

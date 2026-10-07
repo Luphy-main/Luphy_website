@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
 import { CTA_COMMERCIAL, SITE_URL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { CAS_CLIENTS_LIST } from '@/sanity/lib/queries'
+import { urlFor } from '@/sanity/lib/image'
 
 export const revalidate = 3600
 
@@ -33,6 +35,10 @@ type CasClient = {
   ordre?: number
   aLaUne?: boolean
   kpiPrincipal?: Kpi
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  logo?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  imageCouverture?: any
 }
 
 type SearchParams = Promise<{ secteur?: string }>
@@ -101,7 +107,10 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
       {/* ── Hero ── */}
       <header className="cc-lhero container">
         <span className="cc-eyebrow">Cas clients</span>
-        <h1>Des résultats mesurés chez des fonds, boutiques M&amp;A et fintechs</h1>
+        <h1>
+          Des résultats mesurés{' '}
+          <span className="cc-accent">chez des fonds, boutiques M&amp;A et fintechs</span>
+        </h1>
         <p>Chaque étude détaille le problème de départ, ce que Luphy a mis en place et les résultats chiffrés, validés avec le client.</p>
       </header>
 
@@ -121,34 +130,52 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
         </nav>
 
         {/* ── Carte à la une ── */}
-        {featured && (
-          <article className="cc-featured">
-            <div>
-              <span className="cc-chip accent">
-                {[featured.secteur, ...(featured.outils ?? [])].filter(Boolean).join(' · ')}
-              </span>
-              <h2>{featured.titre}</h2>
-              {featured.chapeau && <p style={{ color: 'var(--text-2)', margin: '0 0 24px', fontSize: 16 }}>{featured.chapeau}</p>}
-              <a className="btn-primary" href={`/cas-clients/${featured.slug}`}>
-                Lire l&apos;étude {featured.client} {SVG_ARROW}
-              </a>
-            </div>
-            {featured.kpiPrincipal && (
-              <div className="cc-featured-kpis">
-                {/* premier KPI */}
-                <div className="cc-stat">
-                  <div className="cc-stat-n">
-                    {featured.kpiPrincipal.valeur}
-                    {featured.kpiPrincipal.unite && <small>{featured.kpiPrincipal.unite}</small>}
-                  </div>
-                  <p>{featured.kpiPrincipal.libelle}</p>
+        {featured && (() => {
+          const featuredCover = featured.imageCouverture ? urlFor(featured.imageCouverture).width(1200).height(400).fit('crop').url() : null
+          const featuredLogo = featured.logo ? urlFor(featured.logo).height(48).fit('max').url() : null
+          return (
+            <article className="cc-featured">
+              {featuredCover && (
+                <div className="cc-featured-cover" style={{ gridColumn: '1 / -1' }}>
+                  <Image
+                    src={featuredCover}
+                    alt={featured.imageCouverture?.alt ?? `Image ${featured.client}`}
+                    width={1200}
+                    height={400}
+                    sizes="(max-width: 768px) 100vw, 1200px"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
                 </div>
-                {/* deuxième KPI : on recharge les kpis complets pour l'afficher */}
-                {/* Pour éviter un second fetch, le chapeau fait office de sous-titre */}
+              )}
+              <div>
+                {featuredLogo
+                  ? <div className="cc-logo-tile" style={{ marginBottom: 12 }}>
+                      <Image src={featuredLogo} alt={`Logo ${featured.client}`} width={120} height={40} style={{ objectFit: 'contain', maxHeight: 40, width: 'auto' }} />
+                    </div>
+                  : <span className="cc-chip accent" style={{ marginBottom: 12, display: 'inline-flex' }}>
+                      {[featured.secteur, ...(featured.outils ?? [])].filter(Boolean).join(' · ')}
+                    </span>
+                }
+                <h2>{featured.titre}</h2>
+                {featured.chapeau && <p style={{ color: 'var(--text-2)', margin: '0 0 24px', fontSize: 16 }}>{featured.chapeau}</p>}
+                <a className="btn-primary" href={`/cas-clients/${featured.slug}`}>
+                  Lire l&apos;étude {featured.client} {SVG_ARROW}
+                </a>
               </div>
-            )}
-          </article>
-        )}
+              {featured.kpiPrincipal && (
+                <div className="cc-featured-kpis">
+                  <div className="cc-stat">
+                    <div className="cc-stat-n">
+                      {featured.kpiPrincipal.valeur}
+                      {featured.kpiPrincipal.unite && <small>{featured.kpiPrincipal.unite}</small>}
+                    </div>
+                    <p>{featured.kpiPrincipal.libelle}</p>
+                  </div>
+                </div>
+              )}
+            </article>
+          )
+        })()}
 
         {/* ── Grille de cartes ── */}
         {filtered.length === 0 ? (
@@ -162,27 +189,51 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
           <div className="cc-cards">
             {rest.map(e => {
               const kpi = e.kpiPrincipal
+              const cardCover = e.imageCouverture ? urlFor(e.imageCouverture).width(600).height(338).fit('crop').url() : null
+              const cardLogo = e.logo ? urlFor(e.logo).height(48).fit('max').url() : null
               return (
                 <a key={e._id} className="cc-card" href={`/cas-clients/${e.slug}`}>
-                  <div className="cc-card-top">
-                    <span className="cc-card-logo">{e.client.toUpperCase()}</span>
-                    {e.secteur && <span className="cc-chip">{e.secteur}</span>}
-                  </div>
-                  {kpi && (
-                    <>
-                      <div className="cc-kpi-big">
-                        {kpi.valeur}{kpi.unite}
-                      </div>
-                      <div className="cc-kpi-label">{kpi.libelle}</div>
-                    </>
-                  )}
-                  <h3>{e.titre}</h3>
-                  {e.outils && e.outils.length > 0 && (
-                    <div className="cc-card-tools">
-                      {e.outils.map(o => <span key={o} className="cc-tool-chip">{o}</span>)}
+                  {cardCover && (
+                    <div className="cc-card-cover">
+                      <Image
+                        src={cardCover}
+                        alt={e.imageCouverture?.alt ?? `Image ${e.client}`}
+                        width={600}
+                        height={338}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                      />
                     </div>
                   )}
-                  <span className="cc-more">Lire l&apos;étude {SVG_ARROW}</span>
+                  <div className="cc-card-body">
+                    <div className="cc-card-meta-row">
+                      {cardLogo
+                        ? <div className="cc-card-logo-tile">
+                            <Image src={cardLogo} alt={`Logo ${e.client}`} width={80} height={28} style={{ objectFit: 'contain', maxHeight: 28, width: 'auto' }} />
+                          </div>
+                        : <span className="cc-card-logo">{e.client.toUpperCase()}</span>
+                      }
+                      {e.secteur && <span className="cc-chip" style={{ minHeight: 28, fontSize: 12 }}>{e.secteur}</span>}
+                    </div>
+                    <p className="cc-card-client">
+                      <strong className="cc-accent">{e.client}</strong>
+                      {e.secteur && <span style={{ color: 'var(--text-3)', fontWeight: 400 }}> · {e.secteur}</span>}
+                    </p>
+                    {kpi && (
+                      <div className="cc-kpi-inline">
+                        <span className="cc-kpi-inline-val">{kpi.valeur}{kpi.unite}</span>
+                        <span className="cc-kpi-inline-lbl">{kpi.libelle}</span>
+                      </div>
+                    )}
+                    <h3>{e.titre}</h3>
+                    {e.chapeau && <p className="cc-card-chapeau">{e.chapeau}</p>}
+                    {e.outils && e.outils.length > 0 && (
+                      <div className="cc-card-tools">
+                        {e.outils.map(o => <span key={o} className="cc-tool-chip">{o}</span>)}
+                      </div>
+                    )}
+                    <span className="cc-more">Lire l&apos;étude {SVG_ARROW}</span>
+                  </div>
                 </a>
               )
             })}
@@ -195,7 +246,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
         <div className="cta-glow" />
         <div className="container" style={{ position: 'relative' }}>
           <div className="label reveal" style={{ display: 'inline-block', marginBottom: 16 }}>Votre projet</div>
-          <h2 className="reveal">Vous vous reconnaissez<br /><em>dans ces situations ?</em></h2>
+          <h2 className="reveal">Votre entreprise pourrait<br /><em>être la prochaine.</em></h2>
           <p className="cta-intro reveal">
             30 minutes avec le bon interlocuteur. Votre devis personnalisé en moins d&apos;une semaine.
           </p>

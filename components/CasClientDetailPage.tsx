@@ -8,17 +8,19 @@ import { client } from '@/sanity/lib/client'
 import { CAS_CLIENT_BY_SLUG } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 
-type Kpi  = { _key?: string; valeur: string; unite?: string; libelle: string; source?: string }
-type Enjeu = { _key?: string; titre: string; texte: string }
-type Etape = { _key?: string; titre: string; texte: string; livrable?: string }
+type Kpi     = { _key?: string; valeur: string; unite?: string; libelle: string; source?: string }
+type Enjeu   = { _key?: string; titre: string; texte: string }
+type Etape   = { _key?: string; titre: string; texte: string; livrable?: string }
 type FaqItem = { _key?: string; question: string; reponse: string }
 
 type CasClient = {
   _id: string; client: string; slug: string
   secteur?: string; pole?: string; outils?: string[]
-  titre: string; enBref?: string; chapeau?: string
+  titre: string; titreAccent?: string; enBref?: string; chapeau?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   logo?: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  imageCouverture?: any
   taille?: string; duree?: string; periode?: string; perimetre?: string
   kpis?: Kpi[]
   verbatim?: string; verbatimAuteur?: string; verbatimFonction?: string
@@ -38,6 +40,20 @@ function fmtDate(iso: string): string {
   return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
+function splitTitre(titre: string, titreAccent?: string): { blanc: string; accent: string } | null {
+  if (titreAccent) {
+    const idx = titre.indexOf(titreAccent)
+    if (idx >= 0) {
+      const blanc = titre.slice(0, idx).trimEnd()
+      return { blanc, accent: titreAccent }
+    }
+    return { blanc: titre, accent: titreAccent }
+  }
+  const colonIdx = titre.indexOf(' : ')
+  if (colonIdx > 0) return { blanc: titre.slice(0, colonIdx + 2), accent: titre.slice(colonIdx + 3) }
+  return null
+}
+
 const SVG_ARROW = (
   <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -52,13 +68,18 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
   const data = await fetchCasClient(slug)
   if (!data) notFound()
 
-  const logoUrl = data.logo ? urlFor(data.logo).width(160).height(80).fit('max').url() : null
+  const logoUrl = data.logo ? urlFor(data.logo).height(80).fit('max').url() : null
+  const coverUrl = data.imageCouverture ? urlFor(data.imageCouverture).width(1080).fit('max').url() : null
+  const coverAlt: string = data.imageCouverture?.alt ?? `Image de couverture ${data.client}`
+  const coverLegende: string | undefined = data.imageCouverture?.legende
+
   const ctaHref = data.pole === 'operationnel' ? CTA_OPERATIONNEL : CTA_COMMERCIAL
   const ctaLabel = data.pole === 'operationnel' ? 'IA & opérationnel' : 'CRM & commercial'
   const offreHref = data.pole === 'operationnel' ? '/ia-automation' : '/crm'
   const offreLabel = data.pole === 'operationnel' ? 'Performance IA & automatisation' : 'Performance commerciale : CRM'
 
   const enBref = data.enBref || data.chapeau || ''
+  const titreParts = splitTitre(data.titre, data.titreAccent)
 
   const faqSchema = data.faq && data.faq.length > 0
     ? {
@@ -108,67 +129,67 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
         <span aria-current="page">{data.client}</span>
       </nav>
 
-      {/* ── Hero 2 colonnes ── */}
-      <div className="cc-hero-2col">
-        {/* Colonne gauche */}
-        <div>
-          <div className="cc-chips-row">
-            {data.secteur && <span className="cc-chip accent">{data.secteur}</span>}
-            {(data.outils ?? []).map(o => <span key={o} className="cc-chip">{o}</span>)}
-            {data.pole && (
-              <span className="cc-chip">
-                {data.pole === 'operationnel' ? 'Performance opérationnelle' : 'Performance commerciale'}
-              </span>
-            )}
+      {/* ── Hero v2 : logo + H1 + chapeau + méta ── */}
+      <header className="cc-hero-v2">
+        {logoUrl && (
+          <div className="cc-logo-tile">
+            <Image
+              src={logoUrl}
+              alt={`Logo ${data.client}`}
+              width={160}
+              height={56}
+              style={{ objectFit: 'contain', maxHeight: 56, width: 'auto' }}
+            />
           </div>
-          <h1 className="cc-h1">{data.titre}</h1>
-          {enBref && (
-            <section className="cc-enbref" aria-label="En bref">
-              <div className="cc-enbref-label">En bref</div>
-              <p>{enBref}</p>
-            </section>
+        )}
+
+        <h1 className="cc-h1">
+          {titreParts ? (
+            <>{titreParts.blanc} <span className="cc-accent">{titreParts.accent}</span></>
+          ) : data.titre}
+        </h1>
+
+        {enBref && <p className="cc-chapeau">{enBref}</p>}
+
+        <div className="cc-chips-row">
+          {data.secteur && <span className="cc-chip accent">{data.secteur}</span>}
+          {data.pole && (
+            <span className="cc-chip">
+              {data.pole === 'operationnel' ? 'Performance opérationnelle' : 'Performance commerciale'}
+            </span>
           )}
-          <div className="cc-meta">
-            {data.datePublication && <span>Publié le <strong>{fmtDate(data.datePublication)}</strong></span>}
-            {data.dateMiseAJour && <span>Mis à jour le <strong>{fmtDate(data.dateMiseAJour)}</strong></span>}
-            {data.auteur && <span>Par <strong>{data.auteur}</strong></span>}
-          </div>
         </div>
 
-        {/* Colonne droite : Fiche projet */}
-        <aside className="cc-fiche" aria-label="Fiche projet">
-          <div className="cc-fiche-logo">
-            {logoUrl
-              ? <Image src={logoUrl} alt={`Logo ${data.client}`} width={160} height={44} style={{ objectFit: 'contain', maxHeight: 44 }} />
-              : <span>{data.client.toUpperCase()}</span>
-            }
-          </div>
-          <dl>
-            {data.secteur && <><dt>Secteur</dt><dd>{data.secteur}</dd></>}
-            {data.taille && <><dt>Taille</dt><dd>{data.taille}</dd></>}
-            {data.duree && <><dt>Durée</dt><dd>{data.duree}</dd></>}
-            {data.periode && <><dt>Période</dt><dd>{data.periode}</dd></>}
-            {data.perimetre && <><dt>Périmètre</dt><dd>{data.perimetre}</dd></>}
-            {data.outils && data.outils.length > 0 && (
-              <>
-                <dt>Outils</dt>
-                <dd>
-                  <div className="cc-chips-row">
-                    {data.outils.map(o => <span key={o} className="cc-tool-chip">{o}</span>)}
-                  </div>
-                </dd>
-              </>
-            )}
-          </dl>
-          <a href={ctaHref} target="_blank" rel="noopener" className="btn-primary cc-fiche-cta">
-            Parler {ctaLabel} {SVG_ARROW}
-          </a>
-        </aside>
-      </div>
+        {/* Bandeau méta horizontal */}
+        <dl className="cc-meta-band">
+          {data.secteur && <div><dt>Secteur</dt><dd>{data.secteur}</dd></div>}
+          {data.taille && <div><dt>Taille</dt><dd>{data.taille}</dd></div>}
+          {data.duree && <div><dt>Durée</dt><dd>{data.duree}</dd></div>}
+          {data.periode && <div><dt>Période</dt><dd>{data.periode}</dd></div>}
+          {data.perimetre && <div><dt>Périmètre</dt><dd>{data.perimetre}</dd></div>}
+          {data.outils && data.outils.length > 0 && (
+            <div style={{ flexBasis: '100%' }}>
+              <dt style={{ marginBottom: 6 }}>Outils</dt>
+              <dd>
+                <div className="cc-chips-row">
+                  {data.outils.map(o => <span key={o} className="cc-tool-chip">{o}</span>)}
+                </div>
+              </dd>
+            </div>
+          )}
+          {data.auteur && <div><dt>Par</dt><dd>{data.auteur}</dd></div>}
+          {data.datePublication && <div><dt>Publié le</dt><dd>{fmtDate(data.datePublication)}</dd></div>}
+          {data.dateMiseAJour && <div><dt>Mis à jour le</dt><dd>{fmtDate(data.dateMiseAJour)}</dd></div>}
+        </dl>
 
-      {/* ── Résultats (KPI cards) ── */}
+        <a href={ctaHref} target="_blank" rel="noopener" className="btn-primary" style={{ alignSelf: 'flex-start' }}>
+          Parler {ctaLabel} {SVG_ARROW}
+        </a>
+      </header>
+
+      {/* ── KPIs sans boîte ── */}
       {data.kpis && data.kpis.length > 0 && (
-        <section className="cc-results" aria-label="Résultats">
+        <section className="cc-results" aria-label="Résultats clés">
           <div className="cc-results-wrap">
             <span className="cc-eyebrow">Résultats</span>
             <div className="cc-results-grid">
@@ -178,12 +199,31 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
                     {k.valeur}{k.unite && <small>{k.unite}</small>}
                   </div>
                   <p>{k.libelle}</p>
-                  {k.source && <span className="cc-stat-src">{k.source}</span>}
+                  {k.source && !k.source.trim().startsWith('[') && (
+                    <span className="cc-stat-src">{k.source}</span>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         </section>
+      )}
+
+      {/* ── Image de couverture ── */}
+      {coverUrl && (
+        <div className="container">
+          <figure className="cc-cover">
+            <Image
+              src={coverUrl}
+              alt={coverAlt}
+              width={0}
+              height={0}
+              sizes="(max-width: 768px) 100vw, 1080px"
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            />
+            {coverLegende && <figcaption>{coverLegende}</figcaption>}
+          </figure>
+        </div>
       )}
 
       {/* ── Verbatim ── */}
@@ -210,7 +250,7 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
           <div className="cc-section-inner">
             <div className="cc-section-head">
               <span className="cc-eyebrow">Contexte</span>
-              <h2>Quel était le problème de {data.client} ?</h2>
+              <h2>Quel était le problème de <span className="cc-accent">{data.client} ?</span></h2>
               <p className="cc-section-lead">
                 {data.chapeau || `Les enjeux qui ont conduit ${data.client} à faire appel à Luphy.`}
               </p>
@@ -233,7 +273,7 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
           <div className="cc-section-inner">
             <div className="cc-section-head">
               <span className="cc-eyebrow">Solution</span>
-              <h2>Qu&apos;a mis en place Luphy ?</h2>
+              <h2>Qu&apos;a mis en place <span className="cc-accent">Luphy ?</span></h2>
             </div>
             <ol className="cc-steps">
               {data.etapes.map((e, i) => (
@@ -257,7 +297,7 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
           <div className="cc-section-inner">
             <div className="cc-section-head">
               <span className="cc-eyebrow">Résultats</span>
-              <h2>Quels résultats pour {data.client} ?</h2>
+              <h2>Quels résultats pour <span className="cc-accent">{data.client} ?</span></h2>
             </div>
             <p className="cc-recap">{data.resultatsTexte}</p>
           </div>

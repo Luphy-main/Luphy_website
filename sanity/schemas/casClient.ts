@@ -26,6 +26,21 @@ export const casClient = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'imageCouverture',
+      title: 'Image de couverture',
+      type: 'image',
+      options: { hotspot: true },
+      fields: [
+        defineField({ name: 'alt', title: 'Texte alternatif', type: 'string', validation: r => r.required() }),
+        defineField({ name: 'legende', title: 'Légende (optionnelle)', type: 'string' }),
+      ],
+    }),
+    defineField({
+      name: 'titreAccent',
+      title: 'Partie du titre en accent (couleur bleue — laisser vide pour auto)',
+      type: 'string',
+    }),
+    defineField({
       name: 'secteur',
       title: 'Secteur',
       type: 'string',
