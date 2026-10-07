@@ -22,32 +22,32 @@ const TEAM = [
   {
     prenom: 'Titouan',
     nom: 'Galpin',
-    role: 'Co-fondateur, Pôle performance commerciale',
+    role: 'COO · Pôle CRM & commercial',
     bio: [
-      "Titouan accompagne les acteurs de la finance sur leur performance commerciale : déploiement CRM, structuration du pipeline, prospection outbound. Il intervient principalement sur Affinity, DealCloud et HubSpot.",
-      "Avant Luphy, il a acquis une expérience dans le conseil et le développement commercial auprès d'acteurs financiers. Il connaît les contraintes de suivi de dealflow, de gestion des relations LPs et de sourcing M&A.",
+      "Titouan pilote le pôle performance commerciale : CRM, outbound et structuration de la relation investisseur.",
+      "Ancien VC, il a ensuite été Head of Investor Relations chez Caption. Il connaît de l'intérieur la façon dont un fonds suit ses deals, ses LP et son réseau.",
+      "Formé en finance et en droit.",
     ],
     domaines: ['CRM Affinity, DealCloud, HubSpot, Pipedrive', 'Prospection outbound', 'Pipeline et performance commerciale', 'Formation équipes commerciales'],
     cta: CTA_COMMERCIAL,
     ctaLabel: 'Échanger avec Titouan',
     photo: '/brand-assets/team/titouan-galpin-2026.jpg',
     photoAlt: 'Titouan Galpin, co-fondateur de Luphy',
-    badge: { label: 'HubSpot Solutions Partner', href: HUBSPOT_PARTNER_URL },
   },
   {
     prenom: 'Tristan',
     nom: 'Camilli',
-    role: 'Co-fondateur, Pôle performance opérationnelle & IA',
+    role: 'CEO · Pôle IA & opérations',
     bio: [
-      "Tristan accompagne les acteurs de la finance sur l'automatisation, l'IA et la formation. Il déploie des workflows n8n, des agents Claude et des programmes d'acculturation IA pour les organisations qui souhaitent gagner en productivité sans recruter.",
-      "Avant Luphy, il a développé une expertise en transformation digitale et en IA appliquée. Il connaît les enjeux de confidentialité des données et les niveaux de criticité spécifiques aux métiers financiers.",
+      "Tristan pilote le pôle performance opérationnelle : automatisation, IA et formation des équipes.",
+      "Avant Luphy, il était Head of Operations chez Caption (PSI / fonds).",
+      "Formé à l'INSA Toulouse et à l'ESCP.",
     ],
     domaines: ['Automatisation (n8n, Make)', 'IA et agents Claude', 'Acculturation IA dirigeants et équipes', 'Coaching IA individuel'],
     cta: CTA_OPERATIONNEL,
     ctaLabel: 'Échanger avec Tristan',
     photo: '/brand-assets/team/tristan-camilli.png',
     photoAlt: 'Tristan Camilli, co-fondateur de Luphy',
-    badge: null,
   },
 ]
 
@@ -70,14 +70,14 @@ const schema = {
     {
       '@type': 'Person',
       name: 'Titouan Galpin',
-      jobTitle: 'Co-fondateur, Pôle performance commerciale',
+      jobTitle: 'COO · Pôle CRM & commercial',
       worksFor: { '@type': 'Organization', name: 'Luphy', url: SITE_URL },
       url: `${SITE_URL}/equipe`,
     },
     {
       '@type': 'Person',
       name: 'Tristan Camilli',
-      jobTitle: 'Co-fondateur, Pôle performance opérationnelle & IA',
+      jobTitle: 'CEO · Pôle IA & opérations',
       worksFor: { '@type': 'Organization', name: 'Luphy', url: SITE_URL },
       url: `${SITE_URL}/equipe`,
     },
@@ -133,22 +133,38 @@ export default function Page() {
         </p>
       </section>
 
+      {/* ── NOTRE HISTOIRE ── */}
+      <section className="section" style={{ background: 'var(--dark)' }}>
+        <div className="container" style={{ maxWidth: 800 }}>
+          <div className="label reveal">NOTRE HISTOIRE</div>
+          <div className="divider reveal" style={{ margin: '0 0 20px' }} />
+          <h2 className="sec-title reveal" style={{ textAlign: 'left' }}>L&apos;équipe digitale des acteurs de la finance</h2>
+          <p className="reveal" style={{ fontSize: 17, lineHeight: 1.75, marginBottom: 20 }}>
+            Fondée au début de l&apos;ère de l&apos;IA, Luphy part d&apos;une conviction : les dirigeants de la finance n&apos;ont pas le temps de devenir experts du digital. C&apos;est notre rôle.
+          </p>
+          <p className="reveal" style={{ fontSize: 17, lineHeight: 1.75, marginBottom: 20 }}>
+            Avant Luphy, Tristan et Titouan ont tous deux travaillé chez Caption, l&apos;un côté opérations, l&apos;autre côté relations investisseurs. Ils y ont vu de près ce qui ralentit les équipes d&apos;un fonds : des informations dispersées, des relances oubliées, des heures passées sur des tâches qui ne créent pas de valeur.
+          </p>
+          <p className="reveal" style={{ fontSize: 17, lineHeight: 1.75, marginBottom: 20 }}>
+            Luphy est née pour y répondre. Nous sommes d&apos;abord des conseillers : nous partons de vos process et de vos enjeux business, nous chiffrons le gain, puis nous implémentons les outils (CRM, automatisation, IA) et formons les équipes pour qu&apos;ils soient réellement utilisés.
+          </p>
+          <p className="reveal" style={{ fontSize: 17, lineHeight: 1.75, marginBottom: 0 }}>
+            Aujourd&apos;hui, Luphy accompagne plus de 30 clients dans la finance, les startups et le conseil, depuis Paris. Nous sommes entourés de consultants seniors et d&apos;experts partenaires (data &amp; finance, produit, design, SEO/GEO), incubés à la Blue Factory ESCP et{' '}
+            <a href={HUBSPOT_PARTNER_URL} target="_blank" rel="noopener" style={{ color: 'var(--sky)', textDecoration: 'none', fontWeight: 600, borderBottom: '1px solid rgba(75,159,191,0.4)' }}>HubSpot Solutions Partner</a>.
+          </p>
+        </div>
+      </section>
+
       {/* Fiches membres */}
       {TEAM.map((m, i) => (
-        <section key={i} className="section" style={i % 2 === 1 ? { background: 'var(--dark)', paddingTop: 80, paddingBottom: 80 } : { paddingTop: 80, paddingBottom: 80 }}>
+        <section key={i} className="section" style={i % 2 === 0 ? { paddingTop: 80, paddingBottom: 80 } : { background: 'var(--dark)', paddingTop: 80, paddingBottom: 80 }}>
           <div className="container" style={{ maxWidth: 1040 }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 60, alignItems: 'start' }}
               className={`reveal team-grid${i % 2 === 1 ? ' team-grid-reverse' : ''}`}>
               <div><TeamPhoto src={m.photo} alt={m.photoAlt} /></div>
               <div>
                 <div className="label" style={{ marginBottom: 8 }}>{m.role}</div>
-                <h2 style={{ margin: '0 0 12px', fontSize: 36 }}>{m.prenom} <strong>{m.nom}</strong></h2>
-                {m.badge && (
-                  <a href={m.badge.href} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 6, padding: '4px 10px', textDecoration: 'none', marginBottom: 20, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                    {m.badge.label}
-                  </a>
-                )}
-                {!m.badge && <div style={{ marginBottom: 20 }} />}
+                <h2 style={{ margin: '0 0 24px', fontSize: 36 }}>{m.prenom} <strong>{m.nom}</strong></h2>
                 {m.bio.map((para, j) => (
                   <p key={j} style={{ marginBottom: 16, fontSize: 16, lineHeight: 1.7 }}>{para}</p>
                 ))}

@@ -110,7 +110,7 @@ export default async function HomePage() {
             <h2 className="sec-title">Deux pôles.<br /><span style={{ color: 'var(--sky)' }}>Une méthode ROI.</span></h2>
             <p className="sec-sub" style={{ margin: '0 auto' }}>
               Luphy est une agence de performance digitale spécialisée dans la finance. Nous intervenons du diagnostic
-              à l&apos;implémentation et à la formation, toujours en partant d&apos;un chiffrage ROI.
+              à l&apos;implémentation, en passant par la formation, toujours en partant d&apos;un chiffrage ROI.
             </p>
           </div>
           <div className="offers-grid">
@@ -187,12 +187,12 @@ export default async function HomePage() {
           {/* Stat validée */}
           <div className="why-stat-single reveal">
             <div className="why-stat-n">+30</div>
-            <div className="why-stat-l">clients accompagnés dans la finance, le conseil et les services pro</div>
+            <div className="why-stat-l">clients accompagnés dans la finance, les startups et le conseil</div>
           </div>
 
           {/* Preuve Allyum */}
           <div className="why-proof reveal">
-            <strong>Allyum (fonds d&apos;investissement) :</strong> environ +25 % de temps disponible pour la prospection
+            <strong>Allyum (boutique M&amp;A) :</strong> environ +25 % de temps disponible pour la prospection
             et ×2 sur le nombre de mandats suivis après un an, sans recrutement supplémentaire.
           </div>
 

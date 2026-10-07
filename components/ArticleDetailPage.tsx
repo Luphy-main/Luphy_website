@@ -13,9 +13,17 @@ type Article = {
   slug: string
   chapeau?: string
   contenu?: unknown[]
+  auteur?: string
   datePublication?: string
   categorie?: string
   metaDescription?: string
+}
+
+type PtBlock = {
+  _type: string
+  style?: string
+  _key?: string
+  children?: { text?: string }[]
 }
 
 const ptComponents = {
@@ -39,6 +47,26 @@ const ptComponents = {
       </a>
     ),
   },
+  types: {
+    image: ({ value }: { value?: { asset?: unknown; alt?: string; caption?: string } }) => {
+      if (!value?.asset) return null
+      return (
+        <figure style={{ margin: '40px 0' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`https://cdn.sanity.io/images/fbdmm8o7/production/${(value.asset as { _ref?: string })?._ref?.replace('image-', '').replace(/-(\w+)$/, '.$1')}`}
+            alt={value.alt || ''}
+            style={{ width: '100%', borderRadius: 8 }}
+          />
+          {value.caption && (
+            <figcaption style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', textAlign: 'center', marginTop: 8 }}>
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
+      )
+    },
+  },
 }
 
 export async function fetchArticle(slug: string): Promise<Article | null> {
@@ -49,9 +77,18 @@ function formatDate(d: string) {
   return new Date(d).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
 }
 
+function extractH2s(contenu: unknown[]): string[] {
+  return (contenu as PtBlock[])
+    .filter(b => b._type === 'block' && b.style === 'h2')
+    .map(b => b.children?.map(c => c.text || '').join('') || '')
+    .filter(Boolean)
+}
+
 export default async function ArticleDetailPage({ slug }: { slug: string }) {
   const data = await fetchArticle(slug)
   if (!data) notFound()
+
+  const h2s = data.contenu ? extractH2s(data.contenu) : []
 
   const schema = {
     '@context': 'https://schema.org',
@@ -62,6 +99,7 @@ export default async function ArticleDetailPage({ slug }: { slug: string }) {
         description: data.metaDescription || data.chapeau,
         url: `${SITE_URL}/ressources/${slug}`,
         datePublished: data.datePublication,
+        author: data.auteur ? { '@type': 'Person', name: data.auteur } : undefined,
         publisher: { '@type': 'Organization', name: 'Luphy', url: SITE_URL },
       },
       {
@@ -94,10 +132,28 @@ export default async function ArticleDetailPage({ slug }: { slug: string }) {
           {data.datePublication && (
             <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{formatDate(data.datePublication)}</span>
           )}
+          {data.auteur && (
+            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>Par {data.auteur}</span>
+          )}
         </div>
         <h1 style={{ fontSize: 'clamp(26px, 4.5vw, 48px)' }}>{data.titre}</h1>
         {data.chapeau && <p style={{ maxWidth: 680, fontSize: 18 }}>{data.chapeau}</p>}
       </section>
+
+      {h2s.length > 1 && (
+        <section style={{ paddingBottom: 0 }}>
+          <div className="container" style={{ maxWidth: 780 }}>
+            <nav aria-label="Sommaire" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '20px 24px', marginBottom: 40 }}>
+              <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--sky)', margin: '0 0 12px' }}>Sommaire</p>
+              <ol style={{ margin: 0, paddingLeft: 20, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {h2s.map((title, i) => (
+                  <li key={i} style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)' }}>{title}</li>
+                ))}
+              </ol>
+            </nav>
+          </div>
+        </section>
+      )}
 
       {data.contenu && (
         <section className="section" style={{ paddingTop: 0, paddingBottom: 80 }}>

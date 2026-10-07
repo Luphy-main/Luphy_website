@@ -67,6 +67,11 @@ export const article = defineType({
       ],
     }),
     defineField({
+      name: 'auteur',
+      title: 'Auteur',
+      type: 'string',
+    }),
+    defineField({
       name: 'datePublication',
       title: 'Date de publication',
       type: 'date',

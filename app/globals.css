@@ -256,9 +256,9 @@ button, input, select, textarea { font-family: inherit; }
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
-.logo-item { display: flex; align-items: center; flex-shrink: 0; }
-.logo-item img { height: 28px; width: auto; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.45; transition: opacity 0.2s; }
-.logo-item img:hover { opacity: 0.75; }
+.logo-item { display: flex; align-items: center; flex-shrink: 0; background: #fff; border-radius: 8px; padding: 8px 14px; }
+.logo-item img { height: 28px; width: auto; object-fit: contain; opacity: 0.85; transition: opacity 0.2s; }
+.logo-item img:hover { opacity: 1; }
 
 /* ── OFFERS GRID ── */
 .offers-intro { text-align: center; max-width: 620px; margin: 0 auto 64px; }

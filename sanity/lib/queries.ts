@@ -142,6 +142,7 @@ export const ARTICLE_BY_SLUG = groq`
     "slug": slug.current,
     chapeau,
     contenu,
+    auteur,
     datePublication,
     categorie,
     imageOg,
