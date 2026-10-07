@@ -47,10 +47,6 @@ const FAQ = [
     a: 'La formation est incluse dans chaque déploiement. Nous formons sur vos données et vos process réels, pas sur des exemples génériques. Nous définissons ensemble les indicateurs d\'adoption.',
   },
   {
-    q: 'Luphy est-il partenaire certifié des CRM qu\'il déploie ?',
-    a: '[À COMPLÉTER selon les accords partenaires en vigueur]',
-  },
-  {
     q: 'Combien coûte un projet CRM ?',
     a: 'Le tarif est adapté au périmètre : CRM choisi, nombre d\'utilisateurs, volume de données, modules activés. Votre devis personnalisé en moins d\'une semaine après un premier échange.',
   },

@@ -32,8 +32,6 @@
     .nav-links a:hover, .nav-links a.active { color:#fff; }
     .btn-nav { display:inline-block; padding:10px 22px; border-radius:7px; background:var(--gold); color:var(--deep); font-family:'Sora',sans-serif; font-weight:700; font-size:13.5px; text-decoration:none; transition:background 0.2s,transform 0.2s,box-shadow 0.2s; box-shadow:0 4px 18px rgba(91,190,232,0.28); }
     .btn-nav:hover { background:#7ECFEE; transform:translateY(-1px); box-shadow:0 7px 24px rgba(91,190,232,0.38); }
-    .lang-toggle { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.7); font-family:'Sora',sans-serif; font-size:11.5px; font-weight:700; letter-spacing:0.08em; padding:6px 13px; border-radius:6px; cursor:pointer; transition:background 0.2s,color 0.2s,border-color 0.2s; }
-    .lang-toggle:hover { background:rgba(74,159,191,0.15); border-color:rgba(74,159,191,0.4); color:#fff; }
     .nav-dropdown { position:relative; }
     .dropdown-toggle { display:flex; align-items:center; gap:6px; cursor:pointer; }
     .dropdown-toggle svg { transition:transform 0.2s; }
@@ -219,7 +217,6 @@
     </ul>
   </div>
   <div class="nav-right" style="display:flex;align-items:center;gap:12px">
-    <button class="lang-toggle" id="lang-toggle" onclick="toggleLang()">EN</button>
     <a href="https://meetings-eu1.hubspot.com/tgalpin" target="_blank" rel="noopener" class="btn-nav" data-i18n="nav.cta">Échanger avec nous</a>
   </div>
   <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -454,7 +451,6 @@
   <button class="footer-legal" data-i18n="footer.legal">Mentions légales</button>
 </footer>
 
-<script src="lang.js"></script>
 <script>
 initLang({
   'nav.cta': 'Get in touch',

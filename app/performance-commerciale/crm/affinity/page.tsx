@@ -61,10 +61,6 @@ const DATA: CrmData = {
       a: "Oui. Nous gérons le nettoyage, la déduplication et l'import des données depuis Excel, Notion, HubSpot, Salesforce ou tout autre outil. C'est une étape standard de nos projets.",
     },
     {
-      q: 'Luphy est-il partenaire Affinity certifié ?',
-      a: '[À COMPLÉTER selon les accords partenaires en vigueur]',
-    },
-    {
       q: 'Combien coûte le déploiement d\'Affinity ?',
       a: "Le tarif couvre le conseil, la configuration et la formation. Il est adapté à la taille de l'équipe et au périmètre. Votre devis personnalisé en moins d'une semaine après un premier échange.",
     },

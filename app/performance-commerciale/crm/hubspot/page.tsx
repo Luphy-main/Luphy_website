@@ -62,10 +62,6 @@ const DATA: CrmData = {
       a: "Oui. La migration Salesforce vers HubSpot est un projet standard pour nous. Nous gérons la cartographie des champs, le nettoyage des données, l'import et la validation des données migrées.",
     },
     {
-      q: 'Luphy est-il partenaire HubSpot ?',
-      a: '[À COMPLÉTER selon les accords partenaires en vigueur]',
-    },
-    {
       q: 'Combien coûte le déploiement de HubSpot ?',
       a: "Le tarif couvre le conseil, la configuration et la formation, en plus du coût de la licence HubSpot. Votre devis personnalisé en moins d'une semaine après un premier échange.",
     },
