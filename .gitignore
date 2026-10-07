@@ -2,6 +2,7 @@ node_modules/
 temporary screenshots/
 .next/
 *.jpg.bak
+*.tsbuildinfo
 
 # Fichiers confidentiels — ne jamais committer
 docs/private/
