@@ -188,7 +188,7 @@ export const casClient = defineType({
     }),
 
     // ── Méta ──────────────────────────────────────────────────────────────────
-    defineField({ name: 'auteur', title: 'Auteur (byline)', type: 'string' }),
+    defineField({ name: 'auteur', title: 'Auteur (byline)', type: 'string', initialValue: 'Titouan Galpin' }),
     defineField({ name: 'datePublication', title: 'Date de publication', type: 'date' }),
     defineField({ name: 'dateMiseAJour', title: 'Date de mise à jour', type: 'date' }),
     defineField({
