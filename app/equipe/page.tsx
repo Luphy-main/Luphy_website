@@ -1,8 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
 import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+
+const HUBSPOT_PARTNER_URL = 'https://ecosystem.hubspot.com/fr/marketplace/solutions/luphy'
 
 export const metadata: Metadata = {
   title: 'L\'équipe | Luphy',
@@ -27,7 +30,9 @@ const TEAM = [
     domaines: ['CRM Affinity, DealCloud, HubSpot, Pipedrive', 'Prospection outbound', 'Pipeline et performance commerciale', 'Formation équipes commerciales'],
     cta: CTA_COMMERCIAL,
     ctaLabel: 'Échanger avec Titouan',
-    photo: null,
+    photo: '/brand-assets/team/titouan-galpin-2026.jpg',
+    photoAlt: 'Titouan Galpin, co-fondateur de Luphy',
+    badge: { label: 'HubSpot Solutions Partner', href: HUBSPOT_PARTNER_URL },
   },
   {
     prenom: 'Tristan',
@@ -40,7 +45,9 @@ const TEAM = [
     domaines: ['Automatisation (n8n, Make)', 'IA et agents Claude', 'Acculturation IA dirigeants et équipes', 'Coaching IA individuel'],
     cta: CTA_OPERATIONNEL,
     ctaLabel: 'Échanger avec Tristan',
-    photo: null,
+    photo: '/brand-assets/team/tristan-camilli.png',
+    photoAlt: 'Tristan Camilli, co-fondateur de Luphy',
+    badge: null,
   },
 ]
 
@@ -90,23 +97,20 @@ const SVG_ARROW = (
   </svg>
 )
 
-const PLACEHOLDER_PHOTO = (
-  <div style={{
-    width: '100%', aspectRatio: '4/5', maxWidth: 320,
-    background: 'rgba(255,255,255,0.06)',
-    border: '1px solid rgba(255,255,255,0.1)',
-    borderRadius: 12,
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    color: 'rgba(255,255,255,0.3)', fontSize: 13,
-  }}>
-    <div style={{
-      width: 80, height: 80, borderRadius: '50%',
-      background: 'linear-gradient(135deg, var(--mid), var(--accent))',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      fontSize: 26, fontWeight: 700, color: '#fff', letterSpacing: '0.05em',
-    }}>TG</div>
-  </div>
-)
+function TeamPhoto({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div style={{ width: '100%', maxWidth: 320, borderRadius: 12, overflow: 'hidden', aspectRatio: '4/5', position: 'relative' }}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 768px) 100vw, 320px"
+        style={{ objectFit: 'cover', objectPosition: 'center top' }}
+        priority
+      />
+    </div>
+  )
+}
 
 export default function Page() {
   return (
@@ -135,10 +139,16 @@ export default function Page() {
           <div className="container" style={{ maxWidth: 1040 }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 60, alignItems: 'start' }}
               className={`reveal team-grid${i % 2 === 1 ? ' team-grid-reverse' : ''}`}>
-              <div>{PLACEHOLDER_PHOTO}</div>
+              <div><TeamPhoto src={m.photo} alt={m.photoAlt} /></div>
               <div>
                 <div className="label" style={{ marginBottom: 8 }}>{m.role}</div>
-                <h2 style={{ margin: '0 0 24px', fontSize: 36 }}>{m.prenom} <strong>{m.nom}</strong></h2>
+                <h2 style={{ margin: '0 0 12px', fontSize: 36 }}>{m.prenom} <strong>{m.nom}</strong></h2>
+                {m.badge && (
+                  <a href={m.badge.href} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 6, padding: '4px 10px', textDecoration: 'none', marginBottom: 20, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                    {m.badge.label}
+                  </a>
+                )}
+                {!m.badge && <div style={{ marginBottom: 20 }} />}
                 {m.bio.map((para, j) => (
                   <p key={j} style={{ marginBottom: 16, fontSize: 16, lineHeight: 1.7 }}>{para}</p>
                 ))}

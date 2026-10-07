@@ -20,6 +20,11 @@ export default function SchemaOrg({ type = 'website', url }: SchemaOrgProps) {
     address: { '@type': 'PostalAddress', addressLocality: 'Paris', addressCountry: 'FR' },
     areaServed: 'FR',
     sameAs: [LINKEDIN_URL],
+    memberOf: {
+      '@type': 'Organization',
+      name: 'HubSpot Solutions Partner Program',
+      url: 'https://ecosystem.hubspot.com/fr/marketplace/solutions/luphy',
+    },
     founder: [
       {
         '@type': 'Person',

@@ -17,6 +17,7 @@ export interface CrmData {
   integrations: string[]
   faq: CrmFaq[]
   schemaDesc: string
+  partnerBadge?: { label: string; href: string }
 }
 
 const SVG_ARROW = (
@@ -75,6 +76,11 @@ export default function CrmPageLayout({ data }: { data: CrmData }) {
       <section className="page-hero">
         <div className="label">Consulting CRM</div>
         <h1><em>{data.name}</em></h1>
+        {data.partnerBadge && (
+          <a href={data.partnerBadge.href} target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.55)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 6, padding: '5px 12px', textDecoration: 'none', marginBottom: 20, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+            {data.partnerBadge.label}
+          </a>
+        )}
         <p>{data.description}</p>
         <div className="cta-btns">
           <a href={CTA_COMMERCIAL} target="_blank" rel="noopener" className="btn-primary">

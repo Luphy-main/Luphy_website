@@ -41,6 +41,14 @@ export default function Footer() {
             </svg>
             LinkedIn
           </a>
+          <a
+            href="https://ecosystem.hubspot.com/fr/marketplace/solutions/luphy"
+            target="_blank"
+            rel="noopener"
+            style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', textDecoration: 'none', fontWeight: 500, letterSpacing: '0.04em' }}
+          >
+            HubSpot Solutions Partner
+          </a>
           <button className="footer-legal" onClick={() => setLegalOpen(true)}>
             Mentions légales
           </button>

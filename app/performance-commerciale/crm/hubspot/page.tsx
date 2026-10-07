@@ -67,6 +67,10 @@ const DATA: CrmData = {
     },
   ],
   schemaDesc: "Conseil et déploiement HubSpot pour sociétés de gestion et cabinets de conseil. CRM, outbound, nurturing.",
+  partnerBadge: {
+    label: 'HubSpot Solutions Partner',
+    href: 'https://ecosystem.hubspot.com/fr/marketplace/solutions/luphy',
+  },
 }
 
 export default function Page() {
