@@ -50,6 +50,7 @@ export const casUsage = defineType({
         list: [
           { title: "Fonds d'investissement", value: "Fonds d'investissement" },
           { title: 'Boutique M&A', value: 'Boutique M&A' },
+          { title: 'Boutique M&A / banque d\'affaires', value: 'Boutique M&A / banque d\'affaires' },
           { title: 'Société de gestion', value: 'Société de gestion' },
           { title: 'Cabinet de conseil', value: 'Cabinet de conseil' },
           { title: 'Écosystème marchés privés', value: 'Écosystème marchés privés' },
