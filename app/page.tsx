@@ -226,24 +226,24 @@ export default function HomePage() {
           </div>
           <div className="testi-grid">
             <div className="testi-card reveal">
-              <p className="testi-quote">[À COMPLÉTER : verbatim client]</p>
+              <p className="testi-quote">C&apos;est comme si on avait engagé un demi-commercial. On a fait l&apos;économie d&apos;un demi-biz commercial parce que maintenant, on arrive à le faire nous-mêmes de manière vraiment hyper fluide et efficiente.</p>
               <div className="testi-author">
-                <strong>[Prénom Nom]</strong>
-                <span>[Titre], [Entreprise]</span>
+                <strong>Martin Delépine</strong>
+                <span>Associé, Allyum</span>
               </div>
             </div>
             <div className="testi-card reveal d1">
-              <p className="testi-quote">[À COMPLÉTER : verbatim client]</p>
+              <p className="testi-quote">C&apos;est un changement radical : avant on avait rien, maintenant on a quelque chose qui fonctionne très bien. On s&apos;en sert full-time, c&apos;est quasiment le seul outil servant dans la boîte.</p>
               <div className="testi-author">
-                <strong>[Prénom Nom]</strong>
-                <span>[Titre], [Entreprise]</span>
+                <strong>Benoît Feron</strong>
+                <span>Fondateur, Fundora</span>
               </div>
             </div>
             <div className="testi-card reveal d2">
-              <p className="testi-quote">[À COMPLÉTER : verbatim client]</p>
+              <p className="testi-quote">Tu as apporté l&apos;élément fondateur de notre stratégie commerciale et de l&apos;exécution de cette stratégie. Sans ça c&apos;était à l&apos;arrache. On pouvait construire une stratégie commerciale, mais son exécution était approximative parce qu&apos;il n&apos;y avait rien qui permettait aux commerciaux d&apos;attaquer et d&apos;exécuter.</p>
               <div className="testi-author">
-                <strong>[Prénom Nom]</strong>
-                <span>[Titre], [Entreprise]</span>
+                <strong>Arthur Sevestre</strong>
+                <span>Co-fondateur, Hoppi</span>
               </div>
             </div>
           </div>

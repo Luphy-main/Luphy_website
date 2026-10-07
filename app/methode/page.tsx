@@ -40,7 +40,7 @@ const FAQ = [
   },
   {
     q: 'Combien de temps dure le diagnostic ?',
-    a: 'La durée est adaptée à la taille de votre organisation et à la complexité des processus à analyser. Elle est précisée dans le devis. [À COMPLÉTER]',
+    a: 'La durée est adaptée à la taille de votre organisation et à la complexité des processus à analyser. Comptez 2 à 3 semaines pour la phase de collecte, avec une restitution sous 4 semaines après le lancement.',
   },
   {
     q: 'Faut-il être déjà équipé d\'un CRM ou d\'outils IA ?',
@@ -235,14 +235,14 @@ export default function Page() {
               <div className="step-num" style={{ fontSize: 18 }}>②</div>
               <div className="step-content">
                 <h3>Phase de collecte</h3>
-                <p>Entretiens individuels avec vos collaborateurs clés, observation des pratiques, analyse des outils et données. Durée : [À COMPLÉTER].</p>
+                <p>Entretiens individuels avec vos collaborateurs clés, observation des pratiques, analyse des outils et données. Durée : 2 à 3 semaines.</p>
               </div>
             </div>
             <div className="step-row reveal d2">
               <div className="step-num" style={{ fontSize: 18 }}>③</div>
               <div className="step-content">
                 <h3>Restitution</h3>
-                <p>Présentation de la feuille de route chiffrée devant vos décideurs. Échanges, arbitrages, questions. Jalons : [À CONFIRMER].</p>
+                <p>Présentation de la feuille de route chiffrée devant vos décideurs. Échanges, arbitrages, questions. Jalons : restitution sous 4 semaines après le lancement.</p>
               </div>
             </div>
           </div>

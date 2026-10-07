@@ -99,7 +99,12 @@ const PLACEHOLDER_PHOTO = (
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     color: 'rgba(255,255,255,0.3)', fontSize: 13,
   }}>
-    [Photo à ajouter]
+    <div style={{
+      width: 80, height: 80, borderRadius: '50%',
+      background: 'linear-gradient(135deg, var(--mid), var(--accent))',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      fontSize: 26, fontWeight: 700, color: '#fff', letterSpacing: '0.05em',
+    }}>TG</div>
   </div>
 )
 

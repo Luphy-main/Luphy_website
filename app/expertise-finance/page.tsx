@@ -182,12 +182,12 @@ export default function Page() {
             <div className="why-card reveal d1">
               <div className="why-card-diamond">◆</div>
               <h4>Hébergement UE</h4>
-              <p>Quand la réglementation ou vos contraintes internes l&apos;exigent, nous configurons des solutions avec hébergement européen. [À CONFIRMER selon engagements contractuels]</p>
+              <p>Quand la réglementation ou vos contraintes internes l&apos;exigent, nous privilégions des solutions hébergées en Europe.</p>
             </div>
             <div className="why-card reveal d2">
               <div className="why-card-diamond">◆</div>
               <h4>Pas d&apos;entraînement sur vos données</h4>
-              <p>Les outils que nous déployons ne s&apos;entraînent pas sur vos données clients. [À CONFIRMER selon configurations retenues]</p>
+              <p>Nous configurons les outils (offres entreprise, API) pour que vos données ne servent pas à entraîner les modèles.</p>
             </div>
             <div className="why-card reveal d3">
               <div className="why-card-diamond">◆</div>

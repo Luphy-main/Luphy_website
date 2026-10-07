@@ -27,7 +27,7 @@ const CE_QUE_NOUS_CONSTRUISONS = [
   { icon: '🗄️', title: 'Bases Notion sur mesure', desc: 'Architecture de bases de données Notion avancées avec relations complexes, formules, automatisations et vues personnalisées pour chaque profil.' },
   { icon: '📊', title: 'Bases Airtable configurées', desc: 'Pour les équipes qui ont besoin de la puissance d\'Airtable : vues galerie, formulaires d\'entrée, scripts d\'automatisation, intégrations API.' },
   { icon: '⚙️', title: 'Workflows d\'automatisation', desc: 'Connexion entre vos outils existants via n8n, Make ou Zapier. Synchronisation de données entre plusieurs bases, alertes, enrichissement.' },
-  { icon: '🔧', title: 'Applications légères sur mesure', desc: 'Pour les cas les plus spécifiques : interfaces web légères (Next.js) connectées à vos données. [À préciser selon vos besoins]' },
+  { icon: '🔧', title: 'Applications légères sur mesure', desc: 'Pour les cas les plus spécifiques : interfaces web légères (Next.js) connectées à vos données.' },
 ]
 
 const FAQ = [

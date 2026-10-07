@@ -183,14 +183,14 @@ export default function Page() {
           <div className="divider reveal" style={{ margin: '0 0 20px' }} />
           <h2 className="sec-title reveal">Ce que ça change concrètement</h2>
           <div className="why-proof reveal" style={{ maxWidth: '100%', marginTop: 32, marginBottom: 24 }}>
-            <strong>Allyum (fonds d&apos;investissement) :</strong> environ +25 % de temps disponible pour la
+            <strong>Allyum (boutique M&amp;A) :</strong> environ +25 % de temps disponible pour la
             prospection et ×2 sur le nombre de mandats suivis après un an, sans recrutement supplémentaire.
           </div>
           <div className="testi-card reveal">
-            <p className="testi-quote">[VERBATIM À COLLECTER — Client Allyum, fonction]</p>
+            <p className="testi-quote">C&apos;est comme si on avait engagé un demi-commercial. On a fait l&apos;économie d&apos;un demi-biz commercial parce que maintenant, on arrive à le faire nous-mêmes de manière vraiment hyper fluide et efficiente.</p>
             <div className="testi-author">
-              <strong>[Prénom Nom]</strong>
-              <span>[Titre], Allyum</span>
+              <strong>Martin Delépine</strong>
+              <span>Associé, Allyum</span>
             </div>
           </div>
         </div>
