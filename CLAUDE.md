@@ -63,3 +63,4 @@ Propriétaire : Tristan (Président Luphy). Répondre en français.
 - Les commandes sont lancées depuis la racine du repo : ne jamais préfixer par `cd "..." &&`.
 - Pas de redirection `2>/dev/null` ni `> fichier` dans les commandes de lecture (elles déclenchent une validation manuelle).
 - Une commande simple par appel plutôt que des chaînes `&&` / `|` quand c'est possible.
+- Ne jamais utiliser `node -e` avec du code contenant `>`, `<`, `|` ou des guillemets imbriqués (Windows crée des fichiers parasites). Écrire le code dans un fichier temporaire `docs/private/tmp-*.mjs` et l'exécuter avec `node`.
