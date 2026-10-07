@@ -27,6 +27,9 @@ type Temoignage = {
   entreprise?: string
   secteur?: string
   sujet?: string
+  lienCasClient?: string
+  miseEnAvant?: boolean
+  ordre?: number
 }
 
 const schema = {
@@ -74,27 +77,49 @@ export default async function Page() {
               Les témoignages clients arrivent bientôt.
             </p>
           ) : (
-            <div className="testi-grid">
-              {verbatims.map((v, i) => (
-                <div key={v._id} className={`testi-card reveal${i > 0 ? ` d${Math.min(i % 4, 4)}` : ''}`}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16, gap: 12 }}>
-                    {v.secteur && (
-                      <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--sky)', background: 'rgba(75,159,191,0.12)', border: '1px solid rgba(75,159,191,0.25)', borderRadius: 5, padding: '3px 10px' }}>
-                        {v.secteur}
-                      </span>
-                    )}
-                    {v.sujet && <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>{v.sujet}</span>}
-                  </div>
-                  <p className="testi-quote">&ldquo;{v.quote}&rdquo;</p>
-                  <div className="testi-author">
-                    <strong>{v.auteur}</strong>
-                    {(v.fonction || v.entreprise) && (
-                      <span>{[v.fonction, v.entreprise].filter(Boolean).join(', ')}</span>
-                    )}
-                  </div>
+            (() => {
+              const clients = Array.from(new Set(verbatims.map(v => v.entreprise).filter(Boolean)))
+              return (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 72 }}>
+                  {clients.map(entreprise => {
+                    const groupe = verbatims.filter(v => v.entreprise === entreprise)
+                    const ref = groupe.find(v => v.lienCasClient)
+                    return (
+                      <div key={entreprise}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 32, gap: 16, flexWrap: 'wrap' }}>
+                          <h2 style={{ fontSize: 22, fontWeight: 700, margin: 0 }}>{entreprise}</h2>
+                          {ref?.lienCasClient && (
+                            <Link href={`/cas-clients/${ref.lienCasClient}`}
+                              style={{ fontSize: 13, color: 'var(--sky)', display: 'inline-flex', alignItems: 'center', gap: 6, textDecoration: 'none', fontWeight: 600 }}>
+                              Voir l&apos;étude de cas {SVG_ARROW}
+                            </Link>
+                          )}
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                          {groupe.map((v, i) => (
+                            <div key={v._id} className={`testi-card reveal${i > 0 ? ` d${Math.min(i, 4)}` : ''}`}
+                              style={v.miseEnAvant ? { borderColor: 'rgba(91,190,232,0.35)', background: 'linear-gradient(135deg,rgba(20,79,108,0.5),rgba(10,46,64,0.8))' } : {}}>
+                              {v.miseEnAvant && (
+                                <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--sky)', marginBottom: 12 }}>
+                                  ★ Mis en avant
+                                </div>
+                              )}
+                              <p className="testi-quote">{v.quote}</p>
+                              <div className="testi-author">
+                                <strong>{v.auteur}</strong>
+                                {(v.fonction || v.entreprise) && (
+                                  <span>{[v.fonction, v.entreprise].filter(Boolean).join(', ')}</span>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )
+                  })}
                 </div>
-              ))}
-            </div>
+              )
+            })()
           )}
         </div>
       </section>

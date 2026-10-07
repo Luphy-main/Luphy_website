@@ -99,6 +99,20 @@ export const TEMOIGNAGES_LIST = groq`
     entreprise,
     secteur,
     sujet,
+    lienCasClient,
+    miseEnAvant,
+    ordre,
+  }
+`
+
+export const TEMOIGNAGES_FEATURED = groq`
+  *[_type == "temoignage" && miseEnAvant == true] | order(ordre asc) {
+    _id,
+    quote,
+    auteur,
+    fonction,
+    entreprise,
+    lienCasClient,
     ordre,
   }
 `

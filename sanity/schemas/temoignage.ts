@@ -47,6 +47,19 @@ export const temoignage = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'lienCasClient',
+      title: "Slug de l'étude de cas liée",
+      type: 'string',
+      description: 'Ex : allyum, fundora, hoppi',
+    }),
+    defineField({
+      name: 'miseEnAvant',
+      title: 'Mise en avant (accueil)',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Afficher dans la section témoignages de la page d\'accueil',
+    }),
+    defineField({
       name: 'ordre',
       title: "Ordre d'affichage",
       type: 'number',

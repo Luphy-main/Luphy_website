@@ -5,6 +5,10 @@ import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
 import HeroAnimation from '@/components/HeroAnimation'
 import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { client } from '@/sanity/lib/client'
+import { TEMOIGNAGES_FEATURED } from '@/sanity/lib/queries'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Luphy | Agence de performance digitale pour la finance',
@@ -30,7 +34,8 @@ const CLIENT_LOGOS = [
   { src: '/brand-assets/client-logos/Hoppi-logo.png', alt: 'Hoppi' },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
+  const featured = await client.fetch(TEMOIGNAGES_FEATURED)
   return (
     <>
       <SchemaOrg url={SITE_URL} />
@@ -225,27 +230,17 @@ export default function HomePage() {
             <h2 className="sec-title">Témoignages clients</h2>
           </div>
           <div className="testi-grid">
-            <div className="testi-card reveal">
-              <p className="testi-quote">C&apos;est comme si on avait engagé un demi-commercial. On a fait l&apos;économie d&apos;un demi-biz commercial parce que maintenant, on arrive à le faire nous-mêmes de manière vraiment hyper fluide et efficiente.</p>
-              <div className="testi-author">
-                <strong>Martin Delépine</strong>
-                <span>Associé, Allyum</span>
+            {featured.map((v: { _id: string; quote: string; auteur: string; fonction?: string; entreprise?: string; lienCasClient?: string }, i: number) => (
+              <div key={v._id} className={`testi-card reveal${i > 0 ? ` d${i}` : ''}`}>
+                <p className="testi-quote">{v.quote}</p>
+                <div className="testi-author">
+                  <strong>{v.auteur}</strong>
+                  {(v.fonction || v.entreprise) && (
+                    <span>{[v.fonction, v.entreprise].filter(Boolean).join(', ')}</span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="testi-card reveal d1">
-              <p className="testi-quote">C&apos;est un changement radical : avant on avait rien, maintenant on a quelque chose qui fonctionne très bien. On s&apos;en sert full-time, c&apos;est quasiment le seul outil servant dans la boîte.</p>
-              <div className="testi-author">
-                <strong>Benoît Feron</strong>
-                <span>Fondateur, Fundora</span>
-              </div>
-            </div>
-            <div className="testi-card reveal d2">
-              <p className="testi-quote">Tu as apporté l&apos;élément fondateur de notre stratégie commerciale et de l&apos;exécution de cette stratégie. Sans ça c&apos;était à l&apos;arrache. On pouvait construire une stratégie commerciale, mais son exécution était approximative parce qu&apos;il n&apos;y avait rien qui permettait aux commerciaux d&apos;attaquer et d&apos;exécuter.</p>
-              <div className="testi-author">
-                <strong>Arthur Sevestre</strong>
-                <span>Co-fondateur, Hoppi</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
