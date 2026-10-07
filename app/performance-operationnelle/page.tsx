@@ -26,15 +26,9 @@ const PROBLEMS = [
 
 const SERVICES = [
   {
-    icon: '⚙️',
-    title: 'Automatisation de processus',
-    desc: 'Workflows intelligents avec n8n, Make, Zapier. Élimination des tâches répétitives, connexion entre vos outils.',
-    link: '/performance-operationnelle/automatisation',
-  },
-  {
     icon: '🤖',
-    title: 'IA & intelligence artificielle',
-    desc: 'Déploiement de cas d\'usage IA métier : préparation de RDV, recherche sectorielle, mémos, revue de modèles financiers.',
+    title: 'IA & automatisation',
+    desc: 'Workflows intelligents avec n8n, Make, Zapier et cas d\'usage IA métier. Élimination des tâches répétitives, connexion entre vos outils.',
     link: '/performance-operationnelle/ia',
   },
   {
@@ -150,7 +144,7 @@ export default function Page() {
         <div className="container">
           <div className="label reveal">Ce que nous faisons</div>
           <div className="divider reveal" style={{ margin: '0 0 20px' }} />
-          <h2 className="sec-title reveal">Trois axes d&apos;intervention</h2>
+          <h2 className="sec-title reveal">Deux axes d&apos;intervention</h2>
           <div className="offers-grid" style={{ marginTop: 40 }}>
             {SERVICES.map((s, i) => (
               <Link key={i} href={s.link} className={`offer-card gold-card reveal${i > 0 ? ` d${i}` : ''}`}>

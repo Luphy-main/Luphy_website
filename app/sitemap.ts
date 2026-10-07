@@ -17,7 +17,6 @@ const routes: Array<{ url: string; priority: number; changeFrequency: MetadataRo
   { url: '/performance-commerciale/outbound', priority: 0.85, changeFrequency: 'monthly' },
   { url: '/performance-operationnelle', priority: 0.9, changeFrequency: 'monthly' },
   { url: '/performance-operationnelle/ia', priority: 0.85, changeFrequency: 'monthly' },
-  { url: '/performance-operationnelle/automatisation', priority: 0.8, changeFrequency: 'monthly' },
   { url: '/formation', priority: 0.9, changeFrequency: 'monthly' },
   { url: '/formation/acculturation-ia', priority: 0.8, changeFrequency: 'monthly' },
   { url: '/formation/claude', priority: 0.8, changeFrequency: 'monthly' },
