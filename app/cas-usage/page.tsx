@@ -23,13 +23,15 @@ type CasUsage = {
   _id: string
   titre: string
   slug: string
+  client?: string
   categorie: string
   secteur: string
-  description: string
+  description?: string
+  kpis?: { valeur: string; libelle: string }[]
   datePublication?: string
 }
 
-const CATEGORIES = ['Tous', 'CRM Affinity', 'CRM DealCloud', 'CRM HubSpot', 'CRM Pipedrive', 'CRM Notion', 'Automatisation', 'IA Claude']
+const CATEGORIES = ['Tous', 'Outbound', 'CRM Affinity', 'CRM DealCloud', 'CRM HubSpot', 'CRM Pipedrive', 'CRM Notion', 'IA', 'IA Claude', 'Automatisation']
 
 const schema = {
   '@context': 'https://schema.org',
@@ -70,7 +72,7 @@ export default async function Page() {
 
       <section className="section">
         <div className="container">
-          {/* Filtres statiques, interactifs en Phase 4 */}
+          {/* Filtres */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 40 }}>
             {CATEGORIES.map((cat, i) => (
               <span key={i}
@@ -97,14 +99,27 @@ export default async function Page() {
                   style={{ textDecoration: 'none' }}>
                   <div className="offer-card-line" />
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 14, gap: 8 }}>
-                    <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--sky)', background: 'rgba(75,159,191,0.12)', border: '1px solid rgba(75,159,191,0.25)', borderRadius: 5, padding: '3px 10px' }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--sky)', background: 'rgba(75,159,191,0.12)', border: '1px solid rgba(75,159,191,0.25)', borderRadius: 5, padding: '3px 10px', flexShrink: 0 }}>
                       {c.categorie}
                     </span>
-                    <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', whiteSpace: 'nowrap' }}>{c.secteur}</span>
+                    <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', textAlign: 'right' }}>{c.secteur}</span>
                   </div>
                   <h3 style={{ fontSize: 17, marginBottom: 10 }}>{c.titre}</h3>
+                  {c.client && (
+                    <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.45)', marginBottom: 8, fontWeight: 500 }}>{c.client}</p>
+                  )}
                   {c.description && (
                     <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.65)', lineHeight: 1.6 }}>{c.description}</p>
+                  )}
+                  {c.kpis && c.kpis.length > 0 && (
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 16 }}>
+                      {c.kpis.slice(0, 2).map((k, j) => (
+                        <div key={j} style={{ background: 'rgba(75,159,191,0.08)', border: '1px solid rgba(75,159,191,0.2)', borderRadius: 6, padding: '6px 12px' }}>
+                          <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--sky)', fontFamily: 'var(--font-sora)' }}>{k.valeur}</div>
+                          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>{k.libelle}</div>
+                        </div>
+                      ))}
+                    </div>
                   )}
                   <div className="card-link" style={{ marginTop: 20, color: 'var(--sky)', display: 'flex', alignItems: 'center', gap: 6 }}>
                     Lire le cas d&apos;usage {SVG_ARROW}

@@ -6,8 +6,11 @@ export const CAS_USAGE_LIST = groq`
     _id,
     titre,
     "slug": slug.current,
+    client,
     categorie,
     secteur,
+    outils,
+    kpis,
     description,
     datePublication,
   }
@@ -22,12 +25,18 @@ export const CAS_USAGE_BY_SLUG = groq`
     _id,
     titre,
     "slug": slug.current,
+    client,
     categorie,
     secteur,
+    outils,
+    kpis,
+    enBref,
     description,
     contenu,
+    auteur,
     metaDescription,
     datePublication,
+    dateMiseAJour,
   }
 `
 

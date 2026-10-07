@@ -19,18 +19,25 @@ export const casUsage = defineType({
       validation: r => r.required(),
     }),
     defineField({
+      name: 'client',
+      title: 'Client',
+      type: 'string',
+    }),
+    defineField({
       name: 'categorie',
       title: 'Catégorie',
       type: 'string',
       options: {
         list: [
+          { title: 'Outbound', value: 'Outbound' },
           { title: 'CRM Affinity', value: 'CRM Affinity' },
           { title: 'CRM DealCloud', value: 'CRM DealCloud' },
           { title: 'CRM HubSpot', value: 'CRM HubSpot' },
           { title: 'CRM Pipedrive', value: 'CRM Pipedrive' },
           { title: 'CRM Notion', value: 'CRM Notion' },
-          { title: 'Automatisation', value: 'Automatisation' },
+          { title: 'IA', value: 'IA' },
           { title: 'IA Claude', value: 'IA Claude' },
+          { title: 'Automatisation', value: 'Automatisation' },
         ],
       },
       validation: r => r.required(),
@@ -45,9 +52,38 @@ export const casUsage = defineType({
           { title: 'Boutique M&A', value: 'Boutique M&A' },
           { title: 'Société de gestion', value: 'Société de gestion' },
           { title: 'Cabinet de conseil', value: 'Cabinet de conseil' },
+          { title: 'Écosystème marchés privés', value: 'Écosystème marchés privés' },
+          { title: 'Startup / Scale-up', value: 'Startup / Scale-up' },
         ],
       },
       validation: r => r.required(),
+    }),
+    defineField({
+      name: 'outils',
+      title: 'Outils',
+      type: 'array',
+      of: [{ type: 'string' }],
+    }),
+    defineField({
+      name: 'kpis',
+      title: 'KPIs résultats',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({ name: 'valeur', title: 'Chiffre / valeur', type: 'string' }),
+            defineField({ name: 'libelle', title: 'Libellé', type: 'string' }),
+          ],
+          preview: { select: { title: 'valeur', subtitle: 'libelle' } },
+        },
+      ],
+    }),
+    defineField({
+      name: 'enBref',
+      title: 'En bref (résumé)',
+      type: 'text',
+      rows: 4,
     }),
     defineField({
       name: 'description',
@@ -78,6 +114,12 @@ export const casUsage = defineType({
       ],
     }),
     defineField({
+      name: 'auteur',
+      title: 'Auteur',
+      type: 'string',
+      initialValue: 'Titouan Galpin',
+    }),
+    defineField({
       name: 'metaDescription',
       title: 'Meta description SEO',
       type: 'text',
@@ -87,6 +129,11 @@ export const casUsage = defineType({
     defineField({
       name: 'datePublication',
       title: 'Date de publication',
+      type: 'date',
+    }),
+    defineField({
+      name: 'dateMiseAJour',
+      title: 'Date de mise à jour',
       type: 'date',
     }),
   ],
