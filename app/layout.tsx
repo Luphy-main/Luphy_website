@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Sora, Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import ConditionalLayout from '@/components/ConditionalLayout'
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, OG_IMAGE, MIDBOUND_SCRIPT } from '@/lib/constants'
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <ConditionalLayout>{children}</ConditionalLayout>
+        <Analytics />
       </body>
     </html>
   )
