@@ -6,6 +6,7 @@ temporary screenshots/
 
 # Fichiers confidentiels — ne jamais committer
 docs/private/
+.env*.local
 
 # Images : exclure à la racine, autoriser dans les sous-dossiers d'assets
 *.png
