@@ -8,6 +8,7 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: process.env.NODE_ENV === 'production',
+  // Pas de CDN : après un webhook de revalidation, on doit lire la version publiée à jour
+  useCdn: false,
   perspective: 'published',
 })

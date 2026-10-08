@@ -17,23 +17,8 @@ export async function POST(req: NextRequest) {
     const body = await req.json().catch(() => ({}))
     const docType: string = body?._type ?? body?.document?._type ?? ''
 
-    switch (docType) {
-      case 'casUsage':
-        revalidatePath('/cas-usage', 'layout')
-        break
-      case 'casClient':
-        revalidatePath('/cas-clients', 'layout')
-        break
-      case 'temoignage':
-        revalidatePath('/temoignages', 'layout')
-        break
-      case 'article':
-        revalidatePath('/ressources', 'layout')
-        break
-      default:
-        // Type inconnu : revalider tout (sécurité)
-        revalidatePath('/', 'layout')
-    }
+    // Site petit : on revalide tout, quel que soit le type publié, pour n'oublier aucune page
+    revalidatePath('/', 'layout')
 
     return NextResponse.json({ revalidated: true, type: docType, now: Date.now() })
   } catch (err) {
