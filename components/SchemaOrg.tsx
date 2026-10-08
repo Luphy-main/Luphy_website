@@ -14,7 +14,7 @@ export default function SchemaOrg({ type = 'website', url }: SchemaOrgProps) {
     '@id': `${SITE_URL}/#organization`,
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/brand-assets/Luphy_White_Logo.png`,
+    logo: `${SITE_URL}/brand-assets/luphy-logo-square.png`,
     description:
       "Luphy est une agence de performance digitale basée à Paris, spécialisée dans la finance (fonds d'investissement, M&A, sociétés de gestion, conseil). Elle conseille et implémente des solutions CRM, d'automatisation et d'IA, en partant d'une méthodologie de diagnostic centrée sur le ROI.",
     address: { '@type': 'PostalAddress', addressLocality: 'Paris', addressCountry: 'FR' },

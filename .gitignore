@@ -26,3 +26,4 @@ docs/private/
 !public/case-study-assets/**/*.png
 !public/case-study-assets/**/*.jpg
 !public/case-study-assets/**/*.jpeg
+!app/*.png

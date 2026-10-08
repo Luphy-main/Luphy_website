@@ -36,11 +36,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: [OG_IMAGE],
   },
-  icons: {
-    icon: '/brand-assets/favicon.png',
-    shortcut: '/brand-assets/favicon.png',
-    apple: '/brand-assets/favicon.png',
-  },
   robots: { index: true, follow: true },
 }
 
