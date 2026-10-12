@@ -199,22 +199,22 @@ export default async function HomePage() {
           <div className="why-cards">
             <div className="why-card reveal">
               <div className="why-card-diamond">◆</div>
-              <h4>Spécialisation finance</h4>
+              <h3>Spécialisation finance</h3>
               <p>Fonds VC/PE, M&A, sociétés de gestion, cabinets de conseil. Nous connaissons vos enjeux, vos outils et vos contraintes de confidentialité.</p>
             </div>
             <div className="why-card reveal d1">
               <div className="why-card-diamond">◆</div>
-              <h4>Du diagnostic à l&apos;implémentation</h4>
+              <h3>Du diagnostic à l&apos;implémentation</h3>
               <p>Nous chiffrons la valeur financière de chaque chantier avant de déployer. Aucun projet sans ROI identifié.</p>
             </div>
             <div className="why-card reveal d2">
               <div className="why-card-diamond">◆</div>
-              <h4>Cas d&apos;usage éprouvés</h4>
+              <h3>Cas d&apos;usage éprouvés</h3>
               <p>Nos solutions s&apos;appuient sur des déploiements déjà réalisés chez des acteurs similaires, ce qui réduit les risques et accélère la mise en œuvre.</p>
             </div>
             <div className="why-card reveal d3">
               <div className="why-card-diamond">◆</div>
-              <h4>Formation incluse</h4>
+              <h3>Formation incluse</h3>
               <p>Un déploiement sans adoption ne crée aucune valeur. Nous formons vos équipes sur vos données et vos process réels, jusqu&apos;à l&apos;usage quotidien.</p>
             </div>
           </div>

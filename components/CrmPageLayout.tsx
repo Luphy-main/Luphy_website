@@ -138,7 +138,7 @@ export default function CrmPageLayout({ data }: { data: CrmData }) {
           <div className="why-cards" style={{ maxWidth: 920 }}>
             <div className="why-card reveal">
               <div className="why-card-diamond">◆</div>
-              <h4>Migrations possibles</h4>
+              <h3>Migrations possibles</h3>
               <ul style={{ paddingLeft: 16, marginTop: 8 }}>
                 {data.migrations.map((m, i) => (
                   <li key={i} style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.55)', lineHeight: 1.85 }}>{m}</li>
@@ -147,7 +147,7 @@ export default function CrmPageLayout({ data }: { data: CrmData }) {
             </div>
             <div className="why-card reveal d1">
               <div className="why-card-diamond">◆</div>
-              <h4>Intégrations courantes</h4>
+              <h3>Intégrations courantes</h3>
               <ul style={{ paddingLeft: 16, marginTop: 8 }}>
                 {data.integrations.map((it, i) => (
                   <li key={i} style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.55)', lineHeight: 1.85 }}>{it}</li>

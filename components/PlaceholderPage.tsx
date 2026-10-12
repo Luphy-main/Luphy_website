@@ -8,7 +8,7 @@ interface Props {
 
 export default function PlaceholderPage({ label, title, subtitle }: Props) {
   return (
-    <main style={{ minHeight: '82vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '140px 24px 96px', textAlign: 'center' }}>
+    <div style={{ minHeight: '82vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '140px 24px 96px', textAlign: 'center' }}>
       <div>
         {label && <div className="label" style={{ display: 'inline-block', marginBottom: 16 }}>{label}</div>}
         <h1 className="sec-title" style={{ marginBottom: 18 }}>{title}</h1>
@@ -24,6 +24,6 @@ export default function PlaceholderPage({ label, title, subtitle }: Props) {
           </Link>
         </div>
       </div>
-    </main>
+    </div>
   )
 }

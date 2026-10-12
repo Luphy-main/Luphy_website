@@ -103,12 +103,12 @@ export default function Page() {
           <div className="why-cards" style={{ marginTop: 40 }}>
             <div className="why-card reveal">
               <div className="why-card-diamond">◆</div>
-              <h4>Titouan Galpin</h4>
+              <h3>Titouan Galpin</h3>
               <p>Expérience en investissement, relations investisseurs, finance et accompagnement de sociétés financières. Pôle performance commerciale : CRM, outbound, structuration de la relation investisseur.</p>
             </div>
             <div className="why-card reveal d1">
               <div className="why-card-diamond">◆</div>
-              <h4>Tristan Camilli</h4>
+              <h3>Tristan Camilli</h3>
               <p>Opérations, digitalisation, CRM, automatisation et IA. Ancien Head of Operations chez Caption.market. INSA Toulouse, ESCP. Pôle performance opérationnelle : automatisation, IA, formation.</p>
             </div>
           </div>
@@ -176,22 +176,22 @@ export default function Page() {
           <div className="why-cards" style={{ marginTop: 40 }}>
             <div className="why-card reveal">
               <div className="why-card-diamond">◆</div>
-              <h4>Niveaux de criticité</h4>
+              <h3>Niveaux de criticité</h3>
               <p>Explore, Assist, Execute, Restricted. Chaque donnée est classifiée et traitée dans l&apos;environnement adapté à son niveau de sensibilité.</p>
             </div>
             <div className="why-card reveal d1">
               <div className="why-card-diamond">◆</div>
-              <h4>Hébergement UE</h4>
+              <h3>Hébergement UE</h3>
               <p>Quand la réglementation ou vos contraintes internes l&apos;exigent, nous privilégions des solutions hébergées en Europe.</p>
             </div>
             <div className="why-card reveal d2">
               <div className="why-card-diamond">◆</div>
-              <h4>Pas d&apos;entraînement sur vos données</h4>
+              <h3>Pas d&apos;entraînement sur vos données</h3>
               <p>Nous configurons les outils (offres entreprise, API) pour que vos données ne servent pas à entraîner les modèles.</p>
             </div>
             <div className="why-card reveal d3">
               <div className="why-card-diamond">◆</div>
-              <h4>Charte d&apos;usage IA</h4>
+              <h3>Charte d&apos;usage IA</h3>
               <p>Incluse dans chaque mission de formation. Elle définit clairement ce que les équipes peuvent confier à l&apos;IA, dans quelles conditions et avec quels garde-fous.</p>
             </div>
           </div>

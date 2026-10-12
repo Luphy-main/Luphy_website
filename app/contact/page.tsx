@@ -2,7 +2,7 @@ import { CTA_COMMERCIAL, CTA_OPERATIONNEL } from '@/lib/constants'
 
 export default function ContactPage() {
   return (
-    <main style={{ minHeight: '82vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '140px 24px 96px', textAlign: 'center' }}>
+    <div style={{ minHeight: '82vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '140px 24px 96px', textAlign: 'center' }}>
       <div style={{ maxWidth: 560 }}>
         <div className="label" style={{ display: 'inline-block', marginBottom: 16 }}>Contact</div>
         <h1 className="sec-title" style={{ marginBottom: 18 }}>Parlons de votre organisation.</h1>
@@ -25,6 +25,6 @@ export default function ContactPage() {
           Ou par email : <a href="mailto:titouan@luphy.io" style={{ color: 'var(--sky)' }}>titouan@luphy.io</a>
         </p>
       </div>
-    </main>
+    </div>
   )
 }

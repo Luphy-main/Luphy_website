@@ -1,11 +1,13 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import ClientEffects from '@/components/ClientEffects'
 import SchemaOrg from '@/components/SchemaOrg'
 import { SITE_URL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { ARTICLE_BY_SLUG } from '@/sanity/lib/queries'
+import { imageDimensions } from '@/sanity/lib/image'
 
 type Article = {
   _id: string
@@ -48,15 +50,18 @@ const ptComponents = {
     ),
   },
   types: {
-    image: ({ value }: { value?: { asset?: unknown; alt?: string; caption?: string } }) => {
+    image: ({ value }: { value?: { asset?: { _ref?: string }; alt?: string; caption?: string } }) => {
       if (!value?.asset) return null
+      const dims = imageDimensions(value)
       return (
         <figure style={{ margin: '40px 0' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={`https://cdn.sanity.io/images/fbdmm8o7/production/${(value.asset as { _ref?: string })?._ref?.replace('image-', '').replace(/-(\w+)$/, '.$1')}`}
+          <Image
+            src={`https://cdn.sanity.io/images/fbdmm8o7/production/${value.asset._ref?.replace('image-', '').replace(/-(\w+)$/, '.$1')}`}
             alt={value.alt || ''}
-            style={{ width: '100%', borderRadius: 8 }}
+            width={dims?.width ?? 1200}
+            height={dims?.height ?? 675}
+            sizes="(max-width: 768px) 100vw, 760px"
+            style={{ width: '100%', height: 'auto', borderRadius: 8 }}
           />
           {value.caption && (
             <figcaption style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', textAlign: 'center', marginTop: 8 }}>

@@ -33,12 +33,13 @@ export default function Header() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 40 }}>
           <Link href="/" className="nav-logo-link" onClick={() => setMobileOpen(false)}>
             <Image
-              src="/brand-assets/Luphy_White_Logo.png"
+              src="/brand-assets/luphy-logo-white.svg"
               alt="Luphy"
-              width={160}
+              width={80}
               height={80}
               className="nav-logo"
               priority
+              unoptimized
               style={{ height: 80, width: 'auto' }}
             />
           </Link>

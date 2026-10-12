@@ -125,7 +125,7 @@ export default function Page() {
             {POUR_QUI.map((p, i) => (
               <div key={i} className={`why-card reveal${i > 0 ? ` d${Math.min(i, 3)}` : ''}`}>
                 <div className="why-card-diamond">◆</div>
-                <h4>{p.label}</h4>
+                <h3>{p.label}</h3>
                 <p>{p.desc}</p>
               </div>
             ))}

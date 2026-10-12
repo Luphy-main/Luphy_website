@@ -129,7 +129,7 @@ export default function Page() {
               <div key={i} className={`deliv-item reveal${i > 0 ? ` d${Math.min(i, 3)}` : ''}`}>
                 <div className="deliv-icon">{p.icon}</div>
                 <div className="deliv-text">
-                  <h4>{p.title}</h4>
+                  <h3>{p.title}</h3>
                   <p>{p.desc}</p>
                 </div>
               </div>

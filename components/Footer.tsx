@@ -19,10 +19,11 @@ export default function Footer() {
       <footer>
         <Link href="/">
           <Image
-            src="/brand-assets/Luphy_White_Logo.png"
+            src="/brand-assets/luphy-logo-white.svg"
             alt="Luphy"
-            width={120}
+            width={52}
             height={52}
+            unoptimized
             style={{ height: 52, width: 'auto', opacity: 0.85 }}
           />
         </Link>
@@ -45,7 +46,7 @@ export default function Footer() {
             href="https://ecosystem.hubspot.com/fr/marketplace/solutions/luphy"
             target="_blank"
             rel="noopener"
-            style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', textDecoration: 'none', fontWeight: 500, letterSpacing: '0.04em' }}
+            style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', textDecoration: 'none', fontWeight: 500, letterSpacing: '0.04em' }}
           >
             HubSpot Solutions Partner
           </a>

@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function NotFound() {
   return (
-    <main style={{ minHeight: '82vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '140px 24px 96px', textAlign: 'center' }}>
+    <div style={{ minHeight: '82vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '140px 24px 96px', textAlign: 'center' }}>
       <div>
         <div className="label" style={{ display: 'inline-block', marginBottom: 16 }}>Erreur 404</div>
         <h1 className="sec-title" style={{ marginBottom: 18 }}>Page introuvable</h1>
@@ -13,6 +13,6 @@ export default function NotFound() {
           ← Retour à l&apos;accueil
         </Link>
       </div>
-    </main>
+    </div>
   )
 }

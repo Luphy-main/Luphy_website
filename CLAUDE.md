@@ -32,7 +32,7 @@ Propriétaire : Tristan (Président Luphy). Répondre en français.
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET` : optionnels (valeurs par défaut dans `sanity/lib/client.ts`)
 
 ## Structure
-- `app/` : une route = un dossier avec `page.tsx`. `app/layout.tsx` contient le layout racine (polices, métadonnées par défaut, script Midbound, Vercel Analytics).
+- `app/` : une route = un dossier avec `page.tsx`. `app/layout.tsx` contient le layout racine (polices, métadonnées par défaut, Vercel Analytics) ; `components/ConditionalLayout.tsx` ajoute Header, Footer, `<main>` et le script Midbound hors `/studio`.
   - Offres : `performance-commerciale/` (crm et ses sous-pages par outil, outbound), `performance-operationnelle/` (ia, automatisation), `formation/`, `secteurs/`
   - Contenus Sanity : `cas-clients/`, `cas-usage/`, `temoignages/`, `ressources/` (listes + `[slug]`)
   - Autres : `methode`, `equipe`, `expertise-finance`, `faq`, `contact`, `sitemap.ts`, `robots.ts`, `not-found.tsx`
@@ -64,7 +64,7 @@ Propriétaire : Tristan (Président Luphy). Répondre en français.
 - Chaque page exporte ses `metadata` (title, description, Open Graph). og:image absolue en `https://www.luphy.io/...`, 1200×630.
 - Liens internes sans `.html`.
 - Toute nouvelle page doit figurer dans `app/sitemap.ts`.
-- Le script Midbound est chargé dans `app/layout.tsx` : ne pas le retirer.
+- Le script Midbound est chargé dans `components/ConditionalLayout.tsx` (`lazyOnload`, hors `/studio`) : ne pas le retirer.
 
 ## Captures d'écran
 - `node screenshot.mjs http://localhost:3000` → `./temporary screenshots/screenshot-N.png` (Puppeteer, `npm install` la première fois)

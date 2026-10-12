@@ -191,7 +191,7 @@ export default function Page() {
             {DIFFERENCIANTS.map((d, i) => (
               <div key={i} className={`why-card reveal${i > 0 ? ` d${Math.min(i, 3)}` : ''}`}>
                 <div className="why-card-diamond">◆</div>
-                <h4>{d.title}</h4>
+                <h3>{d.title}</h3>
                 <p>{d.desc}</p>
               </div>
             ))}

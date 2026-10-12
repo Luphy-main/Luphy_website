@@ -143,6 +143,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
                     width={1200}
                     height={400}
                     sizes="(max-width: 768px) 100vw, 1200px"
+                    priority
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   />
                 </div>

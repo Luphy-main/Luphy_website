@@ -46,7 +46,7 @@ const TEAM = [
     domaines: ['Automatisation (n8n, Make)', 'IA et agents Claude', 'Acculturation IA dirigeants et équipes', 'Coaching IA individuel'],
     cta: CTA_OPERATIONNEL,
     ctaLabel: 'Échanger avec Tristan',
-    photo: '/brand-assets/team/tristan-camilli.png',
+    photo: '/brand-assets/team/tristan-camilli.jpg',
     photoAlt: 'Tristan Camilli, co-fondateur de Luphy',
   },
 ]
@@ -106,7 +106,6 @@ function TeamPhoto({ src, alt }: { src: string; alt: string }) {
         fill
         sizes="(max-width: 768px) 100vw, 320px"
         style={{ objectFit: 'cover', objectPosition: 'center top' }}
-        priority
       />
     </div>
   )
@@ -197,7 +196,7 @@ export default function Page() {
             {VALEURS.map((v, i) => (
               <div key={i} className={`why-card reveal${i > 0 ? ` d${Math.min(i, 3)}` : ''}`}>
                 <div className="why-card-diamond">◆</div>
-                <h4>{v.title}</h4>
+                <h3>{v.title}</h3>
                 <p>{v.desc}</p>
               </div>
             ))}

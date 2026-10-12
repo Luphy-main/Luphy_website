@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import { Sora, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import ConditionalLayout from '@/components/ConditionalLayout'
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, OG_IMAGE, MIDBOUND_SCRIPT } from '@/lib/constants'
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, OG_IMAGE } from '@/lib/constants'
 
 const sora = Sora({
   subsets: ['latin'],
@@ -42,9 +41,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${sora.variable} ${inter.variable}`}>
-      <head>
-        <Script src={MIDBOUND_SCRIPT} strategy="afterInteractive" />
-      </head>
       <body>
         <ConditionalLayout>{children}</ConditionalLayout>
         <Analytics />

@@ -182,7 +182,7 @@ export default function Page() {
             {CE_QUE_NOUS_FAISONS.map((c, i) => (
               <div key={i} className={`why-card reveal${i > 0 ? ` d${Math.min(i, 3)}` : ''}`}>
                 <div className="why-card-diamond">◆</div>
-                <h4>{c.title}</h4>
+                <h3>{c.title}</h3>
                 <p>{c.desc}</p>
               </div>
             ))}

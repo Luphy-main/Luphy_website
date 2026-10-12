@@ -6,7 +6,7 @@ import SchemaOrg from '@/components/SchemaOrg'
 import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { CAS_CLIENT_BY_SLUG } from '@/sanity/lib/queries'
-import { urlFor } from '@/sanity/lib/image'
+import { urlFor, imageDimensions } from '@/sanity/lib/image'
 
 type Kpi     = { _key?: string; valeur: string; unite?: string; libelle: string; source?: string }
 type Enjeu   = { _key?: string; titre: string; texte: string }
@@ -70,6 +70,9 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
 
   const logoUrl = data.logo ? urlFor(data.logo).height(80).fit('max').url() : null
   const coverUrl = data.imageCouverture ? urlFor(data.imageCouverture).width(1080).fit('max').url() : null
+  const coverDims = imageDimensions(data.imageCouverture)
+  const coverWidth = coverDims ? Math.min(coverDims.width, 1080) : 1080
+  const coverHeight = coverDims ? Math.round(coverDims.height * coverWidth / coverDims.width) : 608
   const coverAlt: string = data.imageCouverture?.alt ?? `Image de couverture ${data.client}`
   const coverLegende: string | undefined = data.imageCouverture?.legende
 
@@ -138,6 +141,7 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
               alt={`Logo ${data.client}`}
               width={160}
               height={56}
+              priority
               style={{ objectFit: 'contain', maxHeight: 56, width: 'auto' }}
             />
           </div>
@@ -216,8 +220,8 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
             <Image
               src={coverUrl}
               alt={coverAlt}
-              width={0}
-              height={0}
+              width={coverWidth}
+              height={coverHeight}
               sizes="(max-width: 768px) 100vw, 1080px"
               style={{ width: '100%', height: 'auto', display: 'block' }}
             />
