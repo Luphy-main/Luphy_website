@@ -50,8 +50,8 @@ export default function ConditionalLayout({ children }: { children: React.ReactN
       <Header />
       <main>{children}</main>
       <Footer />
-      {/* HubSpot : suivi + bannière de consentement, jamais sur /studio */}
-      <Script id="hs-script-loader" src={HUBSPOT_SCRIPT} strategy="afterInteractive" />
+      {/* HubSpot : suivi + bannière de consentement, chargé après le load de la page, jamais sur /studio */}
+      <Script id="hs-script-loader" src={HUBSPOT_SCRIPT} strategy="lazyOnload" />
     </>
   )
 }
