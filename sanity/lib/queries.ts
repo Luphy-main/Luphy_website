@@ -140,6 +140,19 @@ export const ARTICLES_LIST = groq`
   }
 `
 
+// llms.txt et sitemap : pages détail publiées, avec une ligne de description
+export const LLMS_CONTENT = groq`{
+  "casClients": *[_type == "casClient" && defined(slug.current)] | order(ordre asc, client asc) {
+    titre, "slug": slug.current, "description": coalesce(metaDescription, chapeau)
+  },
+  "casUsage": *[_type == "casUsage" && defined(slug.current)] | order(datePublication desc) {
+    titre, "slug": slug.current, "description": coalesce(metaDescription, description)
+  },
+  "articles": *[_type == "article" && defined(slug.current)] | order(datePublication desc) {
+    titre, "slug": slug.current, "description": coalesce(chapeau, metaDescription)
+  }
+}`
+
 export const ARTICLE_SLUGS = groq`
   *[_type == "article" && defined(slug.current)][].slug.current
 `

@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/lib/constants'
+import { client } from '@/sanity/lib/client'
+import { LLMS_CONTENT } from '@/sanity/lib/queries'
 
 const now = new Date().toISOString().split('T')[0]
 
@@ -41,8 +43,23 @@ const routes: Array<{ url: string; priority: number; changeFrequency: MetadataRo
   { url: '/contact', priority: 0.7, changeFrequency: 'monthly' },
 ]
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.map(({ url, priority, changeFrequency }) => ({
+// Pages détail Sanity publiées après la mise en ligne : ajoutées automatiquement
+export const revalidate = 3600
+
+type Slugs = Record<'casClients' | 'casUsage' | 'articles', Array<{ slug: string }>>
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const { casClients, casUsage, articles } = await client.fetch<Slugs>(LLMS_CONTENT)
+  const known = new Set(routes.map((r) => r.url))
+  const fromSanity = [
+    ...casClients.map(({ slug }) => `/cas-clients/${slug}`),
+    ...casUsage.map(({ slug }) => `/cas-usage/${slug}`),
+    ...articles.map(({ slug }) => `/ressources/${slug}`),
+  ]
+    .filter((url) => !known.has(url))
+    .map((url) => ({ url, priority: 0.7, changeFrequency: 'monthly' as const }))
+
+  return [...routes, ...fromSanity].map(({ url, priority, changeFrequency }) => ({
     url: `${SITE_URL}${url}`,
     lastModified: now,
     changeFrequency,

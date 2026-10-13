@@ -19,6 +19,9 @@ export async function POST(req: NextRequest) {
 
     // Site petit : on revalide tout, quel que soit le type publié, pour n'oublier aucune page
     revalidatePath('/', 'layout')
+    // Routes générées hors layout, listant les contenus Sanity
+    revalidatePath('/llms.txt')
+    revalidatePath('/sitemap.xml')
 
     return NextResponse.json({ revalidated: true, type: docType, now: Date.now() })
   } catch (err) {
