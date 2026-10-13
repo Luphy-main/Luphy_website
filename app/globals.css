@@ -382,8 +382,8 @@ footer img:hover { opacity: 1; }
 footer p { font-size: 13px; color: rgba(255,255,255,0.5); }
 .footer-right { display: flex; align-items: center; gap: 20px; }
 .footer-legal {
-  background: none; border: none; color: rgba(255,255,255,0.5); font-size: 13px;
-  cursor: pointer; transition: color 0.2s; text-decoration: underline; text-underline-offset: 3px;
+  background: none; border: none; padding: 0; font-family: inherit;
+  color: rgba(255,255,255,0.5); font-size: 13px; cursor: pointer; transition: color 0.2s; text-decoration: underline; text-underline-offset: 3px;
 }
 .footer-legal:hover { color: rgba(255,255,255,0.8); }
 .footer-linkedin {
@@ -392,6 +392,50 @@ footer p { font-size: 13px; color: rgba(255,255,255,0.5); }
   transition: color 0.2s;
 }
 .footer-linkedin:hover { color: var(--sky); }
+
+/* ── BANNIÈRE COOKIES HUBSPOT (injectée par le script HubSpot) ── */
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a,
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a:hover {
+  color: #4A9FBF !important; text-decoration: underline !important; text-underline-offset: 3px;
+}
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-confirmation-button,
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-decline-button,
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-cookie-settings-button {
+  background: #4A9FBF !important; color: #fff !important;
+  border: 1px solid #4A9FBF !important; border-radius: 8px !important;
+  font-family: inherit !important; font-size: 14px !important; font-weight: 600 !important;
+  line-height: 1.2 !important; text-decoration: none !important; white-space: nowrap !important;
+  padding: 12px 20px !important; margin: 0 !important; height: auto !important;
+  flex: 0 0 200px !important; width: 200px !important; min-width: 0 !important; max-width: 100% !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
+  cursor: pointer; transition: opacity 0.2s;
+}
+@media (max-width: 640px) {
+  div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-confirmation-button,
+  div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-decline-button,
+  div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-cookie-settings-button {
+    flex: 1 1 100% !important; width: 100% !important;
+  }
+  div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner div#hs-eu-confirmation-button-group,
+  div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner div#hs-eu-opt-in-buttons {
+    flex: 1 1 100% !important; width: 100% !important;
+  }
+}
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-confirmation-button:hover,
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-decline-button:hover,
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-cookie-settings-button:hover { opacity: 0.85; }
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-confirmation-button:focus-visible,
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-decline-button:focus-visible,
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-cookie-settings-button:focus-visible {
+  outline: 2px solid #fff !important; outline-offset: 2px;
+}
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-confirmation-button:active,
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-decline-button:active,
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner button#hs-eu-cookie-settings-button:active { opacity: 0.7; }
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner div#hs-eu-confirmation-button-group,
+div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner div#hs-eu-opt-in-buttons {
+  display: flex !important; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px;
+}
 
 /* ── BREADCRUMB ── */
 .breadcrumb {

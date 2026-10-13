@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import Image from 'next/image'
 import { LINKEDIN_URL } from '@/lib/constants'
@@ -42,6 +43,16 @@ export default function Footer() {
           <Link href="/mentions-legales" className="footer-legal">
             Mentions légales
           </Link>
+          <button
+            type="button"
+            className="footer-legal"
+            onClick={() => {
+              window._hsp = window._hsp || []
+              window._hsp.push(['showBanner'])
+            }}
+          >
+            Gérer les cookies
+          </button>
         </div>
       </footer>
     </>
