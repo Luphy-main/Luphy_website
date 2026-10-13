@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { CTA_COMMERCIAL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Performance commerciale | Luphy',
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     title: 'Performance commerciale | Luphy',
     description: 'CRM, prospection et pilotage commercial pour les acteurs de la finance.',
     url: `${SITE_URL}/performance-commerciale`,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 

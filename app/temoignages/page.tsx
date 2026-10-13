@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { TEMOIGNAGES_LIST } from '@/sanity/lib/queries'
 
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: 'Témoignages clients | Luphy',
     description: "Ce que disent nos clients sur leur transformation CRM et IA avec Luphy.",
     url: `${SITE_URL}/temoignages`,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 

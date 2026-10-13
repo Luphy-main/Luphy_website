@@ -49,6 +49,7 @@ export default function HeroAnimation() {
       container.appendChild(svg)
 
       requestAnimationFrame(() => {
+        if (cancelled) return
         pathEls.forEach(({ el: p, i }) => {
           const len = p.getTotalLength()
           if (!len) return
@@ -57,7 +58,7 @@ export default function HeroAnimation() {
           const delay = -(Math.random() * duration)
           const baseOpacity = Math.min(0.04 + i * 0.009, 0.32)
           p.style.strokeDasharray = `${dashLen} ${len}`
-          p.animate(
+          const animation = p.animate(
             [
               { strokeDashoffset: '0', strokeOpacity: String(baseOpacity * 0.5) },
               { strokeDashoffset: String(-len * 0.4), strokeOpacity: String(baseOpacity), offset: 0.4 },
@@ -65,9 +66,19 @@ export default function HeroAnimation() {
             ],
             { duration, delay, iterations: Infinity, easing: 'linear' }
           )
+          animations.push(animation)
         })
+        applyMotion()
       })
     }
+
+    // Mobile (< 768 px) ou « réduire les animations » : courbes figées sur une image de l'animation
+    const staticQuery = window.matchMedia('(max-width: 767px), (prefers-reduced-motion: reduce)')
+    const animations: Animation[] = []
+    const applyMotion = () => {
+      animations.forEach((a) => (staticQuery.matches ? a.pause() : a.play()))
+    }
+    staticQuery.addEventListener('change', applyMotion)
 
     const schedule = () => {
       if (hasIdle) idleId = window.requestIdleCallback(start, { timeout: 2000 })
@@ -79,6 +90,8 @@ export default function HeroAnimation() {
     return () => {
       cancelled = true
       window.removeEventListener('load', schedule)
+      staticQuery.removeEventListener('change', applyMotion)
+      animations.forEach((a) => a.cancel())
       if (idleId !== undefined) {
         if (hasIdle) window.cancelIdleCallback(idleId)
         else window.clearTimeout(idleId)

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import ClientEffects from '@/components/ClientEffects'
 import SchemaOrg from '@/components/SchemaOrg'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { CAS_USAGE_BY_SLUG, CAS_USAGE_SLUGS } from '@/sanity/lib/queries'
 
@@ -49,6 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: data.titre,
       description: data.metaDescription || data.description,
       url: `${SITE_URL}/cas-usage/${slug}`,
+      images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
     },
   }
 }

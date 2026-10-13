@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Acculturation IA | Formation Luphy',
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     title: 'Acculturation IA | Formation Luphy',
     description: "Programme d'acculturation IA pour dirigeants et managers des métiers de la finance.",
     url: `${SITE_URL}/formation/acculturation-ia`,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 

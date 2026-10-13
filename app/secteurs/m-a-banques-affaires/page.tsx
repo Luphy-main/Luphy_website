@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'M&A et banques d\'affaires | Luphy',
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     title: 'M&A et banques d\'affaires | Luphy',
     description: "CRM DealCloud ou Affinity, outbound et automatisation pour les acteurs M&A.",
     url: `${SITE_URL}/secteurs/m-a-banques-affaires`,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 

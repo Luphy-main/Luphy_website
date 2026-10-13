@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { CTA_COMMERCIAL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Formation CRM | Adoption Luphy',
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     title: 'Formation CRM | Adoption Luphy',
     description: "Formation adoption CRM sur vos données réelles.",
     url: `${SITE_URL}/formation/crm`,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 

@@ -16,6 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${data.titre} | Luphy`,
       description: data.metaDescription || data.chapeau,
       url: `${SITE_URL}/ressources/crm-fonds-2026`,
+      images: [{ url: `${SITE_URL}/og-ressources.png`, width: 1200, height: 630 }],
     },
   }
 }

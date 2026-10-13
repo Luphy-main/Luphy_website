@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${data.titre} | Luphy`,
       description: data.metaDescription || data.chapeau,
       url: `${SITE_URL}/ressources/${slug}`,
+      images: [{ url: `${SITE_URL}/og-ressources.png`, width: 1200, height: 630 }],
     },
   }
 }

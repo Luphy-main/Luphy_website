@@ -4,7 +4,7 @@ import Image from 'next/image'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
 import HeroAnimation from '@/components/HeroAnimation'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { TEMOIGNAGES_FEATURED } from '@/sanity/lib/queries'
 
@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     description:
       "Du conseil à l'implémentation : CRM, automatisation et IA pour les fonds d'investissement, M&A et cabinets de conseil.",
     url: SITE_URL,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 

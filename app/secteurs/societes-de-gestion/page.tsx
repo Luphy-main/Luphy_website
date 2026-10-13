@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Sociétés de gestion | Luphy',
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     title: 'Sociétés de gestion | Luphy',
     description: "CRM Affinity ou HubSpot, automatisation et IA pour les sociétés de gestion.",
     url: `${SITE_URL}/secteurs/societes-de-gestion`,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 

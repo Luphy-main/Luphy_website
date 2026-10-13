@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { CTA_COMMERCIAL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'CRM sur mesure | Luphy',
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     title: 'CRM sur mesure | Luphy',
     description: "Ce que nous construisons quand les CRM du marché ne suffisent pas.",
     url: `${SITE_URL}/performance-commerciale/crm/sur-mesure`,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 

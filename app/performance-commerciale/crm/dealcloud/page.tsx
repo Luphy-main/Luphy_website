@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import CrmPageLayout, { type CrmData } from '@/components/CrmPageLayout'
-import { SITE_URL } from '@/lib/constants'
+import { SITE_URL, OG_IMAGE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Implémentation DealCloud | Luphy',
@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     title: 'Implémentation DealCloud | Luphy',
     description: "Déploiement DealCloud pour boutiques M&A et banques d'affaires.",
     url: `${SITE_URL}/performance-commerciale/crm/dealcloud`,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 

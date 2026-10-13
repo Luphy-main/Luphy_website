@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Expertise financière | Luphy',
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     title: 'Expertise financière | Luphy',
     description: "Spécialisation finance d'investissement, M&A, sociétés de gestion et conseil.",
     url: `${SITE_URL}/expertise-finance`,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 

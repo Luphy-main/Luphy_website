@@ -3,7 +3,7 @@ import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
 import MethodeCalculator from '@/components/MethodeCalculator'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 
 export const metadata: Metadata = {
   title: 'Diagnostic Performance ROI | Luphy',
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     title: 'Diagnostic Performance ROI | Luphy',
     description: 'Identifier, chiffrer et prioriser les chantiers CRM, automatisation et IA à plus fort ROI.',
     url: `${SITE_URL}/methode`,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 

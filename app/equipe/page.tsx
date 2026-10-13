@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 
 const HUBSPOT_PARTNER_URL = 'https://ecosystem.hubspot.com/fr/marketplace/solutions/luphy'
 
@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     title: "L'équipe | Luphy",
     description: "Rencontrez les co-fondateurs de Luphy, spécialistes CRM et IA pour la finance.",
     url: `${SITE_URL}/equipe`,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
 }
 
