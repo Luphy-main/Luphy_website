@@ -73,8 +73,10 @@ export default function Page() {
 
           <h2>Données personnelles</h2>
           <p>
-            Les informations collectées via les formulaires de contact sont utilisées uniquement pour
-            répondre à vos demandes. Contact : <a href="mailto:titouan@luphy.io">titouan@luphy.io</a>
+            Les informations que vous nous transmettez lors d&apos;une prise de rendez-vous ou d&apos;un
+            échange par e-mail sont utilisées uniquement pour répondre à vos demandes. Conformément au
+            RGPD, vous pouvez exercer vos droits d&apos;accès, de rectification et de suppression en
+            écrivant à <a href="mailto:titouan@luphy.io">titouan@luphy.io</a>.
           </p>
         </div>
       </section>

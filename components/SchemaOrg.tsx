@@ -18,13 +18,7 @@ export default function SchemaOrg({ type = 'website', url }: SchemaOrgProps) {
     logo: `${SITE_URL}/brand-assets/luphy-logo-square.png`,
     description:
       "Luphy est une agence de performance digitale basée à Paris, spécialisée dans la finance (fonds d'investissement, M&A, sociétés de gestion, conseil). Elle conseille et implémente des solutions CRM, d'automatisation et d'IA, en partant d'une méthodologie de diagnostic centrée sur le ROI.",
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Centre commercial des Hameaux, 1 place des Hameaux',
-      postalCode: '91130',
-      addressLocality: 'Ris-Orangis',
-      addressCountry: 'FR',
-    },
+    address: { '@type': 'PostalAddress', addressLocality: 'Paris', addressCountry: 'FR' },
     vatID: 'FR32939716833',
     identifier: { '@type': 'PropertyValue', propertyID: 'SIREN', value: '939716833' },
     areaServed: 'FR',

@@ -393,27 +393,6 @@ footer p { font-size: 13px; color: rgba(255,255,255,0.5); }
 }
 .footer-linkedin:hover { color: var(--sky); }
 
-/* ── MODAL ── */
-.modal-overlay {
-  display: none; position: fixed; inset: 0; background: rgba(7,30,44,0.85);
-  backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; padding: 24px;
-}
-.modal-overlay.open { display: flex; }
-.modal-box {
-  background: #0D3D58; border: 1px solid rgba(74,159,191,0.2); border-radius: 18px;
-  padding: 48px; max-width: 560px; width: 100%; position: relative; max-height: 80vh; overflow-y: auto;
-}
-.modal-close {
-  position: absolute; top: 18px; right: 18px; background: rgba(255,255,255,0.08);
-  border: none; color: rgba(255,255,255,0.6); border-radius: 8px; width: 34px; height: 34px;
-  cursor: pointer; font-size: 15px; transition: background 0.2s, color 0.2s;
-}
-.modal-close:hover { background: rgba(255,255,255,0.14); color: #fff; }
-.modal-box h2 { font-size: 22px; font-weight: 700; margin-bottom: 28px; color: #fff; }
-.modal-box h3 { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sky); margin: 22px 0 8px; }
-.modal-box p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; }
-.modal-box a { color: var(--sky); }
-
 /* ── BREADCRUMB ── */
 .breadcrumb {
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
