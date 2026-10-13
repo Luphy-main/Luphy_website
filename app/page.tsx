@@ -47,7 +47,7 @@ export default async function HomePage() {
         <div className="hero-grain" />
         <HeroAnimation />
         <div className="hero-content">
-          <h1 className="hero-h1 a1">
+          <h1 className="hero-h1">
             Automatisez ce qui vous ralentit.
             <em>Concentrez-vous sur ce qui vous différencie.</em>
           </h1>

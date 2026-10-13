@@ -440,10 +440,12 @@ footer p { font-size: 13px; color: rgba(255,255,255,0.5); }
   to { opacity: 1; transform: translateY(0); }
 }
 .a0 { opacity: 0; animation: fadeUp 0.75s ease forwards; }
-.a1 { opacity: 0; animation: fadeUp 0.75s ease 0.15s forwards; }
 .a2 { opacity: 0; animation: fadeUp 0.75s ease 0.3s forwards; }
 .a3 { opacity: 0; animation: fadeUp 0.75s ease 0.45s forwards; }
 .a4 { opacity: 0; animation: fadeUp 0.75s ease 0.6s forwards; }
+@media (prefers-reduced-motion: reduce) {
+  .a2, .a3, .a4 { opacity: 1; animation: none; }
+}
 
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
 .reveal.v { opacity: 1; transform: none; }
