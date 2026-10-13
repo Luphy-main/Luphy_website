@@ -47,6 +47,7 @@ const OPTIONAL: Lien[] = [
   { titre: "M&A et banques d'affaires", url: url('/secteurs/m-a-banques-affaires'), description: "CRM et automatisation pour boutiques M&A et banques d'affaires. Suivi des mandats, gestion de la confidentialité, sourcing acquéreurs, outbound structuré." },
   { titre: 'Sociétés de gestion', url: url('/secteurs/societes-de-gestion'), description: "CRM, automatisation et IA pour les sociétés de gestion d'actifs, asset managers et family offices. Suivi IR, reporting LPs, outbound structuré." },
   { titre: 'Cabinets de conseil', url: url('/secteurs/conseil'), description: 'CRM, outbound et IA pour les cabinets de conseil en stratégie, management et boutiques spécialisées finance. Pilotage du pipe missions, prospection structurée, productivité IA.' },
+  { titre: 'Mentions légales', url: url('/mentions-legales'), description: "Luphy SAS, cabinet de conseil et d'intégration (pas un éditeur de logiciel) : siège, RCS Evry 939 716 833, TVA, hébergement." },
 ]
 
 const ligne = ({ titre, url, description }: Lien) =>

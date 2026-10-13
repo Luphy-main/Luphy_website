@@ -30,6 +30,12 @@ const nextConfig: NextConfig = {
       { source: '/case-study-allyum.html', destination: '/cas-clients/allyum', permanent: true },
       { source: '/case-study-fundora.html', destination: '/cas-clients/fundora', permanent: true },
       { source: '/case-study-hoppi.html', destination: '/cas-clients/hoppi', permanent: true },
+      // Anciennes pages légales (/cgu citée par les IA) : page unique
+      { source: '/cgu', destination: '/mentions-legales', permanent: true },
+      { source: '/cgu.html', destination: '/mentions-legales', permanent: true },
+      { source: '/cgv', destination: '/mentions-legales', permanent: true },
+      { source: '/conditions-generales', destination: '/mentions-legales', permanent: true },
+      { source: '/mentions-legales.html', destination: '/mentions-legales', permanent: true },
       { source: '/cas-clients.html', destination: '/cas-clients', permanent: true },
     ]
   },

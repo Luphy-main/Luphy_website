@@ -544,3 +544,11 @@ footer p { font-size: 13px; color: rgba(255,255,255,0.5); }
   .page-hero { padding: 120px 24px 64px; }
   .why-stat-single { flex-direction: column; text-align: center; padding: 24px; }
 }
+
+/* ── MENTIONS LÉGALES ── */
+.legal-page { max-width: 760px; }
+.legal-page h2 { font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sky); margin: 36px 0 12px; }
+.legal-page h2:first-child { margin-top: 0; }
+.legal-page p { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.8; }
+.legal-page strong { color: #fff; }
+.legal-page a { color: var(--sky); }

@@ -1,19 +1,8 @@
-'use client'
-
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { LINKEDIN_URL } from '@/lib/constants'
 
 export default function Footer() {
-  const [legalOpen, setLegalOpen] = useState(false)
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setLegalOpen(false) }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [])
-
   return (
     <>
       <footer>
@@ -50,39 +39,11 @@ export default function Footer() {
           >
             HubSpot Solutions Partner
           </a>
-          <button className="footer-legal" onClick={() => setLegalOpen(true)}>
+          <Link href="/mentions-legales" className="footer-legal">
             Mentions légales
-          </button>
+          </Link>
         </div>
       </footer>
-
-      {/* Mentions légales modal */}
-      <div
-        className={`modal-overlay${legalOpen ? ' open' : ''}`}
-        onClick={(e) => { if (e.target === e.currentTarget) setLegalOpen(false) }}
-      >
-        <div className="modal-box">
-          <button className="modal-close" onClick={() => setLegalOpen(false)} aria-label="Fermer">✕</button>
-          <h2>Mentions légales</h2>
-          <h3>Éditeur du site</h3>
-          <p>
-            <strong>Luphy SAS</strong><br />
-            Société par actions simplifiée au capital variable<br />
-            Siège social : Paris, France<br />
-            Directeur de la publication : Titouan Galpin<br />
-            Contact : <a href="mailto:titouan@luphy.io">titouan@luphy.io</a>
-          </p>
-          <h3>Hébergement</h3>
-          <p>
-            Le site est hébergé par Vercel Inc. (San Francisco, CA).<br />
-            Pour toute question : <a href="mailto:titouan@luphy.io">titouan@luphy.io</a>
-          </p>
-          <h3>Propriété intellectuelle</h3>
-          <p>L&apos;ensemble des contenus présents sur ce site sont la propriété exclusive de Luphy SAS et sont protégés par le droit de la propriété intellectuelle.</p>
-          <h3>Données personnelles</h3>
-          <p>Les informations collectées via les formulaires de contact sont utilisées uniquement pour répondre à vos demandes. Contact : <a href="mailto:titouan@luphy.io">titouan@luphy.io</a></p>
-        </div>
-      </div>
     </>
   )
 }
