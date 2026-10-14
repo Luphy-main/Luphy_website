@@ -58,7 +58,7 @@ export function personId(nom: string) {
   return `${SITE_URL}/#${slug}`
 }
 
-// jobTitle : la fonction affichée (/equipe) ou le titre officiel (founder), au choix de l'appelant
+// jobTitle : en pratique le titre officiel (repli sur la fonction affichée), passé par l'appelant
 export function personJsonLd(m: MembreEquipe, jobTitle: string | undefined, extra: Record<string, unknown> = {}) {
   const photo = photoMembre(m)
   return {
