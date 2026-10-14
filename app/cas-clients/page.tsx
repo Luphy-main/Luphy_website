@@ -7,6 +7,7 @@ import { CTA_COMMERCIAL, SITE_URL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { CAS_CLIENTS_LIST } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
+import { formatLocalisation, type Localisation } from '@/sanity/lib/casClient'
 
 export const revalidate = 3600
 
@@ -28,7 +29,9 @@ type CasClient = {
   client: string
   slug: string
   secteur?: string
+  localisation?: Localisation
   pole?: string
+  doublePole?: boolean
   outils?: string[]
   titre: string
   chapeau?: string
@@ -154,7 +157,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
                       <Image src={featuredLogo} alt={`Logo ${featured.client}`} width={120} height={40} style={{ objectFit: 'contain', maxHeight: 40, width: 'auto' }} />
                     </div>
                   : <span className="cc-chip accent" style={{ marginBottom: 12, display: 'inline-flex' }}>
-                      {[featured.secteur, ...(featured.outils ?? [])].filter(Boolean).join(' · ')}
+                      {[featured.secteur, formatLocalisation(featured.localisation), ...(featured.outils ?? [])].filter(Boolean).join(' · ')}
                     </span>
                 }
                 <h2>{featured.titre}</h2>
@@ -192,6 +195,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
               const kpi = e.kpiPrincipal
               const cardCover = e.imageCouverture ? urlFor(e.imageCouverture).width(600).height(338).fit('crop').url() : null
               const cardLogo = e.logo ? urlFor(e.logo).height(48).fit('max').url() : null
+              const lieu = formatLocalisation(e.localisation)
               return (
                 <a key={e._id} className="cc-card" href={`/cas-clients/${e.slug}`}>
                   {cardCover && (
@@ -219,6 +223,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
                     <p className="cc-card-client">
                       <strong className="cc-accent">{e.client}</strong>
                       {e.secteur && <span style={{ color: 'var(--text-3)', fontWeight: 400 }}> · {e.secteur}</span>}
+                      {lieu && <span style={{ color: 'var(--text-3)', fontWeight: 400 }}> · {lieu}</span>}
                     </p>
                     {kpi && (
                       <div className="cc-kpi-inline">

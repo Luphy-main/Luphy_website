@@ -7,6 +7,9 @@ import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { CAS_CLIENT_BY_SLUG } from '@/sanity/lib/queries'
 import { urlFor, imageDimensions } from '@/sanity/lib/image'
+import { formatLocalisation, type Localisation } from '@/sanity/lib/casClient'
+
+const POLES = { commercial: 'Performance commerciale', operationnel: 'Performance opérationnelle' } as const
 
 type Kpi     = { _key?: string; valeur: string; unite?: string; libelle: string; source?: string }
 type Enjeu   = { _key?: string; titre: string; texte: string }
@@ -15,7 +18,7 @@ type FaqItem = { _key?: string; question: string; reponse: string }
 
 type CasClient = {
   _id: string; client: string; slug: string
-  secteur?: string; pole?: string; outils?: string[]
+  secteur?: string; localisation?: Localisation; pole?: string; doublePole?: boolean; outils?: string[]
   titre: string; titreAccent?: string; enBref?: string; chapeau?: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   logo?: any
@@ -24,6 +27,7 @@ type CasClient = {
   taille?: string; duree?: string; periode?: string; perimetre?: string
   kpis?: Kpi[]
   verbatim?: string; verbatimAuteur?: string; verbatimFonction?: string
+  verbatimPhoto?: { asset?: { _ref?: string }; alt?: string; hotspot?: { x: number; y: number }; crop?: unknown }
   enjeux?: Enjeu[]
   etapes?: Etape[]
   resultatsTexte?: string
@@ -83,6 +87,18 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
 
   const enBref = data.enBref || data.chapeau || ''
   const titreParts = splitTitre(data.titre, data.titreAccent)
+  const localisation = formatLocalisation(data.localisation)
+
+  // Badges de pôle : le pôle principal, puis l'autre si le cas relève des deux
+  const polePrincipal: keyof typeof POLES | null =
+    data.pole === 'operationnel' ? 'operationnel' : data.pole === 'commercial' ? 'commercial' : null
+  const autrePole: keyof typeof POLES = polePrincipal === 'commercial' ? 'operationnel' : 'commercial'
+  const badgesPole = polePrincipal ? (data.doublePole ? [polePrincipal, autrePole] : [polePrincipal]) : []
+
+  // Avatar du verbatim : photo carrée recadrée sur le point focal, sinon initiales
+  const photoAuteur = data.verbatimPhoto?.asset
+    ? urlFor(data.verbatimPhoto).width(96).height(96).fit('crop').url()
+    : null
 
   const faqSchema = data.faq && data.faq.length > 0
     ? {
@@ -107,6 +123,18 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
         ...(data.dateMiseAJour && { dateModified: data.dateMiseAJour }),
         author: { '@type': 'Person', name: data.auteur || 'Luphy' },
         publisher: { '@type': 'Organization', name: 'Luphy', url: SITE_URL },
+        // Organisation cliente et son adresse, seulement si la localisation est renseignée
+        ...(localisation && {
+          about: {
+            '@type': 'Organization',
+            name: data.client,
+            address: {
+              '@type': 'PostalAddress',
+              ...(data.localisation?.ville?.trim() && { addressLocality: data.localisation.ville.trim() }),
+              ...(data.localisation?.pays?.trim() && { addressCountry: data.localisation.pays.trim() }),
+            },
+          },
+        }),
       },
       ...(faqSchema ? [faqSchema] : []),
       {
@@ -157,16 +185,14 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
 
         <div className="cc-chips-row">
           {data.secteur && <span className="cc-chip accent">{data.secteur}</span>}
-          {data.pole && (
-            <span className="cc-chip">
-              {data.pole === 'operationnel' ? 'Performance opérationnelle' : 'Performance commerciale'}
-            </span>
-          )}
+          {localisation && <span className="cc-chip">{localisation}</span>}
+          {badgesPole.map(p => <span key={p} className="cc-chip">{POLES[p]}</span>)}
         </div>
 
         {/* Bandeau méta horizontal */}
         <dl className="cc-meta-band">
           {data.secteur && <div><dt>Secteur</dt><dd>{data.secteur}</dd></div>}
+          {localisation && <div><dt>Localisation</dt><dd>{localisation}</dd></div>}
           {data.taille && <div><dt>Taille</dt><dd>{data.taille}</dd></div>}
           {data.duree && <div><dt>Durée</dt><dd>{data.duree}</dd></div>}
           {data.periode && <div><dt>Période</dt><dd>{data.periode}</dd></div>}
@@ -237,7 +263,13 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
             <blockquote>{data.verbatim}</blockquote>
             {data.verbatimAuteur && (
               <figcaption className="cc-who">
-                <span className="cc-avatar" aria-hidden="true">{initiales(data.verbatimAuteur)}</span>
+                {photoAuteur ? (
+                  <span className="cc-avatar cc-avatar-photo">
+                    <Image src={photoAuteur} alt={data.verbatimPhoto?.alt ?? data.verbatimAuteur} width={48} height={48} />
+                  </span>
+                ) : (
+                  <span className="cc-avatar" aria-hidden="true">{initiales(data.verbatimAuteur)}</span>
+                )}
                 <span>
                   <b>{data.verbatimAuteur}</b>
                   <span>{data.verbatimFonction}{data.verbatimFonction ? ', ' : ''}{data.client}</span>

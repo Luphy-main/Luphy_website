@@ -38,6 +38,7 @@ export const temoignage = defineType({
           { title: 'Boutique M&A', value: 'Boutique M&A' },
           { title: 'Société de gestion', value: 'Société de gestion' },
           { title: 'Cabinet de conseil', value: 'Cabinet de conseil' },
+          { title: 'Art & luxe', value: 'Art & luxe' },
         ],
       },
     }),

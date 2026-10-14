@@ -222,3 +222,6 @@
   .cc-cover { margin-block: 40px; }
   .cc-meta-band { gap: 12px 24px; }
 }
+/* Avatar du verbatim avec photo (sinon initiales) */
+.cc-avatar-photo { overflow: hidden; background: none; }
+.cc-avatar-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }

@@ -52,12 +52,23 @@ export const casClient = defineType({
           { title: 'Cabinet de conseil', value: 'Cabinet de conseil' },
           { title: 'Fintech', value: 'Fintech' },
           { title: 'Startup / Scale-up', value: 'Startup / Scale-up' },
+          { title: 'Art & luxe', value: 'Art & luxe' },
         ],
       },
     }),
     defineField({
+      name: 'localisation',
+      title: 'Localisation du client',
+      type: 'object',
+      description: 'Affichée « Ville, Pays » à côté du secteur',
+      fields: [
+        defineField({ name: 'ville', title: 'Ville', type: 'string' }),
+        defineField({ name: 'pays', title: 'Pays', type: 'string', initialValue: 'France' }),
+      ],
+    }),
+    defineField({
       name: 'pole',
-      title: 'Pôle (détermine le CTA)',
+      title: 'Pôle principal (détermine le bouton de rendez-vous)',
       type: 'string',
       options: {
         list: [
@@ -66,6 +77,13 @@ export const casClient = defineType({
         ],
         layout: 'radio',
       },
+    }),
+    defineField({
+      name: 'doublePole',
+      title: "Relève aussi de l'autre pôle",
+      type: 'boolean',
+      initialValue: false,
+      description: 'Si coché, la fiche affiche les deux badges. Le bouton de rendez-vous reste celui du pôle principal.',
     }),
     defineField({
       name: 'outils',
@@ -126,6 +144,16 @@ export const casClient = defineType({
     defineField({ name: 'verbatim', title: 'Verbatim client (citation exacte)', type: 'text', rows: 4 }),
     defineField({ name: 'verbatimAuteur', title: 'Auteur du verbatim', type: 'string' }),
     defineField({ name: 'verbatimFonction', title: 'Fonction', type: 'string' }),
+    defineField({
+      name: 'verbatimPhoto',
+      title: "Photo de l'auteur du verbatim (optionnelle)",
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Affichée en avatar rond ; sans photo, les initiales sont affichées',
+      fields: [
+        defineField({ name: 'alt', title: 'Texte alternatif', type: 'string', validation: r => r.required() }),
+      ],
+    }),
 
     // ── Enjeux ────────────────────────────────────────────────────────────────
     defineField({
