@@ -23,6 +23,10 @@ export default defineConfig({
             S.listItem().title('Études de cas clients').schemaType('casClient').child(S.documentTypeList('casClient')),
             S.listItem().title('Témoignages').schemaType('temoignage').child(S.documentTypeList('temoignage')),
             S.listItem().title('Articles').schemaType('article').child(S.documentTypeList('article')),
+            S.listItem()
+              .title('Équipe')
+              .schemaType('membreEquipe')
+              .child(S.documentTypeList('membreEquipe').defaultOrdering([{ field: 'ordre', direction: 'asc' }])),
           ]),
     }),
   ],

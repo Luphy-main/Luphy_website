@@ -1,4 +1,5 @@
 import { SITE_URL, SITE_NAME, LINKEDIN_URL } from '@/lib/constants'
+import { getEquipe, personJsonLd } from '@/sanity/lib/equipe'
 
 interface SchemaOrgProps {
   type?: 'website' | 'article'
@@ -7,7 +8,9 @@ interface SchemaOrgProps {
   url?: string
 }
 
-export default function SchemaOrg({ type = 'website', url }: SchemaOrgProps) {
+export default async function SchemaOrg({ type = 'website', url }: SchemaOrgProps) {
+  const fondateurs = (await getEquipe()).filter(m => m.fondateur)
+
   const organization = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -28,25 +31,7 @@ export default function SchemaOrg({ type = 'website', url }: SchemaOrgProps) {
       name: 'HubSpot Solutions Partner Program',
       url: 'https://ecosystem.hubspot.com/fr/marketplace/solutions/luphy',
     },
-    founder: [
-      {
-        '@type': 'Person',
-        '@id': `${SITE_URL}/#titouan-galpin`,
-        name: 'Titouan Galpin',
-        jobTitle: 'Co-fondateur & Directeur général',
-        worksFor: { '@id': `${SITE_URL}/#organization` },
-        sameAs: 'https://www.linkedin.com/in/titouan-galpin/',
-      },
-      {
-        '@type': 'Person',
-        '@id': `${SITE_URL}/#tristan-camilli`,
-        name: 'Tristan Camilli',
-        jobTitle: 'Co-fondateur & Président',
-        worksFor: { '@id': `${SITE_URL}/#organization` },
-        alumniOf: ['INSA Toulouse', 'ESCP'],
-        sameAs: 'https://www.linkedin.com/in/tristan-camilli/',
-      },
-    ],
+    ...(fondateurs.length > 0 && { founder: fondateurs.map(m => personJsonLd(m)) }),
   }
 
   const webpage = {

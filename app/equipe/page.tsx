@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
+import { PortableText, type PortableTextComponents } from '@portabletext/react'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
 import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
+import { getEquipe, decouperNom, photoMembre, ctaMembre, personJsonLd } from '@/sanity/lib/equipe'
+
+export const revalidate = 3600
 
 const HUBSPOT_PARTNER_URL = 'https://ecosystem.hubspot.com/fr/marketplace/solutions/luphy'
 
@@ -19,38 +23,11 @@ export const metadata: Metadata = {
   },
 }
 
-const TEAM = [
-  {
-    prenom: 'Titouan',
-    nom: 'Galpin',
-    role: 'COO · Pôle CRM & commercial',
-    bio: [
-      "Titouan pilote le pôle performance commerciale : CRM, outbound et structuration de la relation investisseur.",
-      "Ancien VC, il a ensuite été Head of Investor Relations chez Caption. Il connaît de l'intérieur la façon dont un fonds suit ses deals, ses LP et son réseau.",
-      "Formé en finance et en droit.",
-    ],
-    domaines: ['CRM Affinity, DealCloud, HubSpot, Pipedrive', 'Prospection outbound', 'Pipeline et performance commerciale', 'Formation équipes commerciales'],
-    cta: CTA_COMMERCIAL,
-    ctaLabel: 'Échanger avec Titouan',
-    photo: '/brand-assets/team/titouan-galpin-2026.jpg',
-    photoAlt: 'Titouan Galpin, co-fondateur de Luphy',
-  },
-  {
-    prenom: 'Tristan',
-    nom: 'Camilli',
-    role: 'CEO · Pôle IA & opérations',
-    bio: [
-      "Tristan pilote le pôle performance opérationnelle : automatisation, IA et formation des équipes.",
-      "Avant Luphy, il était Head of Operations chez Caption (PSI / fonds).",
-      "Formé à l'INSA Toulouse et à l'ESCP.",
-    ],
-    domaines: ['Automatisation (n8n, Make)', 'IA et agents Claude', 'Acculturation IA dirigeants et équipes', 'Coaching IA individuel'],
-    cta: CTA_OPERATIONNEL,
-    ctaLabel: 'Échanger avec Tristan',
-    photo: '/brand-assets/team/tristan-camilli.jpg',
-    photoAlt: 'Tristan Camilli, co-fondateur de Luphy',
-  },
-]
+const BIO_PARAGRAPHE = { marginBottom: 16, fontSize: 16, lineHeight: 1.7 }
+
+const BIO_COMPONENTS: PortableTextComponents = {
+  block: { normal: ({ children }) => <p style={BIO_PARAGRAPHE}>{children}</p> },
+}
 
 const VALEURS = [
   { title: 'Spécialisation finance', desc: 'Nous travaillons exclusivement avec des acteurs de la finance. Nos recommandations sont adaptées à vos contraintes métier, pas copiées depuis un autre secteur.' },
@@ -59,38 +36,6 @@ const VALEURS = [
   { title: 'ROI mesurable', desc: 'Chaque projet commence par un diagnostic avec des indicateurs clairs. Nous mesurons l\'impact et nous en rendons compte.' },
 ]
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'AboutPage',
-      name: "L'équipe Luphy",
-      url: `${SITE_URL}/equipe`,
-      description: "Titouan Galpin et Tristan Camilli, co-fondateurs de Luphy.",
-    },
-    {
-      '@type': 'Person',
-      name: 'Titouan Galpin',
-      jobTitle: 'COO · Pôle CRM & commercial',
-      worksFor: { '@type': 'Organization', name: 'Luphy', url: SITE_URL },
-      url: `${SITE_URL}/equipe`,
-    },
-    {
-      '@type': 'Person',
-      name: 'Tristan Camilli',
-      jobTitle: 'CEO · Pôle IA & opérations',
-      worksFor: { '@type': 'Organization', name: 'Luphy', url: SITE_URL },
-      url: `${SITE_URL}/equipe`,
-    },
-    {
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Accueil', item: SITE_URL },
-        { '@type': 'ListItem', position: 2, name: "L'équipe", item: `${SITE_URL}/equipe` },
-      ],
-    },
-  ],
-}
 
 const SVG_ARROW = (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -98,7 +43,7 @@ const SVG_ARROW = (
   </svg>
 )
 
-function TeamPhoto({ src, alt }: { src: string; alt: string }) {
+function TeamPhoto({ src, alt, objectPosition }: { src: string; alt: string; objectPosition: string }) {
   return (
     <div style={{ width: '100%', maxWidth: 320, borderRadius: 12, overflow: 'hidden', aspectRatio: '4/5', position: 'relative' }}>
       <Image
@@ -106,13 +51,35 @@ function TeamPhoto({ src, alt }: { src: string; alt: string }) {
         alt={alt}
         fill
         sizes="(max-width: 768px) 100vw, 320px"
-        style={{ objectFit: 'cover', objectPosition: 'center top' }}
+        style={{ objectFit: 'cover', objectPosition }}
       />
     </div>
   )
 }
 
-export default function Page() {
+export default async function Page() {
+  const team = await getEquipe()
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'AboutPage',
+        name: "L'équipe Luphy",
+        url: `${SITE_URL}/equipe`,
+        description: "Titouan Galpin et Tristan Camilli, co-fondateurs de Luphy.",
+      },
+      ...team.map(m => personJsonLd(m, { url: `${SITE_URL}/equipe` })),
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Accueil', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: "L'équipe", item: `${SITE_URL}/equipe` },
+        ],
+      },
+    ],
+  }
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -156,36 +123,47 @@ export default function Page() {
       </section>
 
       {/* Fiches membres */}
-      {TEAM.map((m, i) => (
-        <section key={i} className="section" style={i % 2 === 0 ? { paddingTop: 80, paddingBottom: 80 } : { background: 'var(--dark)', paddingTop: 80, paddingBottom: 80 }}>
-          <div className="container" style={{ maxWidth: 1040 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 60, alignItems: 'start' }}
-              className={`reveal team-grid${i % 2 === 1 ? ' team-grid-reverse' : ''}`}>
-              <div><TeamPhoto src={m.photo} alt={m.photoAlt} /></div>
-              <div>
-                <div className="label" style={{ marginBottom: 8 }}>{m.role}</div>
-                <h2 style={{ margin: '0 0 24px', fontSize: 36 }}>{m.prenom} <strong>{m.nom}</strong></h2>
-                {m.bio.map((para, j) => (
-                  <p key={j} style={{ marginBottom: 16, fontSize: 16, lineHeight: 1.7 }}>{para}</p>
-                ))}
-                <div style={{ marginTop: 28, marginBottom: 28 }}>
-                  <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--sky)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>Domaines</p>
-                  <ul style={{ margin: 0, paddingLeft: 0, listStyle: 'none', display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-                    {m.domaines.map((d, k) => (
-                      <li key={k} style={{ background: 'rgba(75,159,191,0.12)', border: '1px solid rgba(75,159,191,0.25)', borderRadius: 6, padding: '5px 12px', fontSize: 13, color: 'var(--sky)' }}>
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
+      {team.map((m, i) => {
+        const { prenom, nomFamille } = decouperNom(m.nom)
+        const photo = photoMembre(m)
+        const cta = ctaMembre(m)
+        return (
+          <section key={m._id} className="section" style={i % 2 === 0 ? { paddingTop: 80, paddingBottom: 80 } : { background: 'var(--dark)', paddingTop: 80, paddingBottom: 80 }}>
+            <div className="container" style={{ maxWidth: 1040 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 60, alignItems: 'start' }}
+                className={`reveal team-grid${i % 2 === 1 ? ' team-grid-reverse' : ''}`}>
+                <div>{photo && <TeamPhoto {...photo} />}</div>
+                <div>
+                  {m.fonction && <div className="label" style={{ marginBottom: 8 }}>{m.fonction}</div>}
+                  <h2 style={{ margin: '0 0 24px', fontSize: 36 }}>{prenom} <strong>{nomFamille}</strong></h2>
+                  {m.bioLongue?.length ? (
+                    <PortableText value={m.bioLongue} components={BIO_COMPONENTS} />
+                  ) : (
+                    m.courteDescription?.split(/\n+/).map((para, j) => <p key={j} style={BIO_PARAGRAPHE}>{para}</p>)
+                  )}
+                  {m.domaines?.length ? (
+                    <div style={{ marginTop: 28, marginBottom: 28 }}>
+                      <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--sky)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 12 }}>Domaines</p>
+                      <ul style={{ margin: 0, paddingLeft: 0, listStyle: 'none', display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                        {m.domaines.map((d, k) => (
+                          <li key={k} style={{ background: 'rgba(75,159,191,0.12)', border: '1px solid rgba(75,159,191,0.25)', borderRadius: 6, padding: '5px 12px', fontSize: 13, color: 'var(--sky)' }}>
+                            {d}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                  {cta && (
+                    <a href={cta} target="_blank" rel="noopener" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                      Échanger avec {prenom} {SVG_ARROW}
+                    </a>
+                  )}
                 </div>
-                <a href={m.cta} target="_blank" rel="noopener" className="btn-primary" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                  {m.ctaLabel} {SVG_ARROW}
-                </a>
               </div>
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        )
+      })}
 
       {/* Valeurs */}
       <section className="section">

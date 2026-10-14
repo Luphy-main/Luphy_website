@@ -171,3 +171,19 @@ export const ARTICLE_BY_SLUG = groq`
     metaDescription,
   }
 `
+
+// Équipe (membres visibles)
+export const EQUIPE_LIST = groq`
+  *[_type == "membreEquipe" && visible != false] | order(ordre asc) {
+    _id,
+    nom,
+    photo,
+    fonction,
+    courteDescription,
+    bioLongue,
+    domaines,
+    pole,
+    linkedin,
+    fondateur,
+  }
+`

@@ -3,6 +3,9 @@ import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
 import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
+import { getEquipe } from '@/sanity/lib/equipe'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Expertise financière | Luphy',
@@ -41,7 +44,9 @@ const SECTORS = [
   { label: 'Cabinets de conseil et services pro', link: '/secteurs/conseil' },
 ]
 
-export default function Page() {
+export default async function Page() {
+  const fondateurs = (await getEquipe()).filter(m => m.fondateur)
+
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -102,16 +107,13 @@ export default function Page() {
           <div className="divider reveal" style={{ margin: '0 0 20px' }} />
           <h2 className="sec-title reveal">Deux fondateurs issus du secteur</h2>
           <div className="why-cards" style={{ marginTop: 40 }}>
-            <div className="why-card reveal">
-              <div className="why-card-diamond">◆</div>
-              <h3>Titouan Galpin</h3>
-              <p>Expérience en investissement, relations investisseurs, finance et accompagnement de sociétés financières. Pôle performance commerciale : CRM, outbound, structuration de la relation investisseur.</p>
-            </div>
-            <div className="why-card reveal d1">
-              <div className="why-card-diamond">◆</div>
-              <h3>Tristan Camilli</h3>
-              <p>Opérations, digitalisation, CRM, automatisation et IA. Ancien Head of Operations chez Caption.market. INSA Toulouse, ESCP. Pôle performance opérationnelle : automatisation, IA, formation.</p>
-            </div>
+            {fondateurs.map((m, i) => (
+              <div key={m._id} className={`why-card reveal${i > 0 ? ` d${Math.min(i, 3)}` : ''}`}>
+                <div className="why-card-diamond">◆</div>
+                <h3>{m.nom}</h3>
+                {m.courteDescription && <p>{m.courteDescription}</p>}
+              </div>
+            ))}
           </div>
         </div>
       </section>
