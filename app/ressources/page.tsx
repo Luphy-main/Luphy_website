@@ -5,11 +5,14 @@ import ClientEffects from '@/components/ClientEffects'
 import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { ARTICLES_LIST } from '@/sanity/lib/queries'
+import RessourcesListe from '@/components/RessourcesListe'
 
 export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: 'Ressources | Luphy',
+  // Les vues filtrées (?categorie=...) servent le même HTML : elles pointent vers la page complète
+  alternates: { canonical: `${SITE_URL}/ressources` },
   description:
     'Articles, guides et analyses sur le CRM, l\'IA et la performance commerciale pour les métiers de la finance. Par les consultants Luphy.',
   openGraph: {
@@ -77,32 +80,12 @@ export default async function Page() {
               Les articles arrivent bientôt.
             </p>
           ) : (
-            <div className="offers-grid">
-              {articles.map((a, i) => (
-                <Link
-                  key={a._id}
-                  href={`/ressources/${a.slug}`}
-                  className={`offer-card reveal${i > 0 ? ` d${Math.min(i % 4, 4)}` : ''}`}
-                  style={{ textDecoration: 'none' }}
-                >
-                  <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', marginBottom: 16 }}>
-                    {a.categorie && (
-                      <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--sky)', background: 'rgba(75,159,191,0.12)', border: '1px solid rgba(75,159,191,0.25)', borderRadius: 5, padding: '3px 10px' }}>{a.categorie}</span>
-                    )}
-                    {a.datePublication && (
-                      <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>{formatDate(a.datePublication)}</span>
-                    )}
-                  </div>
-                  <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 10, lineHeight: 1.4 }}>{a.titre}</h3>
-                  {a.chapeau && (
-                    <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', lineHeight: 1.65 }}>{a.chapeau}</p>
-                  )}
-                  <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--sky)', fontWeight: 600 }}>
-                    Lire l&apos;article {SVG_ARROW}
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <RessourcesListe
+              articles={articles.map(({ datePublication, ...a }) => ({
+                ...a,
+                date: datePublication ? formatDate(datePublication) : undefined,
+              }))}
+            />
           )}
         </div>
       </section>

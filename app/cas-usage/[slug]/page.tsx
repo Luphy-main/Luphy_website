@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import ClientEffects from '@/components/ClientEffects'
 import SchemaOrg from '@/components/SchemaOrg'
+import MentionNewsletter from '@/components/MentionNewsletter'
 import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { CAS_USAGE_BY_SLUG, CAS_USAGE_SLUGS } from '@/sanity/lib/queries'
@@ -29,6 +30,7 @@ type CasUsage = {
   metaDescription?: string
   datePublication?: string
   dateMiseAJour?: string
+  edition?: { numero?: number; lienLinkedIn?: string } | null
 }
 
 type Props = { params: Promise<{ slug: string }> }
@@ -199,6 +201,8 @@ export default async function Page({ params }: Props) {
           </div>
         </div>
       </section>
+
+      <MentionNewsletter edition={data.edition} maxWidth={860} />
 
       <section className="cta-sec">
         <div className="cta-glow" />

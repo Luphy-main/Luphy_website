@@ -27,10 +27,28 @@ export default defineConfig({
               .title('Équipe')
               .schemaType('membreEquipe')
               .child(S.documentTypeList('membreEquipe').defaultOrdering([{ field: 'ordre', direction: 'asc' }])),
+            S.listItem()
+              .title('Newsletter')
+              .child(
+                S.list()
+                  .title('Newsletter')
+                  .items([
+                    S.listItem()
+                      .title('Éditions')
+                      .schemaType('editionNL')
+                      .child(S.documentTypeList('editionNL').defaultOrdering([{ field: 'numero', direction: 'desc' }])),
+                    S.listItem()
+                      .title('Réglages')
+                      .schemaType('reglagesNewsletter')
+                      .child(S.document().schemaType('reglagesNewsletter').documentId('reglagesNewsletter')),
+                  ]),
+              ),
           ]),
     }),
   ],
   schema: {
     types: schemaTypes,
+    // Réglages newsletter : document unique, pas de création depuis le bouton « + »
+    templates: prev => prev.filter(t => t.schemaType !== 'reglagesNewsletter'),
   },
 })

@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { CATEGORIES_ARTICLE } from '../lib/categories'
 
 export const article = defineType({
   name: 'article',
@@ -82,14 +83,16 @@ export const article = defineType({
       title: 'Catégorie',
       type: 'string',
       options: {
-        list: [
-          { title: 'CRM', value: 'CRM' },
-          { title: 'IA', value: 'IA' },
-          { title: 'Automatisation', value: 'Automatisation' },
-          { title: 'Finance', value: 'Finance' },
-          { title: 'Méthode', value: 'Méthode' },
-        ],
+        list: CATEGORIES_ARTICLE.map(c => ({ title: c.titre, value: c.titre })),
       },
+      validation: r => r.required(),
+    }),
+    defineField({
+      name: 'editionNL',
+      title: 'Édition de la newsletter (optionnel)',
+      type: 'reference',
+      to: [{ type: 'editionNL' }],
+      description: 'Si renseigné, la page indique « Publié initialement dans la newsletter Luphy sur LinkedIn »',
     }),
     defineField({
       name: 'imageOg',

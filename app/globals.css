@@ -575,3 +575,25 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner div#hs-eu-opt-
 .legal-page p { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.8; }
 .legal-page strong { color: #fff; }
 .legal-page a { color: var(--sky); }
+
+/* ── NEWSLETTER : mention en fin d'article / cas d'usage ── */
+.mention-nl {
+  border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; margin: 0;
+  font-size: 13px; color: rgba(255,255,255,0.45);
+}
+.mention-nl a { color: var(--sky); font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(74,159,191,0.4); }
+.mention-nl a:hover { color: #fff; border-bottom-color: #fff; }
+.mention-nl a:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; border-radius: 2px; }
+.mention-nl a:active { opacity: 0.7; }
+
+/* ── RESSOURCES : filtre par catégorie ── */
+.filtre-cat { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 40px; }
+.filtre-cat button {
+  font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; padding: 8px 16px;
+}
+.filtre-cat button:hover { color: #fff; border-color: rgba(74,159,191,0.5); background: rgba(74,159,191,0.07); }
+.filtre-cat button:focus-visible { outline: 2px solid var(--sky); outline-offset: 2px; }
+.filtre-cat button:active { transform: scale(0.97); }
+.filtre-cat button[aria-pressed="true"] { color: var(--deep); background: var(--gold); border-color: var(--gold); }

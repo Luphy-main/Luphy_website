@@ -43,6 +43,13 @@ export const casUsage = defineType({
       validation: r => r.required(),
     }),
     defineField({
+      name: 'editionNL',
+      title: 'Édition de la newsletter (optionnel)',
+      type: 'reference',
+      to: [{ type: 'editionNL' }],
+      description: 'Si renseigné, la page indique « Publié initialement dans la newsletter Luphy sur LinkedIn »',
+    }),
+    defineField({
       name: 'secteur',
       title: 'Secteur',
       type: 'string',

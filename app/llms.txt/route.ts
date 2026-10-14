@@ -1,13 +1,14 @@
 import { client } from '@/sanity/lib/client'
 import { SITE_URL } from '@/lib/constants'
 import { LLMS_CONTENT } from '@/sanity/lib/queries'
+import { titreEdition } from '@/sanity/lib/newsletter'
 
 // Même rythme que les pages Sanity ; le webhook /api/revalidate rafraîchit immédiatement
 export const revalidate = 3600
 
 type Lien = { titre: string; url: string; description?: string }
 type Doc = { titre?: string; slug?: string; description?: string }
-type Contenu = { casClients: Doc[]; casUsage: Doc[]; articles: Doc[] }
+type Contenu = { casClients: Doc[]; casUsage: Doc[]; articles: Doc[]; editions: Array<{ numero: number; titre?: string; description?: string }> }
 
 const url = (path: string) => `${SITE_URL}${path}`
 
@@ -61,7 +62,15 @@ const depuisSanity = (docs: Doc[], base: string): Lien[] =>
 const section = (titre: string, liens: Lien[]) => [`## ${titre}`, '', ...liens.map(ligne)].join('\n')
 
 export async function GET() {
-  const { casClients, casUsage, articles } = await client.fetch<Contenu>(LLMS_CONTENT)
+  const { casClients, casUsage, articles, editions } = await client.fetch<Contenu>(LLMS_CONTENT)
+
+  // Newsletter : listée seulement s'il existe au moins une édition affichable
+  const newsletter: Lien[] = editions.length
+    ? [
+        { titre: 'Newsletter LinkedIn', url: url('/ressources/newsletter'), description: "Toutes les éditions de la newsletter Luphy sur LinkedIn : cas d'usage, opérations et articles de fond pour les acteurs de la finance." },
+        ...editions.map((e) => ({ titre: titreEdition(e), url: url(`/ressources/newsletter/${e.numero}`), description: e.description })),
+      ]
+    : []
 
   const texte = [
     '# Luphy',
@@ -85,6 +94,7 @@ export async function GET() {
     section('Ressources', [
       { titre: 'Toutes les ressources', url: url('/ressources'), description: "Articles, guides et analyses sur le CRM, l'IA et la performance commerciale pour les métiers de la finance. Par les consultants Luphy." },
       ...depuisSanity(articles, '/ressources'),
+      ...newsletter,
     ]),
     '',
     section('À propos', A_PROPOS),

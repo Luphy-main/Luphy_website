@@ -47,15 +47,17 @@ const routes: Array<{ url: string; priority: number; changeFrequency: MetadataRo
 // Pages détail Sanity publiées après la mise en ligne : ajoutées automatiquement
 export const revalidate = 3600
 
-type Slugs = Record<'casClients' | 'casUsage' | 'articles', Array<{ slug: string }>>
+type Slugs = Record<'casClients' | 'casUsage' | 'articles', Array<{ slug: string }>> & { editions: Array<{ numero: number }> }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { casClients, casUsage, articles } = await client.fetch<Slugs>(LLMS_CONTENT)
+  const { casClients, casUsage, articles, editions } = await client.fetch<Slugs>(LLMS_CONTENT)
   const known = new Set(routes.map((r) => r.url))
   const fromSanity = [
     ...casClients.map(({ slug }) => `/cas-clients/${slug}`),
     ...casUsage.map(({ slug }) => `/cas-usage/${slug}`),
     ...articles.map(({ slug }) => `/ressources/${slug}`),
+    // Newsletter : pages présentes seulement s'il existe au moins une édition affichable
+    ...(editions.length ? ['/ressources/newsletter', ...editions.map(({ numero }) => `/ressources/newsletter/${numero}`)] : []),
   ]
     .filter((url) => !known.has(url))
     .map((url) => ({ url, priority: 0.7, changeFrequency: 'monthly' as const }))

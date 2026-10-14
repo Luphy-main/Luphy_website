@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { PortableText } from '@portabletext/react'
 import ClientEffects from '@/components/ClientEffects'
 import SchemaOrg from '@/components/SchemaOrg'
+import MentionNewsletter from '@/components/MentionNewsletter'
 import { SITE_URL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { ARTICLE_BY_SLUG } from '@/sanity/lib/queries'
@@ -19,6 +20,7 @@ type Article = {
   datePublication?: string
   categorie?: string
   metaDescription?: string
+  edition?: { numero?: number; lienLinkedIn?: string } | null
 }
 
 type PtBlock = {
@@ -167,6 +169,8 @@ export default async function ArticleDetailPage({ slug }: { slug: string }) {
           </div>
         </section>
       )}
+
+      <MentionNewsletter edition={data.edition} maxWidth={780} />
 
       <ClientEffects />
     </>

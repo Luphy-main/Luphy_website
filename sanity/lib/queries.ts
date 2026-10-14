@@ -1,5 +1,9 @@
 import { groq } from 'next-sanity'
 
+// Newsletter LinkedIn : une édition est affichée si elle est publiée, numérotée et non vide
+// (introduction ou au moins un contenu relié). Même règle pour ses pages, le sitemap et llms.txt.
+const EDITION_AFFICHABLE = `_type == "editionNL" && defined(numero) && (defined(introduction) || count(*[_type in ["article", "casUsage"] && defined(slug.current) && references(^._id)]) > 0)`
+
 // Cas d'usage
 export const CAS_USAGE_LIST = groq`
   *[_type == "casUsage"] | order(datePublication desc) {
@@ -37,6 +41,7 @@ export const CAS_USAGE_BY_SLUG = groq`
     metaDescription,
     datePublication,
     dateMiseAJour,
+    "edition": editionNL->{ numero, lienLinkedIn },
   }
 `
 
@@ -150,6 +155,9 @@ export const LLMS_CONTENT = groq`{
   },
   "articles": *[_type == "article" && defined(slug.current)] | order(datePublication desc) {
     titre, "slug": slug.current, "description": coalesce(chapeau, metaDescription)
+  },
+  "editions": *[${EDITION_AFFICHABLE}] | order(numero desc) {
+    numero, titre, "description": introduction
   }
 }`
 
@@ -169,7 +177,40 @@ export const ARTICLE_BY_SLUG = groq`
     categorie,
     imageOg,
     metaDescription,
+    "edition": editionNL->{ numero, lienLinkedIn },
   }
+`
+
+// Newsletter LinkedIn : éditions affichables (voir EDITION_AFFICHABLE), contenus liés et réglages
+export const EDITIONS_LIST = groq`
+  *[${EDITION_AFFICHABLE}] | order(numero desc) {
+    numero,
+    titre,
+    datePublication,
+    introduction,
+    lienLinkedIn,
+  }
+`
+
+export const EDITION_BY_NUMERO = groq`
+  *[${EDITION_AFFICHABLE} && numero == $numero][0] {
+    _id,
+    numero,
+    titre,
+    datePublication,
+    introduction,
+    lienLinkedIn,
+    "articles": *[_type == "article" && defined(slug.current) && references(^._id)] | order(datePublication desc) {
+      _id, titre, "slug": slug.current, chapeau, categorie, datePublication
+    },
+    "casUsage": *[_type == "casUsage" && defined(slug.current) && references(^._id)] | order(datePublication desc) {
+      _id, titre, "slug": slug.current, description, categorie, client
+    },
+  }
+`
+
+export const NEWSLETTER_REGLAGES = groq`
+  *[_id == "reglagesNewsletter"][0] { lienAbonnement }
 `
 
 // Équipe (membres visibles)
