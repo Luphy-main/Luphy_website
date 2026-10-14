@@ -11,5 +11,3 @@ export const OG_IMAGE = `${SITE_URL}/brand-assets/Luphy_logo.jpg`
 export const LINKEDIN_URL = 'https://www.linkedin.com/company/luphy/'
 
 export const HUBSPOT_SCRIPT = 'https://js-eu1.hs-scripts.com/143544363.js'
-
-export const MIDBOUND_SCRIPT ='https://p.midbound.click/JUsXLOnLlWk41IlQHp0ICxglq32Da7d8'

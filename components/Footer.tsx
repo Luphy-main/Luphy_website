@@ -3,6 +3,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { LINKEDIN_URL } from '@/lib/constants'
 
+// File de commandes du script HubSpot (bannière de consentement)
+declare global {
+  interface Window {
+    _hsp?: unknown[]
+  }
+}
+
 export default function Footer() {
   return (
     <>
@@ -42,6 +49,12 @@ export default function Footer() {
           </a>
           <Link href="/mentions-legales" className="footer-legal">
             Mentions légales
+          </Link>
+          <Link href="/confidentialite" className="footer-legal">
+            Confidentialité
+          </Link>
+          <Link href="/cookies" className="footer-legal">
+            Cookies
           </Link>
           <button
             type="button"

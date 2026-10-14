@@ -76,7 +76,8 @@ export default function Page() {
             Les informations que vous nous transmettez lors d&apos;une prise de rendez-vous ou d&apos;un
             échange par e-mail sont utilisées uniquement pour répondre à vos demandes. Conformément au
             RGPD, vous pouvez exercer vos droits d&apos;accès, de rectification et de suppression en
-            écrivant à <a href="mailto:titouan@luphy.io">titouan@luphy.io</a>.
+            écrivant à <a href="mailto:tristan@luphy.io">tristan@luphy.io</a>. Pour en savoir plus, consultez
+            notre <Link href="/confidentialite">politique de confidentialité</Link>.
           </p>
         </div>
       </section>

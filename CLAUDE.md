@@ -32,14 +32,14 @@ Propriétaire : Tristan (Président Luphy). Répondre en français.
 - `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET` : optionnels (valeurs par défaut dans `sanity/lib/client.ts`)
 
 ## Structure
-- `app/` : une route = un dossier avec `page.tsx`. `app/layout.tsx` contient le layout racine (polices, métadonnées par défaut, Vercel Analytics) ; `components/ConditionalLayout.tsx` ajoute Header, Footer, `<main>` et le script Midbound hors `/studio`.
+- `app/` : une route = un dossier avec `page.tsx`. `app/layout.tsx` contient le layout racine (polices, métadonnées par défaut, Vercel Analytics) ; `components/ConditionalLayout.tsx` ajoute Header, Footer, `<main>` et le script HubSpot hors `/studio`.
   - Offres : `performance-commerciale/` (crm et ses sous-pages par outil, outbound), `performance-operationnelle/` (ia, automatisation), `formation/`, `secteurs/`
   - Contenus Sanity : `cas-clients/`, `cas-usage/`, `temoignages/`, `ressources/` (listes + `[slug]`)
   - Autres : `methode`, `equipe`, `expertise-finance`, `faq`, `contact`, `sitemap.ts`, `robots.ts`, `not-found.tsx`
   - `api/revalidate/route.ts` : webhook Sanity, `POST /api/revalidate?secret=...`, revalide tout le site
   - `studio/` : Sanity Studio
 - `components/` : `Header`, `Footer` (injectés par `ConditionalLayout`, sauf sur `/studio`), `SchemaOrg`, gabarits de pages détail (`CasClientDetailPage`, `ArticleDetailPage`, `CrmPageLayout`)…
-- `lib/constants.ts` : URL du site, nom, description, image OG, URL du script Midbound
+- `lib/constants.ts` : URL du site, nom, description, image OG, URL du script HubSpot
 - `sanity/` : client (`useCdn: false`), requêtes GROQ (`lib/queries.ts`), schémas (`casUsage`, `casClient`, `temoignage`, `article`)
 - `scripts/` : scripts ponctuels de migration/patch Sanity
 - `next.config.ts` : redirections 301 des anciennes URL du site statique (`/crm`, `/blog`, `/case-study-*`, `*.html`…)
@@ -64,7 +64,7 @@ Propriétaire : Tristan (Président Luphy). Répondre en français.
 - Chaque page exporte ses `metadata` (title, description, Open Graph). og:image absolue en `https://www.luphy.io/...`, 1200×630.
 - Liens internes sans `.html`.
 - Toute nouvelle page doit figurer dans `app/sitemap.ts`.
-- Le script Midbound est chargé dans `components/ConditionalLayout.tsx` (`lazyOnload`, hors `/studio`) : ne pas le retirer.
+- Le script HubSpot (suivi, bannière de consentement, « Gérer les cookies ») est chargé dans `components/ConditionalLayout.tsx` (`lazyOnload`, hors `/studio`) : ne pas le retirer.
 
 ## Captures d'écran
 - `node screenshot.mjs http://localhost:3000` → `./temporary screenshots/screenshot-N.png` (Puppeteer, `npm install` la première fois)

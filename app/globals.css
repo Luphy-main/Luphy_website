@@ -597,3 +597,27 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner div#hs-eu-opt-
 .filtre-cat button:focus-visible { outline: 2px solid var(--sky); outline-offset: 2px; }
 .filtre-cat button:active { transform: scale(0.97); }
 .filtre-cat button[aria-pressed="true"] { color: var(--deep); background: var(--gold); border-color: var(--gold); }
+
+/* ── POLITIQUES (confidentialité, cookies) : complète .legal-page sans modifier /mentions-legales ── */
+.legal-doc p { margin-bottom: 12px; }
+.legal-doc .legal-maj { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 32px; }
+.legal-doc ul { margin: 0 0 16px; padding-left: 20px; list-style: disc; }
+.legal-doc li::marker { color: var(--sky); }
+.legal-doc li { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 4px; }
+.legal-doc a { text-decoration: underline; text-underline-offset: 3px; }
+.legal-doc a:hover { color: #fff; }
+.legal-doc a:focus-visible { outline: 2px solid var(--sky); outline-offset: 2px; border-radius: 2px; }
+.legal-doc a:active { opacity: 0.7; }
+.legal-table { width: 100%; border-collapse: collapse; margin: 8px 0 24px; font-size: 14px; }
+.legal-table th { text-align: left; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: var(--sky); padding: 10px 12px; border-bottom: 1px solid rgba(74,159,191,0.35); }
+.legal-table td { color: rgba(255,255,255,0.75); line-height: 1.6; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); vertical-align: top; }
+.legal-table td:first-child { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: #fff; white-space: nowrap; }
+.legal-table td:last-child { white-space: nowrap; }
+/* Mobile : chaque cookie devient une fiche, libellé de colonne devant chaque valeur */
+@media (max-width: 640px) {
+  .legal-table thead { display: none; }
+  .legal-table, .legal-table tbody, .legal-table tr, .legal-table td { display: block; width: 100%; }
+  .legal-table tr { border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 6px 0; margin-bottom: 12px; background: rgba(255,255,255,0.03); }
+  .legal-table td, .legal-table td:first-child, .legal-table td:last-child { border-bottom: 0; padding: 6px 14px; white-space: normal; overflow-wrap: anywhere; }
+  .legal-table td::before { content: attr(data-label); display: block; font-family: var(--font-inter), sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sky); margin-bottom: 2px; }
+}

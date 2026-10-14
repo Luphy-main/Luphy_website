@@ -42,6 +42,8 @@ const routes: Array<{ url: string; priority: number; changeFrequency: MetadataRo
   { url: '/faq', priority: 0.65, changeFrequency: 'monthly' },
   { url: '/contact', priority: 0.7, changeFrequency: 'monthly' },
   { url: '/mentions-legales', priority: 0.3, changeFrequency: 'yearly' },
+  { url: '/confidentialite', priority: 0.3, changeFrequency: 'yearly' },
+  { url: '/cookies', priority: 0.3, changeFrequency: 'yearly' },
 ]
 
 // Pages détail Sanity publiées après la mise en ligne : ajoutées automatiquement

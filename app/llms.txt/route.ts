@@ -49,6 +49,8 @@ const OPTIONAL: Lien[] = [
   { titre: 'Sociétés de gestion', url: url('/secteurs/societes-de-gestion'), description: "CRM, automatisation et IA pour les sociétés de gestion d'actifs, asset managers et family offices. Suivi IR, reporting LPs, outbound structuré." },
   { titre: 'Cabinets de conseil', url: url('/secteurs/conseil'), description: 'CRM, outbound et IA pour les cabinets de conseil en stratégie, management et boutiques spécialisées finance. Pilotage du pipe missions, prospection structurée, productivité IA.' },
   { titre: 'Mentions légales', url: url('/mentions-legales'), description: "Luphy SAS, cabinet de conseil et d'intégration (pas un éditeur de logiciel) : siège, RCS Evry 939 716 833, TVA, hébergement." },
+  { titre: 'Politique de confidentialité', url: url('/confidentialite'), description: 'Données personnelles collectées par Luphy, finalités, bases légales, durées de conservation, prestataires et exercice des droits RGPD.' },
+  { titre: 'Politique cookies', url: url('/cookies'), description: "Cookies utilisés sur luphy.io : cookies nécessaires, mesure d'audience HubSpot avec consentement, statistiques Vercel sans cookies, gestion des choix." },
 ]
 
 const ligne = ({ titre, url, description }: Lien) =>

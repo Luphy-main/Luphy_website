@@ -37,6 +37,18 @@ const nextConfig: NextConfig = {
       { source: '/conditions-generales', destination: '/mentions-legales', permanent: true },
       { source: '/mentions-legales.html', destination: '/mentions-legales', permanent: true },
       { source: '/cas-clients.html', destination: '/cas-clients', permanent: true },
+      // Politique de confidentialité et politique cookies : variantes d'URL courantes
+      { source: '/politique-de-confidentialite', destination: '/confidentialite', permanent: true },
+      { source: '/politique-confidentialite', destination: '/confidentialite', permanent: true },
+      { source: '/privacy', destination: '/confidentialite', permanent: true },
+      { source: '/privacy-policy', destination: '/confidentialite', permanent: true },
+      { source: '/rgpd', destination: '/confidentialite', permanent: true },
+      { source: '/donnees-personnelles', destination: '/confidentialite', permanent: true },
+      { source: '/confidentialite.html', destination: '/confidentialite', permanent: true },
+      { source: '/politique-cookies', destination: '/cookies', permanent: true },
+      { source: '/politique-de-cookies', destination: '/cookies', permanent: true },
+      { source: '/cookie-policy', destination: '/cookies', permanent: true },
+      { source: '/cookies.html', destination: '/cookies', permanent: true },
     ]
   },
   images: {
