@@ -69,7 +69,7 @@ export default async function Page() {
         url: `${SITE_URL}/equipe`,
         description: "Titouan Galpin et Tristan Camilli, co-fondateurs de Luphy.",
       },
-      ...team.map(m => personJsonLd(m, { url: `${SITE_URL}/equipe` })),
+      ...team.map(m => personJsonLd(m, m.fonction, { url: `${SITE_URL}/equipe` })),
       {
         '@type': 'BreadcrumbList',
         itemListElement: [

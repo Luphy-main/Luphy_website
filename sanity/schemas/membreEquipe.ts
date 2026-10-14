@@ -27,6 +27,19 @@ export const membreEquipe = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'titreOfficiel',
+      title: 'Titre officiel (données structurées)',
+      type: 'string',
+      description: 'jobTitle déclaré pour les co-fondateurs dans le JSON-LD de toutes les pages. Ex : Co-fondateur & Président',
+    }),
+    defineField({
+      name: 'formation',
+      title: 'Formation (écoles)',
+      type: 'array',
+      of: [defineArrayMember({ type: 'string' })],
+      description: 'Une école par ligne, déclarée en alumniOf dans les données structurées',
+    }),
+    defineField({
       name: 'courteDescription',
       title: 'Courte description',
       type: 'text',

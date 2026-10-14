@@ -9,6 +9,8 @@ export interface MembreEquipe {
   nom: string
   photo?: { asset?: { _ref?: string }; alt?: string; hotspot?: { x: number; y: number } }
   fonction?: string
+  titreOfficiel?: string
+  formation?: string[]
   courteDescription?: string
   bioLongue?: PortableTextBlock[]
   domaines?: string[]
@@ -56,14 +58,16 @@ export function personId(nom: string) {
   return `${SITE_URL}/#${slug}`
 }
 
-export function personJsonLd(m: MembreEquipe, extra: Record<string, unknown> = {}) {
+// jobTitle : la fonction affichée (/equipe) ou le titre officiel (founder), au choix de l'appelant
+export function personJsonLd(m: MembreEquipe, jobTitle: string | undefined, extra: Record<string, unknown> = {}) {
   const photo = photoMembre(m)
   return {
     '@type': 'Person',
     '@id': personId(m.nom),
     name: m.nom,
-    ...(m.fonction && { jobTitle: m.fonction }),
+    ...(jobTitle && { jobTitle }),
     worksFor: { '@id': `${SITE_URL}/#organization` },
+    ...(m.formation?.length ? { alumniOf: m.formation } : {}),
     ...(m.linkedin && { sameAs: m.linkedin }),
     ...(photo && { image: photo.src }),
     ...extra,

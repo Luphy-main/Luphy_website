@@ -179,6 +179,8 @@ export const EQUIPE_LIST = groq`
     nom,
     photo,
     fonction,
+    titreOfficiel,
+    formation,
     courteDescription,
     bioLongue,
     domaines,

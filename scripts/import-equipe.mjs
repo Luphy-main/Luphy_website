@@ -26,6 +26,8 @@ const MEMBRES = [
     photoFichier: 'public/brand-assets/team/titouan-galpin-2026.jpg',
     photoAlt: 'Titouan Galpin, co-fondateur de Luphy',
     fonction: 'COO · Pôle CRM & commercial',
+    titreOfficiel: 'Co-fondateur & Directeur général',
+    formation: [],
     courteDescription: "Expérience en investissement, relations investisseurs, finance et accompagnement de sociétés financières. Pôle performance commerciale : CRM, outbound, structuration de la relation investisseur.",
     bio: [
       "Titouan pilote le pôle performance commerciale : CRM, outbound et structuration de la relation investisseur.",
@@ -43,6 +45,8 @@ const MEMBRES = [
     photoFichier: 'public/brand-assets/team/tristan-camilli.jpg',
     photoAlt: 'Tristan Camilli, co-fondateur de Luphy',
     fonction: 'CEO · Pôle IA & opérations',
+    titreOfficiel: 'Co-fondateur & Président',
+    formation: ['INSA Toulouse', 'ESCP'],
     courteDescription: "Opérations, digitalisation, CRM, automatisation et IA. Ancien Head of Operations chez Caption.market. INSA Toulouse, ESCP. Pôle performance opérationnelle : automatisation, IA, formation.",
     bio: [
       "Tristan pilote le pôle performance opérationnelle : automatisation, IA et formation des équipes.",
@@ -68,6 +72,8 @@ for (const m of MEMBRES) {
     nom: m.nom,
     photo: { _type: 'image', asset: { _type: 'reference', _ref: asset._id }, alt: m.photoAlt },
     fonction: m.fonction,
+    titreOfficiel: m.titreOfficiel,
+    ...(m.formation.length && { formation: m.formation }),
     courteDescription: m.courteDescription,
     bioLongue: paragraphes(m.bio),
     domaines: m.domaines,

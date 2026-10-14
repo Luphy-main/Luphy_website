@@ -31,7 +31,7 @@ export default async function SchemaOrg({ type = 'website', url }: SchemaOrgProp
       name: 'HubSpot Solutions Partner Program',
       url: 'https://ecosystem.hubspot.com/fr/marketplace/solutions/luphy',
     },
-    ...(fondateurs.length > 0 && { founder: fondateurs.map(m => personJsonLd(m)) }),
+    ...(fondateurs.length > 0 && { founder: fondateurs.map(m => personJsonLd(m, m.titreOfficiel ?? m.fonction)) }),
   }
 
   const webpage = {
