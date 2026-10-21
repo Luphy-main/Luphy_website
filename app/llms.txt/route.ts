@@ -1,5 +1,5 @@
 import { client } from '@/sanity/lib/client'
-import { SITE_URL } from '@/lib/constants'
+import { SITE_URL, RESSOURCES_LABEL } from '@/lib/constants'
 import { LLMS_CONTENT } from '@/sanity/lib/queries'
 import { titreEdition } from '@/sanity/lib/newsletter'
 
@@ -93,7 +93,7 @@ export async function GET() {
       ...depuisSanity(casUsage, '/cas-usage'),
     ]),
     '',
-    section('Ressources', [
+    section(RESSOURCES_LABEL, [
       { titre: 'Toutes les ressources', url: url('/ressources'), description: "Articles, guides et analyses sur le CRM, l'IA et la performance commerciale pour les métiers de la finance. Par les consultants Luphy." },
       ...depuisSanity(articles, '/ressources'),
       ...newsletter,

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL } from '@/lib/constants'
+import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, RESSOURCES_LABEL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { ARTICLES_LIST } from '@/sanity/lib/queries'
 import RessourcesListe from '@/components/RessourcesListe'
@@ -10,14 +10,14 @@ import RessourcesListe from '@/components/RessourcesListe'
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: 'Ressources | Luphy',
+  title: `${RESSOURCES_LABEL} | Luphy`,
   // Les vues filtrées (?categorie=...) servent le même HTML : elles pointent vers la page complète
   alternates: { canonical: `${SITE_URL}/ressources` },
   description:
-    'Articles, guides et analyses sur le CRM, l\'IA et la performance commerciale pour les métiers de la finance. Par les consultants Luphy.',
+    'Actualités, articles, guides et analyses sur l\'IA, le CRM et la performance commerciale pour les métiers de la finance. Par les consultants Luphy.',
   openGraph: {
-    title: 'Ressources | Luphy',
-    description: 'Articles et guides Luphy : CRM, IA, automatisation, performance commerciale pour la finance.',
+    title: `${RESSOURCES_LABEL} | Luphy`,
+    description: 'Actualités et guides Luphy : IA, CRM, automatisation, performance commerciale pour la finance.',
     url: `${SITE_URL}/ressources`,
     images: [{ url: `${SITE_URL}/og-ressources.png`, width: 1200, height: 630 }],
   },
@@ -37,7 +37,7 @@ const schema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Accueil', item: SITE_URL },
-    { '@type': 'ListItem', position: 2, name: 'Ressources', item: `${SITE_URL}/ressources` },
+    { '@type': 'ListItem', position: 2, name: RESSOURCES_LABEL, item: `${SITE_URL}/ressources` },
   ],
 }
 
@@ -61,12 +61,12 @@ export default async function Page() {
 
       <nav className="breadcrumb" aria-label="Fil d'Ariane">
         <Link href="/">Accueil</Link><span>/</span>
-        <span>Ressources</span>
+        <span>{RESSOURCES_LABEL}</span>
       </nav>
 
       <section className="page-hero">
         <div className="label">Blog &amp; guides</div>
-        <h1>Lire pour<br /><em>décider mieux.</em></h1>
+        <h1>Actualités et Ressources<br /><em>IA et Finance</em></h1>
         <p>
           Articles, guides et analyses rédigés par les consultants Luphy sur le CRM,
           l&apos;IA et la performance commerciale pour les métiers de la finance.

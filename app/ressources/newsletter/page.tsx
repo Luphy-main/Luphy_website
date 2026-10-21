@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
-import { SITE_URL } from '@/lib/constants'
+import { SITE_URL, RESSOURCES_LABEL } from '@/lib/constants'
 import { getEditions, formatDateFr } from '@/sanity/lib/newsletter'
 
 export const revalidate = 3600
@@ -36,7 +36,7 @@ export default async function Page() {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Accueil', item: SITE_URL },
-      { '@type': 'ListItem', position: 2, name: 'Ressources', item: `${SITE_URL}/ressources` },
+      { '@type': 'ListItem', position: 2, name: RESSOURCES_LABEL, item: `${SITE_URL}/ressources` },
       { '@type': 'ListItem', position: 3, name: 'Newsletter', item: `${SITE_URL}/ressources/newsletter` },
     ],
   }
@@ -48,7 +48,7 @@ export default async function Page() {
 
       <nav className="breadcrumb" aria-label="Fil d'Ariane">
         <Link href="/">Accueil</Link><span>/</span>
-        <Link href="/ressources">Ressources</Link><span>/</span>
+        <Link href="/ressources">{RESSOURCES_LABEL}</Link><span>/</span>
         <span>Newsletter</span>
       </nav>
 

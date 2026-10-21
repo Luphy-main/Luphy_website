@@ -58,6 +58,11 @@ button, input, select, textarea { font-family: inherit; }
   transition: color 0.2s;
 }
 .nav-links a:hover, .nav-links a.active { color: #fff; }
+.nav-links a:active { opacity: 0.75; }
+/* Remplace l'anneau de focus par défaut du navigateur (bleu), qui restait affiché sur le lien
+   cliqué car le Header persiste d'une page à l'autre */
+.nav-links a:focus { outline: none; }
+.nav-links a:focus-visible { outline: 2px solid var(--sky); outline-offset: 4px; border-radius: 2px; }
 
 .btn-nav {
   display: inline-block; padding: 10px 22px; border-radius: 7px;
@@ -140,7 +145,7 @@ button, input, select, textarea { font-family: inherit; }
   padding: 12px 28px; border-radius: 10px; width: 100%; max-width: 340px;
   text-align: center; transition: background 0.2s, color 0.2s; letter-spacing: -0.01em;
 }
-.nav-mobile-panel a:hover { background: rgba(74,159,191,0.1); color: #fff; }
+.nav-mobile-panel a:hover, .nav-mobile-panel a.active { background: rgba(74,159,191,0.1); color: #fff; }
 .nav-mobile-panel .mobile-sep { width: 48px; height: 1px; background: rgba(74,159,191,0.2); margin: 8px 0; }
 .nav-mobile-panel .mobile-sub { font-size: 14px !important; font-weight: 500 !important; color: rgba(255,255,255,0.5) !important; padding: 8px 28px !important; }
 .nav-mobile-panel .mobile-cta {
@@ -445,6 +450,12 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner div#hs-eu-opt-
 .breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
 .breadcrumb a:hover { color: var(--sky); }
 .breadcrumb span { color: rgba(255,255,255,0.5); }
+
+/* Sommaire des articles */
+.toc-link { color: inherit; text-decoration: none; transition: color 0.2s; }
+.toc-link:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.toc-link:focus-visible { outline: 2px solid var(--sky); outline-offset: 2px; border-radius: 2px; }
+.toc-link:active { color: var(--sky); }
 
 /* ── PAGE HERO (inner pages) ── */
 .page-hero {

@@ -3,12 +3,17 @@
 import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL } from '@/lib/constants'
+import { usePathname } from 'next/navigation'
+import { CTA_COMMERCIAL, CTA_OPERATIONNEL, RESSOURCES_LABEL_COURT } from '@/lib/constants'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const mobileRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname()
+  // Rubrique courante (sous-pages comprises) : même style actif pour toutes les rubriques
+  const activeProps = (href: string) =>
+    pathname === href || pathname.startsWith(href + '/') ? { className: 'active', 'aria-current': 'page' as const } : {}
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
@@ -79,10 +84,10 @@ export default function Header() {
               </div>
             </li>
 
-            <li><Link href="/methode">Méthode</Link></li>
-            <li><Link href="/expertise-finance">Expertise finance</Link></li>
-            <li><Link href="/cas-clients">Cas clients</Link></li>
-            <li><Link href="/ressources">Ressources</Link></li>
+            <li><Link href="/methode" {...activeProps('/methode')}>Méthode</Link></li>
+            <li><Link href="/expertise-finance" {...activeProps('/expertise-finance')}>Expertise finance</Link></li>
+            <li><Link href="/cas-clients" {...activeProps('/cas-clients')}>Cas clients</Link></li>
+            <li><Link href="/ressources" {...activeProps('/ressources')}>{RESSOURCES_LABEL_COURT}</Link></li>
           </ul>
         </div>
 
@@ -110,11 +115,11 @@ export default function Header() {
         <Link href="/performance-operationnelle" onClick={() => setMobileOpen(false)} className="mobile-sub">IA & Automatisation</Link>
         <Link href="/formation" onClick={() => setMobileOpen(false)}>Formation</Link>
         <div className="mobile-sep" />
-        <Link href="/methode" onClick={() => setMobileOpen(false)}>Méthode</Link>
-        <Link href="/expertise-finance" onClick={() => setMobileOpen(false)}>Expertise finance</Link>
-        <Link href="/cas-clients" onClick={() => setMobileOpen(false)}>Cas clients</Link>
-        <Link href="/ressources" onClick={() => setMobileOpen(false)}>Ressources</Link>
-        <Link href="/equipe" onClick={() => setMobileOpen(false)}>L&apos;équipe</Link>
+        <Link href="/methode" {...activeProps('/methode')} onClick={() => setMobileOpen(false)}>Méthode</Link>
+        <Link href="/expertise-finance" {...activeProps('/expertise-finance')} onClick={() => setMobileOpen(false)}>Expertise finance</Link>
+        <Link href="/cas-clients" {...activeProps('/cas-clients')} onClick={() => setMobileOpen(false)}>Cas clients</Link>
+        <Link href="/ressources" {...activeProps('/ressources')} onClick={() => setMobileOpen(false)}>{RESSOURCES_LABEL_COURT}</Link>
+        <Link href="/equipe" {...activeProps('/equipe')} onClick={() => setMobileOpen(false)}>L&apos;équipe</Link>
         <div className="mobile-sep" />
         <a href={CTA_COMMERCIAL} target="_blank" rel="noopener" className="mobile-cta" onClick={() => setMobileOpen(false)}>
           Parler CRM &amp; commercial
