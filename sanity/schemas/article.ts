@@ -1,10 +1,13 @@
 import { defineField, defineType } from 'sanity'
 import { CATEGORIES_ARTICLE } from '../lib/categories'
+import { aujourdhuiParis } from '../lib/date'
 
 export const article = defineType({
   name: 'article',
   title: 'Article',
   type: 'document',
+  // Champs utilisés par les agents de contenu, regroupés dans leur onglet
+  groups: [{ name: 'pilotage', title: 'Pilotage agent' }],
   fields: [
     defineField({
       name: 'titre',
@@ -107,11 +110,63 @@ export const article = defineType({
       rows: 2,
       validation: r => r.max(160),
     }),
+    defineField({
+      name: 'origine',
+      title: 'Origine',
+      type: 'string',
+      group: 'pilotage',
+      options: {
+        list: [
+          { title: 'Newsletter', value: 'newsletter' },
+          { title: 'Agent Sujets', value: 'agent-sujets' },
+          { title: 'Manuel', value: 'manuel' },
+        ],
+        layout: 'radio',
+      },
+    }),
+    defineField({
+      name: 'typeContenu',
+      title: 'Type de contenu',
+      type: 'string',
+      group: 'pilotage',
+      options: {
+        list: [
+          { title: 'Méthodologique', value: 'methodologique' },
+          { title: 'Chiffres et actualité', value: 'chiffres-actualite' },
+        ],
+        layout: 'radio',
+      },
+    }),
+    defineField({
+      name: 'requeteCible',
+      title: 'Requête cible',
+      type: 'string',
+      group: 'pilotage',
+      description: 'Requête ou question visée par l\'article',
+    }),
+    defineField({
+      name: 'dateMiseAJour',
+      title: 'Mis à jour le',
+      type: 'date',
+      group: 'pilotage',
+    }),
+    defineField({
+      name: 'bloque',
+      title: 'Bloquer la publication',
+      type: 'boolean',
+      group: 'pilotage',
+      description: 'Coché, l\'article n\'apparaît pas sur le site même s\'il est publié.',
+    }),
   ],
   orderings: [
     { title: 'Date de publication (récent)', name: 'dateDesc', by: [{ field: 'datePublication', direction: 'desc' }] },
   ],
   preview: {
-    select: { title: 'titre', subtitle: 'datePublication' },
+    select: { title: 'titre', date: 'datePublication', bloque: 'bloque' },
+    // Badge si l'article est bloqué ou programmé (date de publication future, heure de Paris)
+    prepare: ({ title, date, bloque }: { title?: string; date?: string; bloque?: boolean }) => {
+      const badge = bloque ? 'Bloqué' : date && date > aujourdhuiParis() ? 'Programmé' : null
+      return { title, subtitle: [badge && badge.toUpperCase(), date].filter(Boolean).join(' · ') }
+    },
   },
 })
