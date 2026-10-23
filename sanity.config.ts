@@ -43,12 +43,16 @@ export default defineConfig({
                       .child(S.document().schemaType('reglagesNewsletter').documentId('reglagesNewsletter')),
                   ]),
               ),
+            S.listItem()
+              .title('Agent Sujets')
+              .schemaType('reglagesAgentSujets')
+              .child(S.document().schemaType('reglagesAgentSujets').documentId('reglagesAgentSujets')),
           ]),
     }),
   ],
   schema: {
     types: schemaTypes,
-    // Réglages newsletter : document unique, pas de création depuis le bouton « + »
-    templates: prev => prev.filter(t => t.schemaType !== 'reglagesNewsletter'),
+    // Réglages (newsletter, agent Sujets) : documents uniques, pas de création depuis le bouton « + »
+    templates: prev => prev.filter(t => !['reglagesNewsletter', 'reglagesAgentSujets'].includes(t.schemaType)),
   },
 })
