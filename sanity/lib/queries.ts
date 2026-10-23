@@ -173,6 +173,11 @@ export const LLMS_CONTENT = groq`{
   }
 }`
 
+// Cron quotidien : articles dont la date de publication est aujourd'hui, et leur édition de newsletter
+export const ARTICLES_DU_JOUR = groq`
+  *[${ARTICLE_VISIBLE} && datePublication == $today] { "slug": slug.current, "edition": editionNL->numero }
+`
+
 export const ARTICLE_SLUGS = groq`
   *[${ARTICLE_VISIBLE}][].slug.current
 `
