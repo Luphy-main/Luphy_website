@@ -4,7 +4,7 @@ import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
 import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, RESSOURCES_LABEL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
-import { ARTICLES_LIST } from '@/sanity/lib/queries'
+import { ARTICLES_LIST, visibilite } from '@/sanity/lib/queries'
 import RessourcesListe from '@/components/RessourcesListe'
 
 export const revalidate = 3600
@@ -52,7 +52,7 @@ function formatDate(d: string) {
 }
 
 export default async function Page() {
-  const articles: Article[] = await client.fetch(ARTICLES_LIST)
+  const articles: Article[] = await client.fetch(ARTICLES_LIST, visibilite())
 
   return (
     <>

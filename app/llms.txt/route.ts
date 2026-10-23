@@ -1,6 +1,6 @@
 import { client } from '@/sanity/lib/client'
 import { SITE_URL, RESSOURCES_LABEL } from '@/lib/constants'
-import { LLMS_CONTENT } from '@/sanity/lib/queries'
+import { LLMS_CONTENT, visibilite } from '@/sanity/lib/queries'
 import { titreEdition } from '@/sanity/lib/newsletter'
 
 // Même rythme que les pages Sanity ; le webhook /api/revalidate rafraîchit immédiatement
@@ -64,7 +64,7 @@ const depuisSanity = (docs: Doc[], base: string): Lien[] =>
 const section = (titre: string, liens: Lien[]) => [`## ${titre}`, '', ...liens.map(ligne)].join('\n')
 
 export async function GET() {
-  const { casClients, casUsage, articles, editions } = await client.fetch<Contenu>(LLMS_CONTENT)
+  const { casClients, casUsage, articles, editions } = await client.fetch<Contenu>(LLMS_CONTENT, visibilite())
 
   // Newsletter : listée seulement s'il existe au moins une édition affichable
   const newsletter: Lien[] = editions.length

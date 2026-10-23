@@ -1,8 +1,15 @@
 import { groq } from 'next-sanity'
+import { aujourdhuiParis } from './date'
+
+// Article visible : publié (client en perspective « published »), non bloqué, date de publication atteinte
+// à Paris. Toute requête qui l'utilise attend le paramètre $today : passer visibilite() au fetch.
+// Les articles sans champ bloque (antérieurs au champ) restent visibles.
+export const ARTICLE_VISIBLE = `_type == "article" && defined(slug.current) && bloque != true && (!defined(datePublication) || datePublication <= $today)`
+export const visibilite = () => ({ today: aujourdhuiParis() })
 
 // Newsletter LinkedIn : une édition est affichée si elle est publiée, numérotée et non vide
-// (introduction ou au moins un contenu relié). Même règle pour ses pages, le sitemap et llms.txt.
-const EDITION_AFFICHABLE = `_type == "editionNL" && defined(numero) && (defined(introduction) || count(*[_type in ["article", "casUsage"] && defined(slug.current) && references(^._id)]) > 0)`
+// (introduction ou au moins un contenu relié visible). Même règle pour ses pages, le sitemap et llms.txt.
+const EDITION_AFFICHABLE = `_type == "editionNL" && defined(numero) && (defined(introduction) || count(*[((${ARTICLE_VISIBLE}) || (_type == "casUsage" && defined(slug.current))) && references(^._id)]) > 0)`
 
 // Cas d'usage
 export const CAS_USAGE_LIST = groq`
@@ -138,7 +145,7 @@ export const TEMOIGNAGES_FEATURED = groq`
 
 // Articles
 export const ARTICLES_LIST = groq`
-  *[_type == "article"] | order(datePublication desc) {
+  *[${ARTICLE_VISIBLE}] | order(datePublication desc) {
     _id,
     titre,
     "slug": slug.current,
@@ -158,7 +165,7 @@ export const LLMS_CONTENT = groq`{
   "casUsage": *[_type == "casUsage" && defined(slug.current)] | order(datePublication desc) {
     titre, "slug": slug.current, "description": coalesce(metaDescription, description)
   },
-  "articles": *[_type == "article" && defined(slug.current)] | order(datePublication desc) {
+  "articles": *[${ARTICLE_VISIBLE}] | order(datePublication desc) {
     titre, "slug": slug.current, "description": coalesce(chapeau, metaDescription)
   },
   "editions": *[${EDITION_AFFICHABLE}] | order(numero desc) {
@@ -167,11 +174,11 @@ export const LLMS_CONTENT = groq`{
 }`
 
 export const ARTICLE_SLUGS = groq`
-  *[_type == "article" && defined(slug.current)][].slug.current
+  *[${ARTICLE_VISIBLE}][].slug.current
 `
 
 export const ARTICLE_BY_SLUG = groq`
-  *[_type == "article" && slug.current == $slug][0] {
+  *[${ARTICLE_VISIBLE} && slug.current == $slug][0] {
     _id,
     titre,
     "slug": slug.current,
@@ -205,7 +212,7 @@ export const EDITION_BY_NUMERO = groq`
     datePublication,
     introduction,
     lienLinkedIn,
-    "articles": *[_type == "article" && defined(slug.current) && references(^._id)] | order(datePublication desc) {
+    "articles": *[${ARTICLE_VISIBLE} && references(^._id)] | order(datePublication desc) {
       _id, titre, "slug": slug.current, chapeau, categorie, datePublication
     },
     "casUsage": *[_type == "casUsage" && defined(slug.current) && references(^._id)] | order(datePublication desc) {

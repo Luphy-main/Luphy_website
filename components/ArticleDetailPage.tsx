@@ -7,7 +7,7 @@ import SchemaOrg from '@/components/SchemaOrg'
 import MentionNewsletter from '@/components/MentionNewsletter'
 import { SITE_URL, RESSOURCES_LABEL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
-import { ARTICLE_BY_SLUG } from '@/sanity/lib/queries'
+import { ARTICLE_BY_SLUG, visibilite } from '@/sanity/lib/queries'
 import { imageDimensions } from '@/sanity/lib/image'
 
 type Article = {
@@ -84,7 +84,7 @@ const makePtComponents = (h2s: H2[]) => ({
 })
 
 export async function fetchArticle(slug: string): Promise<Article | null> {
-  return client.fetch(ARTICLE_BY_SLUG, { slug })
+  return client.fetch(ARTICLE_BY_SLUG, { slug, ...visibilite() })
 }
 
 function formatDate(d: string) {

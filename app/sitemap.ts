@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
-import { LLMS_CONTENT } from '@/sanity/lib/queries'
+import { LLMS_CONTENT, visibilite } from '@/sanity/lib/queries'
 
 const now = new Date().toISOString().split('T')[0]
 
@@ -36,9 +36,8 @@ const routes: Array<{ url: string; priority: number; changeFrequency: MetadataRo
   { url: '/cas-clients/hoppi', priority: 0.75, changeFrequency: 'monthly' },
   { url: '/temoignages', priority: 0.7, changeFrequency: 'monthly' },
   { url: '/equipe', priority: 0.7, changeFrequency: 'monthly' },
+  // Les articles viennent uniquement de Sanity, pour respecter leur visibilité (bloqué, programmé)
   { url: '/ressources', priority: 0.85, changeFrequency: 'weekly' },
-  { url: '/ressources/crm-fonds-2026', priority: 0.75, changeFrequency: 'monthly' },
-  { url: '/ressources/ia-ma-2026', priority: 0.75, changeFrequency: 'monthly' },
   { url: '/faq', priority: 0.65, changeFrequency: 'monthly' },
   { url: '/contact', priority: 0.7, changeFrequency: 'monthly' },
   { url: '/mentions-legales', priority: 0.3, changeFrequency: 'yearly' },
@@ -52,17 +51,16 @@ export const revalidate = 3600
 type Slugs = Record<'casClients' | 'casUsage' | 'articles', Array<{ slug: string }>> & { editions: Array<{ numero: number }> }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { casClients, casUsage, articles, editions } = await client.fetch<Slugs>(LLMS_CONTENT)
+  const { casClients, casUsage, articles, editions } = await client.fetch<Slugs>(LLMS_CONTENT, visibilite())
   const known = new Set(routes.map((r) => r.url))
+  const page = (url: string, priority = 0.7) => ({ url, priority, changeFrequency: 'monthly' as const })
   const fromSanity = [
-    ...casClients.map(({ slug }) => `/cas-clients/${slug}`),
-    ...casUsage.map(({ slug }) => `/cas-usage/${slug}`),
-    ...articles.map(({ slug }) => `/ressources/${slug}`),
+    ...casClients.map(({ slug }) => page(`/cas-clients/${slug}`)),
+    ...casUsage.map(({ slug }) => page(`/cas-usage/${slug}`)),
+    ...articles.map(({ slug }) => page(`/ressources/${slug}`, 0.75)),
     // Newsletter : pages présentes seulement s'il existe au moins une édition affichable
-    ...(editions.length ? ['/ressources/newsletter', ...editions.map(({ numero }) => `/ressources/newsletter/${numero}`)] : []),
-  ]
-    .filter((url) => !known.has(url))
-    .map((url) => ({ url, priority: 0.7, changeFrequency: 'monthly' as const }))
+    ...(editions.length ? ['/ressources/newsletter', ...editions.map(({ numero }) => `/ressources/newsletter/${numero}`)].map((url) => page(url)) : []),
+  ].filter(({ url }) => !known.has(url))
 
   return [...routes, ...fromSanity].map(({ url, priority, changeFrequency }) => ({
     url: `${SITE_URL}${url}`,
