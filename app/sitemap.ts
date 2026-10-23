@@ -48,23 +48,26 @@ const routes: Array<{ url: string; priority: number; changeFrequency: MetadataRo
 // Pages détail Sanity publiées après la mise en ligne : ajoutées automatiquement
 export const revalidate = 3600
 
-type Slugs = Record<'casClients' | 'casUsage' | 'articles', Array<{ slug: string }>> & { editions: Array<{ numero: number }> }
+type Slugs = Record<'casClients' | 'casUsage', Array<{ slug: string }>> & {
+  articles: Array<{ slug: string; lastmod?: string }>
+  editions: Array<{ numero: number }>
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { casClients, casUsage, articles, editions } = await client.fetch<Slugs>(LLMS_CONTENT, visibilite())
   const known = new Set(routes.map((r) => r.url))
-  const page = (url: string, priority = 0.7) => ({ url, priority, changeFrequency: 'monthly' as const })
+  const page = (url: string, priority = 0.7, lastModified = now) => ({ url, priority, changeFrequency: 'monthly' as const, lastModified })
   const fromSanity = [
     ...casClients.map(({ slug }) => page(`/cas-clients/${slug}`)),
     ...casUsage.map(({ slug }) => page(`/cas-usage/${slug}`)),
-    ...articles.map(({ slug }) => page(`/ressources/${slug}`, 0.75)),
+    ...articles.map(({ slug, lastmod }) => page(`/ressources/${slug}`, 0.75, lastmod ?? now)),
     // Newsletter : pages présentes seulement s'il existe au moins une édition affichable
     ...(editions.length ? ['/ressources/newsletter', ...editions.map(({ numero }) => `/ressources/newsletter/${numero}`)].map((url) => page(url)) : []),
   ].filter(({ url }) => !known.has(url))
 
-  return [...routes, ...fromSanity].map(({ url, priority, changeFrequency }) => ({
+  return [...routes.map((r) => ({ ...r, lastModified: now })), ...fromSanity].map(({ url, priority, changeFrequency, lastModified }) => ({
     url: `${SITE_URL}${url}`,
-    lastModified: now,
+    lastModified,
     changeFrequency,
     priority,
   }))

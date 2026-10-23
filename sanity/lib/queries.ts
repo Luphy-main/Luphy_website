@@ -158,6 +158,7 @@ export const ARTICLES_LIST = groq`
 `
 
 // llms.txt et sitemap : pages détail publiées, avec une ligne de description
+// (articles : lastmod = date de mise à jour si postérieure à la publication)
 export const LLMS_CONTENT = groq`{
   "casClients": *[_type == "casClient" && defined(slug.current)] | order(ordre asc, client asc) {
     titre, "slug": slug.current, "description": coalesce(metaDescription, chapeau)
@@ -166,7 +167,8 @@ export const LLMS_CONTENT = groq`{
     titre, "slug": slug.current, "description": coalesce(metaDescription, description)
   },
   "articles": *[${ARTICLE_VISIBLE}] | order(datePublication desc) {
-    titre, "slug": slug.current, "description": coalesce(chapeau, metaDescription)
+    titre, "slug": slug.current, "description": coalesce(chapeau, metaDescription),
+    "lastmod": select(dateMiseAJour > datePublication => dateMiseAJour, datePublication)
   },
   "editions": *[${EDITION_AFFICHABLE}] | order(numero desc) {
     numero, titre, "description": introduction
@@ -191,6 +193,7 @@ export const ARTICLE_BY_SLUG = groq`
     contenu,
     auteur,
     datePublication,
+    dateMiseAJour,
     categorie,
     imageOg,
     metaDescription,

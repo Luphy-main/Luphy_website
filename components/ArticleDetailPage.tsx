@@ -18,6 +18,7 @@ type Article = {
   contenu?: unknown[]
   auteur?: string
   datePublication?: string
+  dateMiseAJour?: string
   categorie?: string
   metaDescription?: string
   edition?: { numero?: number; lienLinkedIn?: string } | null
@@ -120,6 +121,8 @@ export default async function ArticleDetailPage({ slug }: { slug: string }) {
   if (!data) notFound()
 
   const h2s = data.contenu ? extractH2s(data.contenu) : []
+  // Mise à jour affichée seulement si postérieure à la publication
+  const miseAJour = data.dateMiseAJour && (!data.datePublication || data.dateMiseAJour > data.datePublication) ? data.dateMiseAJour : undefined
 
   const schema = {
     '@context': 'https://schema.org',
@@ -130,6 +133,7 @@ export default async function ArticleDetailPage({ slug }: { slug: string }) {
         description: data.metaDescription || data.chapeau,
         url: `${SITE_URL}/ressources/${slug}`,
         datePublished: data.datePublication,
+        dateModified: miseAJour ?? data.datePublication,
         author: data.auteur ? { '@type': 'Person', name: data.auteur } : undefined,
         publisher: { '@type': 'Organization', name: 'Luphy', url: SITE_URL },
       },
@@ -168,6 +172,9 @@ export default async function ArticleDetailPage({ slug }: { slug: string }) {
               <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>Par {data.auteur}</span>
             )}
           </div>
+          {miseAJour && (
+            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', margin: '-12px 0 20px' }}>Mis à jour le {formatDate(miseAJour)}</div>
+          )}
           <h1 style={{ fontSize: 'clamp(26px, 4.5vw, 48px)' }}>{data.titre}</h1>
           {data.chapeau && <p style={{ maxWidth: 'none', margin: 0, fontSize: 18 }}>{data.chapeau}</p>}
         </div>
