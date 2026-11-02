@@ -184,7 +184,7 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
         {enBref && <p className="cc-chapeau">{enBref}</p>}
 
         <div className="cc-chips-row">
-          {data.secteur && <span className="cc-chip accent">{data.secteur}</span>}
+          {data.secteur && <span className="cc-chip accent wrap">{data.secteur}</span>}
           {localisation && <span className="cc-chip">{localisation}</span>}
           {badgesPole.map(p => <span key={p} className="cc-chip">{POLES[p]}</span>)}
         </div>

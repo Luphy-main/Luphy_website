@@ -7,7 +7,7 @@ import { CTA_COMMERCIAL, SITE_URL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { CAS_CLIENTS_LIST } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
-import { formatLocalisation, type Localisation } from '@/sanity/lib/casClient'
+import { SECTEURS, formatLocalisation, type Localisation } from '@/sanity/lib/casClient'
 
 export const revalidate = 3600
 
@@ -72,7 +72,12 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
   const featured = filtered.find(e => e.aLaUne) ?? null
   const rest = filtered.filter(e => !e.aLaUne)
 
-  const secteurs = [...new Set(allEtudes.map(e => e.secteur).filter(Boolean) as string[])]
+  // Secteurs ayant au moins une étude publiée, dans l'ordre de SECTEURS (valeurs hors liste en fin)
+  const presents = new Set(allEtudes.map(e => e.secteur).filter(Boolean) as string[])
+  const secteurs = [
+    ...SECTEURS.filter(s => presents.has(s)),
+    ...[...presents].filter(s => !SECTEURS.includes(s)),
+  ]
 
   const listSchema = {
     '@context': 'https://schema.org',
@@ -156,7 +161,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
                   ? <div className="cc-logo-tile" style={{ marginBottom: 12 }}>
                       <Image src={featuredLogo} alt={`Logo ${featured.client}`} width={120} height={40} style={{ objectFit: 'contain', maxHeight: 40, width: 'auto' }} />
                     </div>
-                  : <span className="cc-chip accent" style={{ marginBottom: 12, display: 'inline-flex' }}>
+                  : <span className="cc-chip accent wrap" style={{ marginBottom: 12, display: 'inline-flex' }}>
                       {[featured.secteur, formatLocalisation(featured.localisation), ...(featured.outils ?? [])].filter(Boolean).join(' · ')}
                     </span>
                 }
@@ -218,7 +223,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
                           </div>
                         : <span className="cc-card-logo">{e.client.toUpperCase()}</span>
                       }
-                      {e.secteur && <span className="cc-chip" style={{ minHeight: 28, fontSize: 12 }}>{e.secteur}</span>}
+                      {e.secteur && <span className="cc-chip wrap" style={{ minHeight: 28, fontSize: 12 }}>{e.secteur}</span>}
                     </div>
                     <p className="cc-card-client">
                       <strong className="cc-accent">{e.client}</strong>

@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { SECTEURS } from '../lib/casClient'
 
 export const temoignage = defineType({
   name: 'temoignage',
@@ -33,13 +34,7 @@ export const temoignage = defineType({
       title: 'Secteur',
       type: 'string',
       options: {
-        list: [
-          { title: "Fonds d'investissement", value: "Fonds d'investissement" },
-          { title: 'Boutique M&A', value: 'Boutique M&A' },
-          { title: 'Société de gestion', value: 'Société de gestion' },
-          { title: 'Cabinet de conseil', value: 'Cabinet de conseil' },
-          { title: 'Art & luxe', value: 'Art & luxe' },
-        ],
+        list: SECTEURS.map(s => ({ title: s, value: s })),
       },
     }),
     defineField({
