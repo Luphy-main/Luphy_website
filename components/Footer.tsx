@@ -47,6 +47,9 @@ export default function Footer() {
           >
             HubSpot Solutions Partner
           </a>
+          <Link href="/equipe" className="footer-legal">
+            À propos
+          </Link>
           <Link href="/mentions-legales" className="footer-legal">
             Mentions légales
           </Link>

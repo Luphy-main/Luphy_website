@@ -9,6 +9,7 @@ import { SITE_URL, RESSOURCES_LABEL } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { ARTICLE_BY_SLUG, visibilite } from '@/sanity/lib/queries'
 import { imageDimensions } from '@/sanity/lib/image'
+import { dateDeModification } from '@/sanity/lib/date'
 
 type Article = {
   _id: string
@@ -19,6 +20,7 @@ type Article = {
   auteur?: string
   datePublication?: string
   dateMiseAJour?: string
+  _updatedAt?: string
   categorie?: string
   metaDescription?: string
   edition?: { numero?: number; lienLinkedIn?: string } | null
@@ -133,7 +135,7 @@ export default async function ArticleDetailPage({ slug }: { slug: string }) {
         description: data.metaDescription || data.chapeau,
         url: `${SITE_URL}/ressources/${slug}`,
         datePublished: data.datePublication,
-        dateModified: miseAJour ?? data.datePublication,
+        dateModified: dateDeModification(data.dateMiseAJour, data._updatedAt, data.datePublication),
         author: data.auteur ? { '@type': 'Person', name: data.auteur } : undefined,
         publisher: { '@type': 'Organization', name: 'Luphy', url: SITE_URL },
       },

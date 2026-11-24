@@ -4,20 +4,26 @@ import Image from 'next/image'
 import SchemaOrg from '@/components/SchemaOrg'
 import ClientEffects from '@/components/ClientEffects'
 import HeroAnimation from '@/components/HeroAnimation'
-import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE } from '@/lib/constants'
+import { HomeResultats, HomeEquipe, HomePartenaires, HomeFaq } from '@/components/HomeSections'
+import { CTA_COMMERCIAL, CTA_OPERATIONNEL, SITE_URL, OG_IMAGE, DEFINITION_LUPHY } from '@/lib/constants'
 import { client } from '@/sanity/lib/client'
 import { TEMOIGNAGES_FEATURED } from '@/sanity/lib/queries'
+import './home.css'
 
 export const revalidate = 3600
 
+const TITLE = 'Luphy | Cabinet CRM et IA pour les acteurs de la finance'
+const DESCRIPTION =
+  'Luphy conseille et déploie CRM, automatisations et agents IA pour les fonds, boutiques M&A et sociétés de gestion. Diagnostic ROI, devis sous une semaine.'
+
 export const metadata: Metadata = {
-  title: 'Luphy | Agence de performance digitale pour la finance',
-  description:
-    "Luphy conseille et implémente des solutions CRM, d'automatisation et d'IA pour les acteurs de la finance (fonds d'investissement, M&A, sociétés de gestion, conseil), en partant d'un diagnostic ROI.",
+  // absolute : pas de suffixe « | Luphy » ajouté par le template du layout
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
+  alternates: { canonical: '/' },
   openGraph: {
-    title: 'Luphy | Agence de performance digitale pour la finance',
-    description:
-      "Du conseil à l'implémentation : CRM, automatisation et IA pour les fonds d'investissement, M&A et cabinets de conseil.",
+    title: TITLE,
+    description: DESCRIPTION,
     url: SITE_URL,
     images: [{ url: OG_IMAGE, width: 1200, height: 630 }],
   },
@@ -51,10 +57,7 @@ export default async function HomePage() {
             Automatisez ce qui vous ralentit.
             <em>Concentrez-vous sur ce qui vous différencie.</em>
           </h1>
-          <p className="hero-sub a2">
-            Du conseil à l&apos;implémentation, Luphy accompagne les acteurs de la finance dans l&apos;amélioration
-            de leur performance commerciale et opérationnelle : CRM, automatisation et IA.
-          </p>
+          <p className="hero-sub hero-definition a2">{DEFINITION_LUPHY}</p>
           <div className="hero-ctas a3">
             <a href={CTA_COMMERCIAL} target="_blank" rel="noopener" className="btn-primary">
               Parler CRM &amp; commercial
@@ -169,6 +172,9 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── RÉSULTATS ── */}
+      <HomeResultats />
+
       {/* ── WHY LUPHY ── */}
       <section className="why-sec">
         <div className="container">
@@ -245,6 +251,11 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── ÉQUIPE, PARTENAIRES, FAQ ── */}
+      <HomeEquipe />
+      <HomePartenaires />
+      <HomeFaq />
 
       {/* ── CTA ── */}
       <section className="cta-sec">

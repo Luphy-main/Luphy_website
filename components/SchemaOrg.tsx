@@ -1,4 +1,4 @@
-import { SITE_URL, SITE_NAME, LINKEDIN_URL } from '@/lib/constants'
+import { SITE_URL, SITE_NAME, LINKEDIN_URL, DEFINITION_LUPHY, HUBSPOT_MARKETPLACE_URL } from '@/lib/constants'
 import { getEquipe, personJsonLd } from '@/sanity/lib/equipe'
 
 interface SchemaOrgProps {
@@ -19,8 +19,9 @@ export default async function SchemaOrg({ type = 'website', url }: SchemaOrgProp
     legalName: 'LUPHY',
     url: SITE_URL,
     logo: `${SITE_URL}/brand-assets/luphy-logo-square.png`,
-    description:
-      "Luphy est une agence de performance digitale basée à Paris, spécialisée dans la finance (fonds d'investissement, M&A, sociétés de gestion, conseil). Elle conseille et implémente des solutions CRM, d'automatisation et d'IA, en partant d'une méthodologie de diagnostic centrée sur le ROI.",
+    description: DEFINITION_LUPHY,
+    foundingDate: '2025',
+    foundingLocation: { '@type': 'Place', name: 'Paris' },
     address: { '@type': 'PostalAddress', addressLocality: 'Paris', addressCountry: 'FR' },
     vatID: 'FR32939716833',
     identifier: { '@type': 'PropertyValue', propertyID: 'SIREN', value: '939716833' },
@@ -29,7 +30,7 @@ export default async function SchemaOrg({ type = 'website', url }: SchemaOrgProp
     memberOf: {
       '@type': 'Organization',
       name: 'HubSpot Solutions Partner Program',
-      url: 'https://ecosystem.hubspot.com/fr/marketplace/solutions/luphy',
+      url: HUBSPOT_MARKETPLACE_URL,
     },
     ...(fondateurs.length > 0 && { founder: fondateurs.map(m => personJsonLd(m, m.titreOfficiel ?? m.fonction)) }),
   }

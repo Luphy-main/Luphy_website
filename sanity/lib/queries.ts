@@ -109,6 +109,7 @@ export const CAS_CLIENT_BY_SLUG = groq`
     auteur,
     datePublication,
     dateMiseAJour,
+    _updatedAt,
     metaDescription,
     ordre,
     aLaUne,
@@ -194,6 +195,7 @@ export const ARTICLE_BY_SLUG = groq`
     auteur,
     datePublication,
     dateMiseAJour,
+    _updatedAt,
     categorie,
     imageOg,
     metaDescription,
@@ -231,6 +233,16 @@ export const EDITION_BY_NUMERO = groq`
 
 export const NEWSLETTER_REGLAGES = groq`
   *[_id == "reglagesNewsletter"][0] { lienAbonnement }
+`
+
+// Accueil, bloc « Résultats » : chiffre principal des cas clients mis en avant, lu dans Sanity
+export const CAS_CLIENTS_RESULTATS = groq`
+  *[_type == "casClient" && slug.current in $slugs] {
+    client,
+    "slug": slug.current,
+    titre,
+    "kpi": kpis[0],
+  }
 `
 
 // Équipe (membres visibles)

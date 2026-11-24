@@ -3,7 +3,7 @@ import { Sora, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import ConditionalLayout from '@/components/ConditionalLayout'
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, OG_IMAGE } from '@/lib/constants'
+import { SITE_URL, SITE_NAME, SITE_TITLE_DEFAUT, SITE_DESCRIPTION, OG_IMAGE } from '@/lib/constants'
 
 const sora = Sora({
   subsets: ['latin'],
@@ -21,10 +21,13 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | Agence de performance digitale pour la finance`,
+    default: `${SITE_NAME} | ${SITE_TITLE_DEFAUT}`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
+  // Canonical par défaut : l'URL de la page elle-même ('./' est résolu sur le chemin courant).
+  // Les pages qui déclarent leurs propres alternates le remplacent.
+  alternates: { canonical: './' },
   openGraph: {
     siteName: SITE_NAME,
     locale: 'fr_FR',

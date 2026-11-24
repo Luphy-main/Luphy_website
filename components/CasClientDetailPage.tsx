@@ -8,6 +8,7 @@ import { client } from '@/sanity/lib/client'
 import { CAS_CLIENT_BY_SLUG } from '@/sanity/lib/queries'
 import { urlFor, imageDimensions } from '@/sanity/lib/image'
 import { formatLocalisation, type Localisation } from '@/sanity/lib/casClient'
+import { dateDeModification } from '@/sanity/lib/date'
 
 const POLES = { commercial: 'Performance commerciale', operationnel: 'Performance opérationnelle' } as const
 
@@ -32,7 +33,7 @@ type CasClient = {
   etapes?: Etape[]
   resultatsTexte?: string
   faq?: FaqItem[]
-  auteur?: string; datePublication?: string; dateMiseAJour?: string
+  auteur?: string; datePublication?: string; dateMiseAJour?: string; _updatedAt?: string
   metaDescription?: string
 }
 
@@ -111,6 +112,8 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
       }
     : null
 
+  const dateModified = dateDeModification(data.dateMiseAJour, data._updatedAt, data.datePublication)
+
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -120,7 +123,7 @@ export default async function CasClientDetailPage({ slug }: { slug: string }) {
         description: enBref.slice(0, 155),
         url: `${SITE_URL}/cas-clients/${slug}`,
         ...(data.datePublication && { datePublished: data.datePublication }),
-        ...(data.dateMiseAJour && { dateModified: data.dateMiseAJour }),
+        ...(dateModified && { dateModified }),
         author: { '@type': 'Person', name: data.auteur || 'Luphy' },
         publisher: { '@type': 'Organization', name: 'Luphy', url: SITE_URL },
         // Organisation cliente et son adresse, seulement si la localisation est renseignée
