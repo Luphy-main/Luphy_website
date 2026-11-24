@@ -16,8 +16,8 @@ export const HUBSPOT_MARKETPLACE_URL = 'https://ecosystem.hubspot.com/fr/marketp
 // Bloc « Partenaires et presse » de l'accueil ('#' = lien pas encore fourni : affiché sans lien)
 export const PARTNER_LINKS = {
   hubspot: HUBSPOT_MARKETPLACE_URL,
-  capsens: '#',
-  findfi: '#',
+  capsens: 'https://www.capsens.eu/',
+  findfi: 'https://findfi.fr/',
 }
 
 // Nom de la rubrique /ressources (H1, title, fil d'Ariane) et libellé court du menu
